@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "340995120863",
+    "project_id": "tribe-7070c",
+    "storage_bucket": "tribe-7070c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340995120863:android:a49f6d5b9137d10d07936a",
+        "android_client_info": {
+          "package_name": "com.tribeorbital"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340995120863-b56k6jrs6qme2u95blk6tn6l5u4ac7d5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqBLulfN_IbcIhS04pCL8P4hSJ6pS1BYw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340995120863-b56k6jrs6qme2u95blk6tn6l5u4ac7d5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

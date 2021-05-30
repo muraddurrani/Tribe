@@ -1,4 +1,4 @@
-package com.tribe;
+package com.tribeorbital;
 
 import com.facebook.react.ReactActivity;
 

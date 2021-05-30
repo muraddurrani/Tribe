@@ -1,9 +1,9 @@
 import React from 'react'
 import { Input, Icon } from 'react-native-elements'
 
-function EmailInput() {
+function EmailInput(props) {
   return (
-    <Input placeholder = 'Email Address' leftIcon = {<Icon name = 'mail'/>}/>
+    <Input placeholder = 'Email Address' leftIcon = {<Icon name = 'mail'/>} keyboardType = 'email-address' onChangeText = {props.onChangeText}/>
   )
 }
 

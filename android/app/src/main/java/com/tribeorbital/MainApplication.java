@@ -1,4 +1,4 @@
-package com.tribe;
+package com.tribeorbital;
 
 import android.app.Application;
 import android.content.Context;
