@@ -1,15 +1,14 @@
-import Avatar from './constants/Avatar'
-import Button from './constants/Button'
-import colors from './constants/colors'
-import CheckBox from './constants/CheckBox'
-import Icon from './constants/Icon'
-import Input from './constants/Input'
-import Text from './constants/Text'
+import colours from './colours'
+import spacing from './spacing'
+
+import Button from './components/Button'
+import Icon from './components/Icon'
+import Input from './components/Input'
+import Text from './components/Text'
 
 const theme = {
-  Avatar,
-  colors,
-  CheckBox,
+  colours,
+  spacing,
   Button,
   Icon,
   Input,

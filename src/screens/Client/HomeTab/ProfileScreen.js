@@ -5,7 +5,7 @@ import { AuthContext } from '../../../navigation/AuthProvider'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import _ from 'lodash'
-import colors from '../../../styles/constants/colors'
+import colors from '../../../styles/colours'
 
 function ProfileScreen() {
 

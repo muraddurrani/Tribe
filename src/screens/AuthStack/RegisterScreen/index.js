@@ -18,7 +18,7 @@ function index() {
 
   return (
     <View style = {styles.container}>
-      <Image source = {require('../../../assets/images/logo_ubuntu.png')} containerStyle = {styles.imageContainer} style = {styles.image}/>
+      <Image source = {require('../../../assets/images/Logo_Ubuntu.png')} containerStyle = {styles.imageContainer} style = {styles.image}/>
       <NameInput onChangeFirstName = {(text) => setFirstName(text)} onChangeLastName = {(text) => setLastName(text)}/>
       <EmailInput onChangeText = {(email) => setEmail(email)}/>
       <PasswordInput onChangeText = {(password) => setPassword(password)}/>
