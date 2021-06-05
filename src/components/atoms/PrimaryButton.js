@@ -6,9 +6,13 @@ import theme from '../../styles/theme'
 function PrimaryButton(props) {
   return (
     <Button
+      disabled = {props.disabled}
+      containerStyle = {{...props.containerStyle}}
       buttonStyle = {styles.button}
       titleStyle = {styles.title}
       title = {props.title}
+      onPress = {props.onPress}
+      loading = {props.loading}
     />
   )
 }

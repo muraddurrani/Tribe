@@ -6,9 +6,11 @@ import theme from '../../styles/theme'
 function SecondaryButton(props) {
   return (
     <Button
-      buttonStyle = {styles.button}
-      titleStyle = {styles.title}
+      containerStyle = {{...props.containerStyle}}
+      buttonStyle = {{...styles.button, ...props.buttonStyle}}
+      titleStyle = {{...styles.title, ...props.titleStyle}}
       title = {props.title}
+      onPress = {props.onPress}
     />
   )
 }

@@ -1,61 +1,59 @@
-import React, {useState, useContext } from 'react'
-import { View, StyleSheet } from 'react-native'
-import { Image, Button } from 'react-native-elements'
-import { AuthContext } from '../../../navigation/AuthProvider'
-
-import EmailInput from '../../../components/atoms/EmailInput'
-import PasswordInput from '../../../components/atoms/PasswordInput'
-import TouchableText from '../../../components/atoms/TouchableText'
+import React, { useState } from 'react'
+import { StyleSheet, View } from 'react-native'
+import { Image, Text } from 'react-native-elements'
+import KeyboardView from '../../../components/atoms/KeyboardView'
+import TertiaryButton from '../../../components/atoms/TertiaryButton'
+import LoginForm from './LoginForm'
 import DetailsOverlay from './DetailsOverlay'
-import { NavigationContainer } from '@react-navigation/native'
 
 function index({ navigation }) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [toggleOverlay, setToggleOverlay] = useState(false)
-  const { login } = useContext(AuthContext)
+
+  const [show, setShow] = useState(false)
 
   return (
-    <View style = {styles.container} >
-      <Image source = {require('../../../assets/images/Logo_Ubuntu.png')} containerStyle = {styles.imageContainer} style = {styles.image}/>
-      <EmailInput onChangeText = {(email) => setEmail(email)}/>
-      <PasswordInput onChangeText = {(password) => setPassword(password)}/>
-      {
-      /* <TouchableText text = "Forgot Password?"/> ---- Implement later*/ 
-    }
-      <Button containerStyle = {styles.buttonContainer} title = "Log In" onPress = {() => login(email, password)}/>
-      <Button containerStyle = {styles.buttonContainer} title = "Create an Account" type = "clear" onPress = {() => navigation.navigate('Register')}/>
-      <TouchableText style = {styles.detailsText} text = "What is Tribe?" onPress = {() => setToggleOverlay(true)}/>
-
-      {
-        toggleOverlay && (
-          <DetailsOverlay onPress = {() => setToggleOverlay(false)}/>
-        )
-      }
-    </View>
+    <KeyboardView>
+      <Image
+        style = {styles.image}
+        source = {require('../../../assets/images/Logo_Ubuntu.png')}
+      />
+      <LoginForm />
+      <TertiaryButton
+        containerStyle = {styles.forgotPassButton}
+        title = "Forgot Password?"
+        onPress = {() => navigation.navigate('ResetPassword')}
+      />
+      <View style = {styles.createAccView}>
+        <Text>Don't have an account?</Text>
+        <TertiaryButton
+          containerStyle = {styles.signUpButton}
+          title = "Sign up!"
+          onPress = {() => navigation.navigate('Register')}
+        />
+      </View>
+      <TertiaryButton title = "What is Tribe?" onPress = {() => setShow(true)}/>
+      <DetailsOverlay
+        isVisible = {show}
+        onPress = {() => setShow(false)}
+      />
+    </KeyboardView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fcfcfc'
-  },
-  imageContainer: {
-    height: '12.8%',
-    width: '50%',
-    marginBottom: 20
-  },
   image: {
+    height: 55,
+    width: 160,
     resizeMode: 'contain'
   },
-  buttonContainer: {
-    marginTop: 20
+  forgotPassButton: {
+    width: 140
   },
-  detailsText: {
-    marginTop: 50
+  createAccView: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  signUpButton: {
+    width: 70
   }
 })
 

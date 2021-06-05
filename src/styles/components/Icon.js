@@ -1,7 +1,7 @@
 import colors from '../colours'
 const Icon = {
   type: 'feather',
-  color: colors.grey3
+  color: colors.gray5
 }
 
 export default Icon

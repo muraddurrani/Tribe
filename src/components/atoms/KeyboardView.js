@@ -8,6 +8,7 @@ function KeyboardView(props) {
     <TouchableWithoutFeedback
       onPress = {() => Keyboard.dismiss()}
       accessible = {false}
+      touchSoundDisabled = {true}
     >
       <View style = {styles.container}>
         <ScreenView style = {props.style}>

@@ -6,6 +6,11 @@ import theme from '../../styles/theme'
 function TertiaryButton(props) {
   return (
     <Button
+      disabledStyle = {props.disabledStyle}
+      disabledTitleStyle = {props.disabledTitleStyle}
+      disabled = {props.disabled}
+      onPress = {props.onPress}
+      containerStyle = {{...props.containerStyle}}
       buttonStyle = {styles.button}
       titleStyle = {styles.title}
       title = {props.title}
@@ -18,7 +23,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colours.gray0
   },
   title: {
-    color: theme.colours.gray6
+    color: theme.colours.gray6,
+    fontSize: 14
   }
 })
 
