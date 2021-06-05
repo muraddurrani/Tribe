@@ -1,6 +1,7 @@
 import React from 'react'
-import { Keyboard, View, TouchableWithoutFeedback, StyleSheet } from 'react-native'
-import ScreenView from './ScreenView'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { Keyboard, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import theme from '../../styles/theme'
 
 
 function KeyboardView(props) {
@@ -10,18 +11,25 @@ function KeyboardView(props) {
       accessible = {false}
       touchSoundDisabled = {true}
     >
-      <View style = {styles.container}>
-        <ScreenView style = {props.style}>
+        <KeyboardAwareScrollView
+          style = {{...styles.container, ...props.style}}
+          contentContainerStyle = {{...styles.content, ...props.contentContainerStyle}}
+          resetScrollToCoords={{ x: 0, y: 0 }}
+          scrollEnabled={false}
+          >
           {props.children}
-        </ScreenView>
-      </View>
+        </KeyboardAwareScrollView>
     </TouchableWithoutFeedback>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: theme.colours.gray0
+  },
+  content: {
+    flexGrow: 1
   }
 })
 

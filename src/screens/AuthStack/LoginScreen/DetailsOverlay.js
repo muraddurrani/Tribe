@@ -9,18 +9,24 @@ function DetailsOverlay(props) {
       overlayStyle = {styles.container}
       isVisible = {props.isVisible}
       >
-      <Text h2>What is Tribe?</Text>
+      <Text style = {styles.header} h3>What is Tribe?</Text>
       <Text style = {styles.text}>
-        Tribe is a supportive platform for parents of children with special needs and professionals to connect.
-        {`\n`}
+        Tribe is a supportive platform that connects parents of children with special needs and professionals.
         {`\n`}
         So, how exactly can you use Tribe?
-        {`\n`}
-        {`\n`}
-        The first step is to create an account! If you are a parent, provide your particulars and the particulars of your child. Then, design your profile by selecting your preferences.
-            Tribe will then store this information in Firebase and run our match-making algorithm to determine the best matches for you! 
+      </Text>
+      <Text style = {styles.subHeader} h4>For parents</Text>
+      <Text style = {styles.text}>
+        Create an account and provide your particulars and the particulars of your child. Then, design your profile by selecting your preferences.
+        Tribe will use this information to match you with the best service providers for your and faciliate all communication and scheduling needs!
+      </Text>
+      <Text style = {styles.subHeader} h4>For professionals</Text>
+      <Text style = {styles.text}>
+        Create an account and provide us with information regarding your service. Tribe will do the rest of the work and connect you with potential clients
+        all over the country.
       </Text>
       <Icon
+        containerStyle = {styles.icon}
         name = "x"
         color = {theme.colours.accent2}
         onPress = {props.onPress}
@@ -31,12 +37,22 @@ function DetailsOverlay(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: 320,
-    padding: theme.spacing.spacing5,
-    alignItems: 'center'
+    width: '90%',
+    paddingVertical: theme.spacing.spacing5,
+    paddingHorizontal: theme.spacing.spacing4,
+  },
+  header: {
+    marginBottom: theme.spacing.spacing4,
+    alignSelf: 'center'
+  },
+  subHeader: {
+    marginTop: theme.spacing.spacing3
   },
   text: {
-    lineHeight: 18
+    lineHeight: 20
+  },
+  icon: {
+    marginTop: theme.spacing.spacing4
   }
 })
 

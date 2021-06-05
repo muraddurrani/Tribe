@@ -1,26 +1,32 @@
 import React from 'react'
-import { StyleSheet, ScrollView } from 'react-native'
-import { Image, Text } from 'react-native-elements'
+import { StyleSheet } from 'react-native'
+import { Text } from 'react-native-elements'
 import KeyboardView from '../../../components/atoms/KeyboardView'
 import RegisterForm from './RegisterForm'
+import TertiaryButton from '../../../components/atoms/TertiaryButton'
+import theme from '../../../styles/theme'
 
-function index2() {
+function index({ navigation }) {
   return (
-    <KeyboardView>
-      <ScrollView>
-        <Text h2>Create Account</Text>
+    <KeyboardView contentContainerStyle = {styles.container}>
+      <Text style = {styles.header} h3>Create an Account</Text>
         <RegisterForm />
-      </ScrollView>
+        <TertiaryButton
+                title = "Back to Login"
+                onPress = {() => navigation.goBack()}
+              />
     </KeyboardView>
   )
 }
 
 const styles = StyleSheet.create({
-  image: {
-    height: 55,
-    width: 160,
-    resizeMode: 'contain'
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  header: {
+    marginBottom: theme.spacing.spacing2
   }
 })
 
-export default index2
+export default index

@@ -11,7 +11,7 @@ function TertiaryButton(props) {
       disabled = {props.disabled}
       onPress = {props.onPress}
       containerStyle = {{...props.containerStyle}}
-      buttonStyle = {styles.button}
+      buttonStyle = {{...styles.button, ...props.buttonStyle}}
       titleStyle = {styles.title}
       title = {props.title}
     />

@@ -10,9 +10,10 @@ function ErrorOverlay(props) {
       isVisible = {props.isVisible}
       >
 
-      <Text Style = {styles.header} h3>Oh no!</Text>
+      <Text style = {styles.header} h3>Oops!</Text>
       <Text> {props.message} </Text>
       <Icon
+        containerStyle = {styles.icon}
         name = "x"
         color = {theme.colours.accent2}
         onPress = {props.onPress}
@@ -24,8 +25,15 @@ function ErrorOverlay(props) {
 const styles = StyleSheet.create({
   container: {
     width: 320,
-    padding: theme.spacing.spacing2,
+    paddingHorizontal: theme.spacing.spacing3,
+    paddingVertical: theme.spacing.spacing4,
     alignItems: 'center'
+  },
+  header: {
+    marginBottom: theme.spacing.spacing1
+  },
+  icon: {
+    marginTop: theme.spacing.spacing3
   }
 })
 

@@ -12,8 +12,8 @@ function ScreenView(props) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: theme.colours.gray0,
-    flex: 1
   }
 })
 export default ScreenView

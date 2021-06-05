@@ -48,7 +48,7 @@ function ResetPasswordForm(props) {
       }}
       >
       {(formikProps) => (
-        <View style = {props.style}>
+        <View style = {styles.container}>
           <Input
             label = "Email Address"
             placeholder = "e.g. email@address.com"
@@ -62,6 +62,7 @@ function ResetPasswordForm(props) {
           <View style = {styles.buttonsView} >
             <SecondaryButton
               containerStyle = {styles.button}
+              buttonStyle = {styles.cancelButton}
                title = "Cancel"
                onPress = {() => navigation.goBack()}
             />
@@ -80,12 +81,25 @@ function ResetPasswordForm(props) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginLeft: theme.spacing.spacing3,
+    marginRight: theme.spacing.spacing3,
+    paddingVertical: theme.spacing.spacing4,
+    paddingHorizontal: theme.spacing.spacing3,
+    backgroundColor: theme.colours.gray1,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
   buttonsView: {
     flexDirection: 'row',
     justifyContent: 'flex-end'
   },
   button: {
+    marginTop: theme.spacing.spacing1,
     marginRight: theme.spacing.spacing1
+  },
+  cancelButton: {
+    backgroundColor: theme.colours.gray1
   }
 })
 

@@ -1,17 +1,14 @@
 import React, { useState, useContext } from 'react'
-import { KeyboardAvoidingView, View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { Input, Icon, Text } from 'react-native-elements'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import PrimaryButton from '../../../components/atoms/PrimaryButton'
-import auth from '@react-native-firebase/auth'
-import firestore from '@react-native-firebase/firestore'
 import ErrorOverlay from '../LoginScreen/ErrorOverlay'
 import SecondaryButton from '../../../components/atoms/SecondaryButton'
-import TertiaryButton from '../../../components/atoms/TertiaryButton'
 import colours from '../../../styles/colours'
-import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../../navigation/AuthProvider'
+import theme from '../../../styles/theme'
 
 const reviewSchema = yup.object({
   firstName: yup.string().required('Please provide your first name'),
@@ -31,7 +28,6 @@ function RegisterForm() {
   const [providerPressed, setProviderPressed] = useState(false)
   const [canSubmit, setCanSubmit] = useState(false)
   const [disclaimer, setDisclaimer] = useState(false)
-  const navigation = useNavigation()
   const { signup } = useContext(AuthContext)
 
   return (
@@ -51,7 +47,9 @@ function RegisterForm() {
       }}
       >
       {(formikProps) => (
-        <KeyboardAvoidingView behavior = "padding">
+        <View
+          style = {styles.container}
+          >
           <View style = {styles.rowView}>
             <Input
               containerStyle = {styles.inputContainer}
@@ -110,6 +108,7 @@ function RegisterForm() {
               <Text h4>I am a:</Text>
               <View style = {styles.rowView}>
                 <SecondaryButton
+                  containerStyle = {styles.accTypeButton}
                   buttonStyle = {clientPressed ? styles.pressedButton : styles.unpressedButton}
                   titleStyle = {clientPressed ? styles.pressedTitle : styles.unpressedTitle}
                   title = "Parent"
@@ -121,6 +120,7 @@ function RegisterForm() {
                   }}
                 />
                 <SecondaryButton
+                  containerStyle = {styles.accTypeButton}
                   buttonStyle = {providerPressed ? styles.pressedButton : styles.unpressedButton}
                   titleStyle = {providerPressed ? styles.pressedTitle : styles.unpressedTitle}
                   title = "Professional"
@@ -139,13 +139,9 @@ function RegisterForm() {
                 loading = {loading}
                 onPress = {formikProps.handleSubmit}
               />
-              <TertiaryButton
-                title = "Back to Login"
-                onPress = {() => navigation.goBack()}
-              />
               <ErrorOverlay isVisible = {fbError} message = {errorMsg} onPress = {() => setFBError(false)}/>
               
-        </KeyboardAvoidingView>
+        </View>
       )  
       }
     </Formik>
@@ -153,7 +149,11 @@ function RegisterForm() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center'
+  },
   rowView: {
+    marginTop: theme.spacing.spacing3,
     flexDirection: 'row'
   },
   inputContainer: {
@@ -172,7 +172,12 @@ const styles = StyleSheet.create({
   unpressedTitle: {
     color: colours.gray6
   },
+  accTypeButton: {
+    marginHorizontal: theme.spacing.spacing1
+  },
   createAccButton: {
+    marginTop: theme.spacing.spacing5,
+    marginBottom: theme.spacing.spacing0,
     width: 150
   }
 })

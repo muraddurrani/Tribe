@@ -5,23 +5,20 @@ import KeyboardView from '../../../components/atoms/KeyboardView'
 import TertiaryButton from '../../../components/atoms/TertiaryButton'
 import LoginForm from './LoginForm'
 import DetailsOverlay from './DetailsOverlay'
+import theme from '../../../styles/theme'
 
 function index({ navigation }) {
 
   const [show, setShow] = useState(false)
 
   return (
-    <KeyboardView>
+    <KeyboardView contentContainerStyle = {styles.container}>
       <Image
+        containerStyle = {styles.imageContainer}
         style = {styles.image}
         source = {require('../../../assets/images/Logo_Ubuntu.png')}
       />
       <LoginForm />
-      <TertiaryButton
-        containerStyle = {styles.forgotPassButton}
-        title = "Forgot Password?"
-        onPress = {() => navigation.navigate('ResetPassword')}
-      />
       <View style = {styles.createAccView}>
         <Text>Don't have an account?</Text>
         <TertiaryButton
@@ -30,7 +27,11 @@ function index({ navigation }) {
           onPress = {() => navigation.navigate('Register')}
         />
       </View>
-      <TertiaryButton title = "What is Tribe?" onPress = {() => setShow(true)}/>
+      <TertiaryButton
+        containerStyle = {styles.detailsButton}
+        title = "What is Tribe?"
+        onPress = {() => setShow(true)}
+      />
       <DetailsOverlay
         isVisible = {show}
         onPress = {() => setShow(false)}
@@ -40,20 +41,32 @@ function index({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  imageContainer: {
+    marginBottom: theme.spacing.spacing5
+  },
   image: {
     height: 55,
-    width: 160,
+    width: 180,
     resizeMode: 'contain'
   },
   forgotPassButton: {
+    alignSelf: 'flex-end',
     width: 140
   },
   createAccView: {
+    marginTop: theme.spacing.spacing1,
     flexDirection: 'row',
     alignItems: 'center'
   },
   signUpButton: {
     width: 70
+  },
+  detailsButton: {
+    marginTop: theme.spacing.spacing4
   }
 })
 
