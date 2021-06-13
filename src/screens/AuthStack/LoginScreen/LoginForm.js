@@ -8,7 +8,7 @@ import TertiaryButton from '../../../components/atoms/TertiaryButton'
 import ErrorOverlay from './ErrorOverlay'
 import { AuthContext } from '../../../navigation/AuthProvider'
 import theme from '../../../styles/theme'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'
 
 const reviewSchema = yup.object({
   email: yup.string().required('Please provide your email address').email('Please provide a valid email'),
@@ -87,8 +87,15 @@ function LoginForm() {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: theme.colours.gray0,
+    padding: theme.spacing.spacing4,
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,  
+    elevation: 5
   },
   inputContainer: {
     marginTop: theme.spacing.spacing1,

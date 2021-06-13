@@ -6,6 +6,7 @@ import theme from '../../../styles/theme'
 function DetailsOverlay(props) {
   return (
     <Overlay
+      animationType = 'slide'
       overlayStyle = {styles.container}
       isVisible = {props.isVisible}
       >

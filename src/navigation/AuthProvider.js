@@ -1,7 +1,6 @@
 import React, { createContext, useState } from 'react'
 import auth from '@react-native-firebase/auth'
-import firestore from '@react-native-firebase/firestore' 
-import { acc } from 'react-native-reanimated'
+import firestore from '@react-native-firebase/firestore'
 
 export const AuthContext = createContext({})
 
@@ -21,9 +20,9 @@ function AuthProvider({ children }) {
         login: async (email, password) => {
           await auth().signInWithEmailAndPassword(email, password)
         },
-        signup: async (email, password, firstName, lastName, number, accType) => {
+        signup: async (email, password, accType) => {
           await auth().createUserWithEmailAndPassword(email, password).
-            then(() => firestore().collection(accType).doc(auth().currentUser.uid).set({firstName, lastName, email, number}))
+            then(() => firestore().collection(accType).doc(auth().currentUser.uid).set({email}))
           setAccType(accType)
           setIsSignUp(true)
         },

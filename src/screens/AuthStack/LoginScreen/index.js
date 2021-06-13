@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, ImageBackground } from 'react-native'
 import { Image, Text } from 'react-native-elements'
 import KeyboardView from '../../../components/atoms/KeyboardView'
 import TertiaryButton from '../../../components/atoms/TertiaryButton'
@@ -12,61 +12,69 @@ function index({ navigation }) {
   const [show, setShow] = useState(false)
 
   return (
-    <KeyboardView contentContainerStyle = {styles.container}>
-      <Image
-        containerStyle = {styles.imageContainer}
-        style = {styles.image}
-        source = {require('../../../assets/images/Logo_Ubuntu.png')}
-      />
-      <LoginForm />
-      <View style = {styles.createAccView}>
-        <Text>Don't have an account?</Text>
-        <TertiaryButton
-          containerStyle = {styles.signUpButton}
-          title = "Sign up!"
-          onPress = {() => navigation.navigate('Register')}
+      <KeyboardView>
+        <ImageBackground source = {require('../../../assets/images/Login_Background.png')} style = {styles.container}>
+
+        <Image
+          source = {require('../../../assets/images/Logo_Ubuntu_Inverse.png')}
+          containerStyle= {styles.imageContainer}
+          style = {styles.image}
         />
-      </View>
-      <TertiaryButton
-        containerStyle = {styles.detailsButton}
-        title = "What is Tribe?"
-        onPress = {() => setShow(true)}
-      />
-      <DetailsOverlay
-        isVisible = {show}
-        onPress = {() => setShow(false)}
-      />
-    </KeyboardView>
+        <LoginForm />
+        <View style = {styles.createAccView}>
+          <Text>Don't have an account?</Text>
+          <TertiaryButton
+            containerStyle = {styles.signUpButtonContainer}
+            buttonStyle = {styles.tertiaryButton}
+            title = "Sign up!"
+            onPress = {() => navigation.navigate('Register')}
+          />
+        </View>
+        <TertiaryButton
+          containerStyle = {styles.detailsButton}
+          buttonStyle = {styles.tertiaryButton}
+          title = "What is Tribe?"
+          onPress = {() => setShow(true)}
+        />
+        <DetailsOverlay
+          isVisible = {show}
+          onPress = {() => setShow(false)}
+        />
+        </ImageBackground>
+      </KeyboardView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    flex: 1,
     alignItems: 'center'
   },
   imageContainer: {
-    marginBottom: theme.spacing.spacing5
+    marginTop: 60,
+    marginBottom: 40
   },
   image: {
-    height: 55,
-    width: 180,
+    height: 70,
+    width: 220,
     resizeMode: 'contain'
   },
   forgotPassButton: {
-    alignSelf: 'flex-end',
     width: 140
   },
   createAccView: {
-    marginTop: theme.spacing.spacing1,
+    marginTop: 20,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  signUpButton: {
+  signUpButtonContainer: {
     width: 70
   },
   detailsButton: {
-    marginTop: theme.spacing.spacing4
+    marginTop: 40
+  },
+  tertiaryButton: {
+    backgroundColor: theme.colours.gray2
   }
 })
 

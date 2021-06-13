@@ -14,6 +14,7 @@ function TertiaryButton(props) {
       buttonStyle = {{...styles.button, ...props.buttonStyle}}
       titleStyle = {styles.title}
       title = {props.title}
+      icon = {props.icon}
     />
   )
 }

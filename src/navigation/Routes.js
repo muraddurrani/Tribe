@@ -2,7 +2,8 @@ import React, { useContext, useState, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import auth from '@react-native-firebase/auth'
 import AuthStack from './AuthStack'
-import ProfileScreen from '../screens/Client/HomeTab/ProfileScreen/index'
+import CPProfileStack from './Provider/CPProfileStack'
+import ProviderHomeTab from './Provider/ProviderHomeTab'
 import Test from '../Test'
 import { AuthContext } from './AuthProvider'
 
@@ -22,15 +23,14 @@ function Routes() {
     <NavigationContainer>
       {(
         user
-          ? isSignUp
-            ? accType == 'Clients'
+          ? accType == 'Clients'
+            ? isSignUp
               ? <Test />
               : <Test />
-            : accType == 'Clients'
-              ? <ProfileScreen />
-              : <ProfileScreen />
+            : isSignUp
+              ? <CPProfileStack />
+              : <ProviderHomeTab />
           : <AuthStack />
-          
       )}
     </NavigationContainer> 
   )

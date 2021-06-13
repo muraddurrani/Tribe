@@ -11,7 +11,6 @@ function index({ navigation }) {
   const [choices, setChoices] = useState([])
   const [checked, setChecked] = useState(new Array(serviceList.length).fill(false))
   const [data, setData] = useState(serviceList)
-
   const masterData = serviceList.map(dataMapper)
 
   function dataMapper(item) {

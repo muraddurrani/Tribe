@@ -8,7 +8,7 @@ function PrimaryButton(props) {
     <Button
       disabled = {props.disabled}
       containerStyle = {{...props.containerStyle}}
-      buttonStyle = {styles.button}
+      buttonStyle = {{...styles.button, ...props.buttonStyle}}
       titleStyle = {styles.title}
       title = {props.title}
       onPress = {props.onPress}

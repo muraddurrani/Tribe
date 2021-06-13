@@ -4,7 +4,7 @@ import theme from '../../styles/theme'
 
 function ScreenView(props) {
   return (
-    <View style = {{...props.style, ...styles.container}}>
+    <View style = {{...styles.container, ...props.style}}>
       {props.children}
     </View>
   )

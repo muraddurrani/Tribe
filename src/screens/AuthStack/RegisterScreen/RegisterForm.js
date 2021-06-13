@@ -11,8 +11,6 @@ import { AuthContext } from '../../../navigation/AuthProvider'
 import theme from '../../../styles/theme'
 
 const reviewSchema = yup.object({
-  firstName: yup.string().required('Please provide your first name'),
-  lastName: yup.string().required('Please provide your last name'),
   email: yup.string().required('Please provide your email address').email('Please provide a valid email'),
   password: yup.string().required('Please provide a password').min(6)
 })
@@ -27,49 +25,26 @@ function RegisterForm() {
   const [clientPressed, setClientPressed] = useState(false)
   const [providerPressed, setProviderPressed] = useState(false)
   const [canSubmit, setCanSubmit] = useState(false)
-  const [disclaimer, setDisclaimer] = useState(false)
   const { signup } = useContext(AuthContext)
 
   return (
     <Formik
-      initialValues = {{firstName: '', lastName: '', email: '', password: '', number: '+65 '}}
+      initialValues = {{email: '', password: ''}}
       validationSchema = {reviewSchema}
       onSubmit = {(values) => {
         setLoading(true)
-        signup(values.email, values.password, values.firstName, values.lastName, values.number, accType).
-          catch(error => {
+        signup(values.email, values.password, accType).
+          catch((error) => {
             if (error.code == 'auth/email-already-in-use') {
               setErrorMsg("This email address is already in use.")
             }
             setFBError(true)
-          }).
-          finally(() => setLoading(false))
+            setLoading(false)
+          })
       }}
       >
       {(formikProps) => (
-        <View
-          style = {styles.container}
-          >
-          <View style = {styles.rowView}>
-            <Input
-              containerStyle = {styles.inputContainer}
-              label = "First Name"
-              placeholder = "e.g. John"
-              onChangeText = {formikProps.handleChange('firstName')}
-              value = {formikProps.values.firstName}
-              onBlur = {formikProps.handleBlur('firstName')}
-              errorMessage = {formikProps.touched.firstName && formikProps.errors.firstName}
-            />
-            <Input
-              containerStyle = {styles.inputContainer}
-              label = "Last Name"
-              placeholder = "e.g. Doe"
-              onChangeText = {formikProps.handleChange('lastName')}
-              value = {formikProps.values.lastName}
-              onBlur = {formikProps.handleBlur('lastName')}
-              errorMessage = {formikProps.touched.lastName && formikProps.errors.lastName}
-            />
-          </View>
+        <View style = {styles.container}>
             <Input
               label = "Email Address"
               placeholder = "e.g. email@address.com"
@@ -91,21 +66,7 @@ function RegisterForm() {
               secureTextEntry = {!showPass}
               errorMessage = {formikProps.touched.password && formikProps.errors.password}
             />
-            {
-              (disclaimer && <Text>Your number will only be shared people you match with</Text>)
-            }
-              <Input
-                label = "Mobile Number (Optional)"
-                placeholder = "e.g. 12345678"
-                onChangeText = {formikProps.handleChange('number')}
-                value = {formikProps.values.number}
-                leftIcon = {<Icon name = "phone"/>}
-                rightIcon = {<Icon name = 'info' onPress = {() => setDisclaimer(!disclaimer)}/>}
-                onBlur = {formikProps.handleBlur('number')}
-                keyboardType = 'numeric'
-                errorMessage = {formikProps.touched.number && formikProps.errors.number}
-              />
-              <Text h4>I am a:</Text>
+              <Text style = {{marginTop: 30}}>I am joining as a:</Text>
               <View style = {styles.rowView}>
                 <SecondaryButton
                   containerStyle = {styles.accTypeButton}
@@ -150,15 +111,14 @@ function RegisterForm() {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: theme.colours.gray0,
+    borderRadius: 20,
+    paddingTop: theme.spacing.spacing6
   },
   rowView: {
-    marginTop: theme.spacing.spacing3,
+    marginTop: theme.spacing.spacing4,
     flexDirection: 'row'
-  },
-  inputContainer: {
-    width: 150,
-    marginHorizontal: 5
   },
   pressedButton: {
     backgroundColor: colours.gray5
@@ -173,11 +133,11 @@ const styles = StyleSheet.create({
     color: colours.gray6
   },
   accTypeButton: {
-    marginHorizontal: theme.spacing.spacing1
+    marginHorizontal: theme.spacing.spacing2
   },
   createAccButton: {
     marginTop: theme.spacing.spacing5,
-    marginBottom: theme.spacing.spacing0,
+    marginBottom: theme.spacing.spacing5,
     width: 150
   }
 })
