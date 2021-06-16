@@ -10,7 +10,7 @@ function index() {
     <KeyboardView contentContainerStyle = {styles.container}>
       <Text style = {styles.header} h3>Reset your password</Text>
       <ForgotPasswordForm />
-    </KeyboardView >
+    </KeyboardView>
   )
 }
 

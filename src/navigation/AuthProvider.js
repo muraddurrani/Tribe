@@ -36,7 +36,7 @@ function AuthProvider({ children }) {
         }
       }}
     >
-      {children}
+      {children} 
     </AuthContext.Provider>
   )
 }
