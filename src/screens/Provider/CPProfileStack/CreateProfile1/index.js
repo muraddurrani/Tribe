@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   listView: {
     marginTop: 20,
     borderRadius: 10,
-    height: 360,
+    height: 320,
     padding: theme.spacing.spacing1,
     backgroundColor: theme.colours.gray0,
     borderColor: theme.colours.gray2,

@@ -38,6 +38,9 @@ function RegisterForm() {
             if (error.code == 'auth/email-already-in-use') {
               setErrorMsg("This email address is already in use.")
             }
+            else {
+              setErrorMsg(error.message)
+            }
             setFBError(true)
             setLoading(false)
           })

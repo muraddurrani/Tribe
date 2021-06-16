@@ -38,8 +38,7 @@ function LoginForm() {
               setErrorMsg("The password you entered is incorrect.")
             }
             setFBError(true)
-            }).
-          finally(() => setLoading(false))
+          })
       }}
       >
       {(formikProps) => (

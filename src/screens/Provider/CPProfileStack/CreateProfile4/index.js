@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 10,
     width: 340,
-    height: 360,
+    height: 320,
     padding: theme.spacing.spacing1,
     backgroundColor: theme.colours.gray0,
     borderColor: theme.colours.gray2,

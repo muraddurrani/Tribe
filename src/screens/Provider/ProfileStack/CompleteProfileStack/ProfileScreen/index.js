@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { View, StyleSheet, ScrollView, Image } from 'react-native'
-import { Avatar, Button, Icon, Text, Divider } from 'react-native-elements'
+import { Avatar, Icon, Text, Divider } from 'react-native-elements'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
-import { AuthContext } from '../../../../navigation/AuthProvider'
-import PrimaryButton from '../../../../components/atoms/PrimaryButton'
-import theme from '../../../../styles/theme'
+import { AuthContext } from '../../../../../navigation/AuthProvider'
+import PrimaryButton from '../../../../../components/atoms/PrimaryButton'
+import theme from '../../../../../styles/theme'
 
 function index({ navigation }) {
 
@@ -74,7 +74,7 @@ function index({ navigation }) {
       setServiceData(responses)
       setAvailData(availability)
   
-      if (data.images.length != 0) {
+      if (data.images) {
         setPhotos(data.images)
         setPhotoPresent(true)
       }
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: '100%',
     bottom: 0,
-    backgroundColor: 'rgba(250, 250, 250, 0.95)'
+    backgroundColor: 'rgba(247, 247, 247, 0.95)'
   },
   availView: {
     backgroundColor: theme.colours.gray1

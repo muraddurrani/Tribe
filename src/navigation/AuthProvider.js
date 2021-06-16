@@ -6,7 +6,7 @@ export const AuthContext = createContext({})
 
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
-  const [isSignUp, setIsSignUp] = useState(false)
+  const [isSignUp, setIsSignUp] = useState()
   const [accType, setAccType] = useState()
   
   return (
@@ -15,17 +15,22 @@ function AuthProvider({ children }) {
         setUser, 
         user,
         isSignUp,
+        setIsSignUp,
         accType,
+        setAccType,
 
         login: async (email, password) => {
+          setIsSignUp(false)
           await auth().signInWithEmailAndPassword(email, password)
         },
+
         signup: async (email, password, accType) => {
+          setIsSignUp(true)
+          setAccType(accType)
           await auth().createUserWithEmailAndPassword(email, password).
             then(() => firestore().collection(accType).doc(auth().currentUser.uid).set({email}))
-          setAccType(accType)
-          setIsSignUp(true)
         },
+
         logout: async () => {
           await auth().signOut().catch(error => console.log(error))
         }

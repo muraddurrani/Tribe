@@ -12,7 +12,7 @@ function TertiaryButton(props) {
       onPress = {props.onPress}
       containerStyle = {{...props.containerStyle}}
       buttonStyle = {{...styles.button, ...props.buttonStyle}}
-      titleStyle = {styles.title}
+      titleStyle = {{...styles.title, ...props.titleStyle}}
       title = {props.title}
       icon = {props.icon}
     />

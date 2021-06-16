@@ -11,7 +11,7 @@ import CreateProfile6 from '../../screens/Provider/CPProfileStack/CreateProfile6
 import CreateProfile7 from '../../screens/Provider/CPProfileStack/CreateProfile7/index'
 import CreateProfile8 from '../../screens/Provider/CPProfileStack/CreateProfile8/index'
 import CreateProfile9 from '../../screens/Provider/CPProfileStack/CreateProfile9/index'
-import ProviderHomeTab from '../../navigation/Provider/ProviderHomeTab'
+import CompleteProfileStack from '../../navigation/Provider/ProfileStack/CompleteProfileStack'
 
 const Stack = createStackNavigator()
 
@@ -28,7 +28,7 @@ function CPProfileStack() {
         <Stack.Screen name = "CP7" component = {CreateProfile7} />
         <Stack.Screen name = "CP8" component = {CreateProfile8} />
         <Stack.Screen name = "CP9" component = {CreateProfile9} />
-        <Stack.Screen name = 'HomeTab' component = {ProviderHomeTab} />
+        <Stack.Screen name = 'CompleteProfile' component = {CompleteProfileStack} />
       </Stack.Navigator>
   )
 }
