@@ -6,6 +6,7 @@ import TertiaryButton from '../../../components/atoms/TertiaryButton'
 import LoginForm from './LoginForm'
 import DetailsOverlay from './DetailsOverlay'
 import theme from '../../../styles/theme'
+import { Dimensions } from 'react-native'
 
 function index({ navigation }) {
 
@@ -48,7 +49,10 @@ function index({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    position: 'absolute'
   },
   imageContainer: {
     marginTop: 60,

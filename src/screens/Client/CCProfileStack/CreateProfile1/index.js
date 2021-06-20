@@ -34,6 +34,7 @@ function index({ navigation }) {
           validationSchema = {reviewSchema}
           onSubmit = {(values) => {
             firestore().collection('Clients').doc(auth().currentUser.uid).update({childName: values.name, childDOB: dob, childGender: gender})
+            firestore().collection('Users').doc(auth().currentUser.uid).update({profileComplete: true})
             navigation.navigate('CP2')
           }}
         >

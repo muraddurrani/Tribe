@@ -13,7 +13,7 @@ function index({ navigation }) {
 
   const [data, setData] = useState([])
   const [experience, setExperience] = useState({})
-  const [checked, setChecked] = useState([])
+  const [checked, setChecked] = useState()
   
   const fetchData = async () => {
     const dataDoc = await firestore().collection('ProviderAttributes').doc('6').get()

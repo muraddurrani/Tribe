@@ -3,9 +3,9 @@ import { StyleSheet } from 'react-native'
 import { Text } from 'react-native-elements'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
-import ScreenView from '../../../../../components/atoms/ScreenView'
-import PrimaryButton from '../../../../../components/atoms/PrimaryButton'
-import theme from '../../../../../styles/theme'
+import ScreenView from '../../../../components/atoms/ScreenView'
+import PrimaryButton from '../../../../components/atoms/PrimaryButton'
+import theme from '../../../../styles/theme'
 
 function index({ navigation }) {
 

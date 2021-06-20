@@ -11,13 +11,14 @@ import CreateProfile6 from '../../screens/Provider/CPProfileStack/CreateProfile6
 import CreateProfile7 from '../../screens/Provider/CPProfileStack/CreateProfile7/index'
 import CreateProfile8 from '../../screens/Provider/CPProfileStack/CreateProfile8/index'
 import CreateProfile9 from '../../screens/Provider/CPProfileStack/CreateProfile9/index'
-import CompleteProfileStack from '../../navigation/Provider/ProfileStack/CompleteProfileStack'
+import IncompleteProfileScreen from '../../screens/Provider/CPProfileStack/IncompleteProfileScreen/index'
+import ProviderHomeTab from './ProviderHomeTab'
 
 const Stack = createStackNavigator()
 
-function CPProfileStack() {
+function CPProfileStack(routes) {
   return (
-      <Stack.Navigator initialRouteName = "CP0" screenOptions = {{headerShown: false}}>
+      <Stack.Navigator initialRouteName = {routes.initialRouteName} screenOptions = {{headerShown: false}}>
         <Stack.Screen name = "CP0" component = {CreateProfile0} />
         <Stack.Screen name = "CP1" component = {CreateProfile1} />
         <Stack.Screen name = "CP2" component = {CreateProfile2} />
@@ -28,7 +29,8 @@ function CPProfileStack() {
         <Stack.Screen name = "CP7" component = {CreateProfile7} />
         <Stack.Screen name = "CP8" component = {CreateProfile8} />
         <Stack.Screen name = "CP9" component = {CreateProfile9} />
-        <Stack.Screen name = 'CompleteProfile' component = {CompleteProfileStack} />
+        <Stack.Screen name = 'IncompleteProfile' component = {IncompleteProfileScreen} />
+        <Stack.Screen name = 'Home' component = {ProviderHomeTab} />
       </Stack.Navigator>
   )
 }

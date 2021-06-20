@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import {Overlay, Text, Icon } from 'react-native-elements'
+import TertiaryButton from '../../../components/atoms/TertiaryButton'
 import theme from '../../../styles/theme'
 
 function DetailsOverlay(props) {
@@ -26,11 +27,11 @@ function DetailsOverlay(props) {
         Create an account and provide us with information regarding your service. Tribe will do the rest of the work and connect you with potential clients
         all over the country.
       </Text>
-      <Icon
-        containerStyle = {styles.icon}
-        name = "x"
-        color = {theme.colours.accent2}
+      <TertiaryButton
+        icon = {<Icon name = "x" color = {theme.colours.accent2}/>}
+        titleStyle = {{color: theme.colours.accent2}}
         onPress = {props.onPress}
+        containerStyle = {styles.icon}
       />
     </Overlay>
   )
@@ -53,7 +54,8 @@ const styles = StyleSheet.create({
     lineHeight: 20
   },
   icon: {
-    marginTop: theme.spacing.spacing4
+    marginTop: theme.spacing.spacing4,
+    alignSelf: 'center'
   }
 })
 

@@ -3,9 +3,9 @@ import { StyleSheet } from 'react-native'
 import { Text } from 'react-native-elements'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
-import ScreenView from '../../../../../components/atoms/ScreenView'
-import PrimaryButton from '../../../../../components/atoms/PrimaryButton'
-import theme from '../../../../../styles/theme'
+import ScreenView from '../../../../components/atoms/ScreenView'
+import PrimaryButton from '../../../../components/atoms/PrimaryButton'
+import theme from '../../../../styles/theme'
 import _ from 'lodash'
 
 function index({ navigation }) {
@@ -21,7 +21,7 @@ function index({ navigation }) {
   return (
     <ScreenView style = {styles.container}>
       <Text h2>Your profile is incomplete</Text>
-      <Text h4Style = {styles.text} h4>Please complete your profile so we can find the best clients for you!</Text>
+      <Text h4Style = {styles.text} h4>Please complete your profile so we can find the best service providers for your needs!</Text>
       <PrimaryButton
         loading = {loading}
         title = "Complete Profile"
@@ -47,7 +47,7 @@ function index({ navigation }) {
               navigation.navigate('CP6')
             } else if (!_.has(data, 'Responses.6')) {
               navigation.navigate('CP7')
-            } else {
+            } else if (!_.has(data, 'description')) {
               navigation.navigate('CP8')
             }
           })

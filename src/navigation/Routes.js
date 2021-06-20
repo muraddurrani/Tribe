@@ -14,13 +14,23 @@ function Routes() {
 
   const { user, setUser, isSignUp, setIsSignUp, accType, setAccType } = useContext(AuthContext)
 
-    const roleSettings = (isSignUp) => ({
-      Clients: isSignUp ? <CCProfileStack /> : <ClientHomeTab />,
-      Providers: isSignUp ? <CPProfileStack /> : <ProviderHomeTab />
+  const [profileComplete, setProfileComplete] = useState(null)
+
+    const roleSettings = (isSignUp, profileComplete) => ({
+      Clients: isSignUp
+        ? <CCProfileStack initialRouteName = "CP0"/>
+        : profileComplete
+          ? <ClientHomeTab />
+          : <CCProfileStack initialRouteName = "IncompleteProfile" />,
+      Providers: isSignUp
+        ? <CPProfileStack initialRouteName = "CP0"/>
+        : profileComplete
+          ? <ProviderHomeTab />
+          : <CPProfileStack initialRouteName = "IncompleteProfile" />
     })
 
     const checkLoaded = () => {
-      return (isSignUp != null && accType != null)
+      return (isSignUp != null && accType != null && profileComplete != null)
     }
 
     useEffect(() => {
@@ -33,8 +43,10 @@ function Routes() {
               if (doc.exists) {
                 setAccType(doc.data().accType)
                 setIsSignUp(false)
+                setProfileComplete(doc.data().profileComplete)
               } else {
-                firestore().collection('Users').doc(user.uid).set({accType})
+                firestore().collection('Users').doc(user.uid).set({accType, profileComplete: false})
+                setProfileComplete(false)
               }
             })
         }
@@ -48,7 +60,7 @@ function Routes() {
       {(
         user
           ? checkLoaded()
-            ? roleSettings(isSignUp)[accType]
+            ? roleSettings(isSignUp, profileComplete)[accType]
             : <LoadingScreen />
           : <AuthStack />
       )}

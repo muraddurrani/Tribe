@@ -4,9 +4,9 @@ import { Avatar, Icon, Text, Divider } from 'react-native-elements'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import Carousel, { Pagination } from 'react-native-snap-carousel'
-import { AuthContext } from '../../../../../navigation/AuthProvider'
-import PrimaryButton from '../../../../../components/atoms/PrimaryButton'
-import theme from '../../../../../styles/theme'
+import { AuthContext } from '../../../../navigation/AuthProvider'
+import PrimaryButton from '../../../../components/atoms/PrimaryButton'
+import theme from '../../../../styles/theme'
 
 function index({ navigation }) {
 
@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
   avatar: {
     alignSelf: 'center',
     backgroundColor: theme.colours.gray2,
+    marginBottom: theme.spacing.spacing2
   },
   carouselContainer: {
     height: 220,

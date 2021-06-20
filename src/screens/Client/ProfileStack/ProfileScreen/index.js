@@ -1,32 +1,26 @@
-import React, { useEffect, useState, useContext } from 'react'
-import auth from '@react-native-firebase/auth'
-import firestore from '@react-native-firebase/firestore'
+import React, { useState, useEffect, useContext } from 'react'
 import { StyleSheet, Image } from 'react-native'
 import { Avatar, Text, Divider } from 'react-native-elements'
-import { AuthContext } from '../../../../../navigation/AuthProvider'
-import ScreenView from '../../../../../components/atoms/ScreenView'
-import PrimaryButton from '../../../../../components/atoms/PrimaryButton'
-import theme from '../../../../../styles/theme'
+import { AuthContext } from '../../../../navigation/AuthProvider'
+import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
+import ScreenView from '../../../../components/atoms/ScreenView'
+import PrimaryButton from '../../../../components/atoms/PrimaryButton'
+import theme from '../../../../styles/theme'
 
 function index({ navigation }) {
 
   const [childName, setChildName] = useState('')
   const [age, setAge] = useState()
-  const [gender, setGender] = useState("")
+  const [gender, setGender] = useState('')
   const [location, setLocation] = useState()
   const [parentName, setParentName] = useState('')
   const [email, setEmail] = useState('')
-  const [number, setNumber] = useState('')
-  const [photo, setPhoto] = useState('')
+  const [number ,setNumber] = useState('')
+  const [photo, setPhoto] = useState()
   const [photoPresent, setPhotoPresent] = useState(false)
 
   const { logout } = useContext(AuthContext)
-
-  const getAge = (seconds) => {
-    const dobMS = seconds * 1000
-    const age = new Date() - dobMS
-    return Math.floor(age / (1000 * 60 * 60 * 24 * 365))
-  }
 
   const fetchData = async () => {
     const doc = await firestore().collection('Clients').doc(auth().currentUser.uid).get()
@@ -34,23 +28,29 @@ function index({ navigation }) {
     return data
   }
 
+  const getAge = (seconds) => {
+    const dobMS = seconds * 1000
+    const age = new Date() - dobMS
+    return Math.floor(age / (1000 * 60 * 60 * 24 * 365))
+  }
+
   useEffect(() => {
     fetchData().then((data) => {
-        setChildName(data.childName)
-        setGender(data.childGender)
-        setAge(getAge(data.childDOB.seconds))
-        setLocation(data.location)
-        setParentName(data.parentName)
-        setEmail(data.email)
-        setNumber(data.number)
-
-        if (data.image) {
-          setPhoto(data.image)
-          setPhotoPresent(true)
-        }
+      setChildName(data.childName)
+      setAge(getAge(data.childDOB.seconds))
+      setGender(data.childGender)
+      setLocation(data.location)
+      setParentName(data.parentName)
+      setEmail(data.email)
+      setNumber(data.number)
+      
+      if (data.image) {
+        setPhoto(data.image)
+        setPhotoPresent(true)
+      }
     })
   }, [])
-  
+
   return (
     <ScreenView style = {styles.container}>
       <Text h2Style = {styles.header} h2>Your Profile</Text>

@@ -15,6 +15,7 @@ function index({ navigation }) {
 
   const submit = () => {
     firestore().collection('Providers').doc(auth().currentUser.uid).update({description})
+    firestore().collection('Users').doc(auth().currentUser.uid).update({profileComplete: true})
   }
 
   return (

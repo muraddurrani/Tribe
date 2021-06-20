@@ -31,7 +31,7 @@ function index({ navigation }) {
       return upload
     })
     const uploads = await Promise.all(promises)
-    navigation.navigate('CompleteProfile')
+    navigation.navigate('Home')
   }
 
   const render = (source) => (
