@@ -3,12 +3,13 @@ import { StyleSheet, View } from 'react-native'
 import { Input, Icon } from 'react-native-elements'
 import { Formik } from 'formik'
 import * as yup from 'yup'
-import SecondaryButton from '../../../components/atoms/SecondaryButton'
-import PrimaryButton from '../../../components/atoms/PrimaryButton'
 import auth from '@react-native-firebase/auth'
+
+import { useNavigation } from '@react-navigation/native'
+import PrimaryButton from '../../../components/buttons/PrimaryButton'
+import SecondaryButton from '../../../components/buttons/SecondaryButton'
 import ErrorOverlay from '../LoginScreen/ErrorOverlay'
-import theme from '../../../styles/theme'
-import { useNavigation } from '@react-navigation/native';
+
 
 const reviewSchema = yup.object({
   email: yup.string().required('Please provide your email address').email('Please provide a valid email')
@@ -17,7 +18,7 @@ const reviewSchema = yup.object({
 
 
 
-function ResetPasswordForm(props) {
+function ResetPasswordForm() {
 
   const [fbError, setFBError] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
@@ -48,8 +49,9 @@ function ResetPasswordForm(props) {
       }}
       >
       {(formikProps) => (
-        <View style = {styles.container}>
+        <View>
           <Input
+            containerStyle = {styles.input}
             label = "Email Address"
             placeholder = "e.g. email@address.com"
             onChangeText = {formikProps.handleChange('email')}
@@ -59,15 +61,16 @@ function ResetPasswordForm(props) {
             onBlur = {formikProps.handleBlur('email')}
             errorMessage = {formikProps.touched.email && formikProps.errors.email}
           />
-          <View style = {styles.buttonsView} >
+          <View style = {styles.rowView} >
             <SecondaryButton
-              containerStyle = {styles.button}
-              buttonStyle = {styles.cancelButton}
+              containerStyle = {styles.buttonContainer}
+              buttonStyle = {styles.button}
                title = "Cancel"
                onPress = {() => navigation.goBack()}
             />
             <PrimaryButton
-              containerStyle = {styles.button}
+              containerStyle = {styles.buttonContainer}
+              buttonStyle = {styles.button}
               loading = {loading}
               title = {"Reset"}
               onPress = {formikProps.handleSubmit}
@@ -81,25 +84,19 @@ function ResetPasswordForm(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginLeft: theme.spacing.spacing3,
-    marginRight: theme.spacing.spacing3,
-    paddingVertical: theme.spacing.spacing4,
-    paddingHorizontal: theme.spacing.spacing3,
-    backgroundColor: theme.colours.gray1,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+  input: {
+    marginTop: 25,
   },
-  buttonsView: {
+  rowView: {
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    alignSelf: 'flex-end'
+  },
+  buttonContainer: {
+    marginHorizontal: 5,
+    width: 110
   },
   button: {
-    marginTop: theme.spacing.spacing1,
-    marginRight: theme.spacing.spacing1
-  },
-  cancelButton: {
-    backgroundColor: theme.colours.gray1
+    width: 110
   }
 })
 

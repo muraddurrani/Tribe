@@ -1,152 +1,112 @@
-import React, { useState, useEffect } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
-import { Text, CheckBox } from 'react-native-elements'
-import ScreenView from '../../../../components/atoms/ScreenView'
-import PrimaryButton from '../../../../components/atoms/PrimaryButton'
-import firestore from '@react-native-firebase/firestore'
+import React, { useState, useCallback } from 'react'
+import { Image, Keyboard, StyleSheet } from 'react-native'
+import { Text, Input, Icon } from 'react-native-elements'
+import { useFocusEffect } from '@react-navigation/native'
 import _ from 'lodash'
-import theme from '../../../../styles/theme'
 
-function index({ navigation, route }) {
+import { fetchProviderAttribute } from '../../../../utilities/helper'
+import KeyboardGradientView from '../../../../components/views/KeyboardGradientView'
+import SingleChoiceChecklist from '../../../../components/molecules/SingleChoiceChecklist'
+import Card from '../../../../components/atoms/Card'
+import PrimaryButton from '../../../../components/buttons/PrimaryButton'
 
-  let query = route.params
 
+function index({ navigation }) {
+
+  const [masterData, setMasterData] = useState([])
   const [data, setData] = useState([])
-  const [locationData, setLocationData] = useState([])
-  const [choices, setChoices] = useState({})
-  const [checked, setChecked] = useState([])
-  const [expand, setExpand] = useState(false)
-  const [height, setHeight] = useState(190)
+  const [search, setSearch] = useState('')
+  const [choice, setChoice] = useState(null)
 
-  const fetchData = async () => {
-    const dataDoc = await firestore().collection('ProviderAttributes').doc('2').get()
-    const dataMap = dataDoc.get('AnswerSet')
-    return Object.keys(dataMap).map(key => {
-      return {id: key, name: dataMap[key]}
-    })
+  let query = []
+
+  const onCheck = (item) => {
+    setChoice({[item.id]: item.name})
   }
 
-  const handleCheck = (item) => {
-    if (_.has(choices, item.id)) {
-      const {[item.id]: deleted, ...rest} = choices
-      setChoices(rest)
-    } else {
-      setChoices({...choices, ...{[item.id]: item.name}})
-    }
-    setChecked(checked.map((bool, index) => index == item.id ? !bool : bool))
+  const filterSearch = (text) => {
+    const value = text.toLowerCase()
+    const filtered = _.filter(masterData, item => item.name.includes(value))
+    setData(filtered)
+    setSearch(text)
   }
 
-  const render = ({item}) => (
-    <CheckBox
-      containerStyle = {styles.checkbox}
-      title = {item.name}
-      checked = {checked[item.id]}
-      checkedColor = {theme.colours.primary}
-      onPress = {() => handleCheck(item)}
-      />
-  )
-
-  const expandList = () => {
-    if (expand) {
-      setExpand(false)
-      setHeight(190)
-    } else {
-      setExpand(true)
-      setHeight(360)
-    }
-  }
-
-  async function filter(arr, callback) {
-    const fail = Symbol()
-    return (await Promise.all(arr.map(async item => (await callback(item)) ? item : fail))).filter(i=>i!==fail)
-  }
-
-  const submit = async () => {
-    query.push(choices)
-    console.log(query)
+  const submit = () => {
+    query.push(choice)
     navigation.navigate('Search3', query)
   }
 
-  useEffect(() => {
-    fetchData().then((data) => {
-      setChecked(new Array(data.length).fill(false))
-      const initData = data.splice(0, 2)
-      setData(initData)
-      setLocationData(data)
-    })
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      fetchProviderAttribute('0').then((data) => {
+        setData(data)
+        setMasterData(data)
+      })
+
+      return () => {
+        setSearch('')
+        setChoice(null)
+      }
+    }, [])
+  )
 
   return (
-    <ScreenView style = {styles.container}>
-      <Text h1Style = {styles.header} h1>Find a service</Text>
-      <Text h4>Which venues/locations are suitable for you?</Text>
-      <Text>(Select all that apply)</Text>
-      <View style = {{...styles.listView, height: height}} >
-        <View>
-          <FlatList
-            data = {data}
-            renderItem = {render}
-            keyExtractor = {item => item.id}
-          />
-        </View>
-        <CheckBox
-          containerStyle = {styles.checkbox}
-          title={<Text style={{flex:1, marginLeft: 34}} h4>Venue Based</Text>}
-          iconRight = {true}
-          uncheckedIcon = 'chevron-right'
-          checkedIcon = 'chevron-down'
-          checkedColor = {theme.colours.primary}
-          size = {16}
-          right = {true}
-          checked = {expand}
-          onPress = {() => {
-            expandList()
-          }}
+    <KeyboardGradientView style = {styles.container}>
+      <Image source = {require('../../../../assets/images/Logo_Icon_White.png')} style = {styles.image} />
+      <Card style = {styles.card}>
+        <Text h4>Which of the following best describes your service?</Text>
+        <Input
+          containerStyle = {styles.searchBar}
+          value = {search}
+          placeholder = "Search..."
+          onChangeText = {(text) => filterSearch(text)} 
+          leftIcon = {<Icon name = "search"/>}
+          rightIcon = {<Icon name = "x" onPress = {() => {
+            Keyboard.dismiss()
+            filterSearch('')
+          }}/>}
         />
-        {expand && (
-          <FlatList
-            data = {locationData}
-            renderItem = {render}
-            keyExtractor = {item => item.id}
+          <SingleChoiceChecklist
+            height = {280}
+            width = {'95%'}
+            data = {data}
+            onCheck = {onCheck}
           />
-        )}
-      </View>
-      <PrimaryButton
-        title = "Next"
-        disabled = {Object.keys(choices).length === 0}
-        onPress = {() => {
-          submit()
-        }}
-        containerStyle = {styles.nextButton}
-      />
-    </ScreenView>
+          <PrimaryButton
+            title = "Next"
+            disabled = {!choice}
+            containerStyle = {styles.button}
+            onPress = {() => submit()}
+          />
+      </Card>
+    </KeyboardGradientView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colours.gray1,
     alignItems: 'center'
   },
-  header: {
-    marginVertical: theme.spacing.spacing6
+  image: {
+    height: 40,
+    width: 40,
+    position: 'absolute',
+    top: 15,
+    right: 20
   },
-  listView: {
+  card: {
+    paddingTop: 40,
+    paddingBottom: 30,
+    paddingHorizontal: 15,
+    marginTop: '20%',
+    width: '95%',
+    alignItems: 'center'
+  },
+  searchBar: {
     marginTop: 20,
-    borderRadius: 10,
-    width: 340,
-    padding: theme.spacing.spacing1,
-    backgroundColor: theme.colours.gray0,
-    borderColor: theme.colours.gray2,
-    borderWidth: 1
+    height: 60
   },
-  checkbox: {
-    backgroundColor: 'transparent',
-    borderColor: 'transparent',
-    borderBottomColor: theme.colours.gray1,
-    borderWidth: 2
-  },
-  nextButton: {
+  button: {
     marginTop: 30
   }
 })

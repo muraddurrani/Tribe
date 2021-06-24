@@ -1,215 +1,82 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { View, StyleSheet, ScrollView, Image } from 'react-native'
-import { Avatar, Icon, Text, Divider } from 'react-native-elements'
-import auth from '@react-native-firebase/auth'
-import firestore from '@react-native-firebase/firestore'
-import Carousel, { Pagination } from 'react-native-snap-carousel'
+import React, { useContext, useState, useEffect } from 'react'
+import { View, ScrollView, StyleSheet } from 'react-native'
+import { Text } from 'react-native-elements'
+
 import { AuthContext } from '../../../../navigation/AuthProvider'
-import PrimaryButton from '../../../../components/atoms/PrimaryButton'
-import theme from '../../../../styles/theme'
+import GradientScreenView from '../../../../components/views/GradientScreenView'
+import PrimaryButton from '../../../../components/buttons/PrimaryButton'
+import ProfilePicture from '../../../../components/molecules/ProfilePicture'
+import Header from '../../../../components/molecules/Header'
+import Section from '../../../../components/molecules/Section'
 
-function index({ navigation }) {
+import { mapObjectToSentence } from '../../../../utilities/helper'
+import colours from '../../../../styles/colours'
 
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [number, setNumber] = useState('')
-  const [photos, setPhotos] = useState([])
-  const [serviceData, setServiceData] = useState([])
-  const [availData, setAvailData] = useState([])
-  const [description, setDescription] = useState('')
-  const [photoPresent, setPhotoPresent] = useState(false)
-  const [index, setIndex] = useState(0)
-  
-  const [expand, setExpand] = useState(false)
-  const { logout } = useContext(AuthContext)
+function index() {
 
-  const fetchData = async () => {
-    const doc = await firestore().collection('Providers').doc(auth().currentUser.uid).get()
-    const data = doc.data()
-    return data
-  }
-
-  const renderImages = (source) => (
-    <Image
-      style = {styles.image}
-      source = {{uri: source.item}}
-    />
-  )
-
-  const renderService = (item, index) => (
-    <Text style = {styles.text} key = {index}>
-      {item.map((str, i) => {
-        if (i === item.length - 1) {
-          return str[0].toUpperCase() + str.substring(1)
-        } else {
-          return str[0].toUpperCase() + str.substring(1) + ', '
-        }
-      })}
-    </Text>
-  )
-
-  const renderAvail = (item, index) => (
-    <Text style = {styles.text} key = {index}>
-      {item.map((str, i) => {
-        if (i === item.length - 1) {
-          return str[0].toUpperCase() + str.substring(1)
-        } else {
-          return str[0].toUpperCase() + str.substring(1) + ', '
-        }
-      })
-      }
-    </Text>
-  )
+  const { userData, logout } = useContext(AuthContext)
+  const [serviceInfo, setServiceInfo] = useState({})
+  const [availabilityInfo, setAvailabilityInfo] = useState({})
 
   useEffect(() => {
-    fetchData().then((data) => {
-      setName(data.name)
-      setEmail(data.email)
-      setNumber(data.number)
-      setDescription(data.description)
-      
-      var responses = data.Responses
-      responses = Object.values(responses).map(response => Object.values(response))
-      const availability = responses.splice(3, 2)
-      setServiceData(responses)
-      setAvailData(availability)
-  
-      if (data.images) {
-        setPhotos(data.images)
-        setPhotoPresent(true)
-      }
-    })
+    setServiceInfo({'0': userData.Responses[0], '1': userData.Responses[1], '5': userData.Responses[5]})
+    setAvailabilityInfo({'2': userData.Responses[2], '3': userData.Responses[3], '4': userData.Responses[4]})
   }, [])
   
   return (
-    <ScrollView style = {styles.container}>
-      <Text h2Style = {styles.header} h2>Your Profile</Text>
-      {
-        !photoPresent && (
-          <Avatar
-            containerStyle = {styles.avatar}
-            icon = {{name: 'user', color: theme.colours.gray5, type: 'feather'}}
-            size = {220}
+    <ScrollView>
+      <GradientScreenView>
+        <Header title = "My Profile"/>
+        <View style = {styles.card}>
+          <ProfilePicture photo = {userData.profilePhoto} style = {styles.profile}/>
+          <Text h4Style = {styles.name} h4>{userData.fullName}</Text>
+          <Text>{userData.serviceDescription}</Text>
+          <Section title = "My Service">
+            {Object.values(serviceInfo).map((value, index) => (
+              <Text style = {styles.text} key = {index}>{mapObjectToSentence(value)}</Text>
+            ))}
+          </Section>
+          <Section title = "My Availability">
+            {Object.values(availabilityInfo).map((value, index) => (
+              <Text style = {styles.text} key = {index}>{mapObjectToSentence(value)}</Text>
+            ))}
+          </Section>
+          <Section title = "My Particulars">
+            <Text style = {styles.text}>Email: {userData.email}</Text>
+            <Text style = {styles.text}>Mobile number: {userData.phoneNumber}</Text>
+          </Section>
+          <PrimaryButton
+            title = "Log Out"
+            containerStyle = {styles.logoutButton}
+            buttonStyle = {styles.logoutButton}
+            onPress = {() => logout()}
           />
-        )
-      }
-      {
-        photoPresent && (
-          <View style = {{alignItems: 'center'}}>
-            <View style = {styles.carouselContainer}>
-              <Carousel
-                data = {photos}
-                renderItem = {renderImages}
-                sliderWidth = {240}
-                itemWidth = {220}
-                contentContainerStyle = {{padding: 10}}
-                onSnapToItem = {index => setIndex(index)}
-              />
-            </View>
-            <Pagination
-              activeDotIndex = {index}
-              dotsLength = {photos.length}
-              containerStyle = {{paddingVertical: theme.spacing.spacing3}}
-            />
-          </View>
-        )
-      }
-      <Text h3>{name}</Text>
-      <View style = {styles.descriptionView}>
-        <Text style = {styles.text}>{description}</Text>
-      </View>
-      <View style = {expand ? styles.expandedView: styles.collapsedView}>
-        <Divider style = {styles.divider} />
-        <Text style = {styles.label}>Your service</Text>
-        {
-          serviceData.map(renderService)
-        }
-        <Icon name = {expand ? 'chevron-up' : 'chevron-down'} color = {theme.colours.gray5} containerStyle = {styles.expandIcon} onPress = {() => setExpand(!expand)}/>
-      </View>
-      <View style = {styles.availView}>
-        <Divider style = {styles.divider} />
-        <Text style = {styles.label}>Your availability</Text>
-        {
-          availData.map(renderAvail)
-        }
-      </View>
-      <View>
-        <Divider style = {styles.divider} />
-        <Text style = {styles.label}>Your particulars</Text>
-          <Text style = {styles.text}>Your email: {email}</Text>
-          <Text style = {styles.text}>Your number: {number}</Text>
-      </View>
-      <PrimaryButton
-        title = "Log Out"
-        onPress = {() => logout()}
-        containerStyle = {styles.logoutButtonContainer}
-        buttonStyle = {styles.logoutButton}
-      />
+        </View>
+      </GradientScreenView>
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: theme.colours.gray1,
-    padding: theme.spacing.spacing3
+  card: {
+    flex: 1,
+    backgroundColor: colours.gray0,
+    borderTopLeftRadius: 30,
+    paddingHorizontal: 25
   },
-  header: {
-    marginBottom: theme.spacing.spacing2
+  profile: {
+    marginVertical: 20
   },
-  avatar: {
-    alignSelf: 'center',
-    backgroundColor: theme.colours.gray2,
-    marginBottom: theme.spacing.spacing2
-  },
-  carouselContainer: {
-    height: 220,
-    width: 240,
-  },
-  image: {
-    height: 220,
-    width: 220,
-  },
-  divider: {
-    height: 2,
-    backgroundColor: theme.colours.gray2,
-    marginHorizontal: theme.spacing.spacing5,
-    marginTop: theme.spacing.spacing0,
-    marginBottom: theme.spacing.spacing4
-  },
-  label: {
-    fontSize: 16,
-    color: theme.colours.gray5,
-    marginBottom: theme.spacing.spacing1
+  name: {
+    marginBottom: 10
   },
   text: {
-    lineHeight: 18,
-    marginBottom: theme.spacing.spacing1
-  },
-  descriptionView: {
-    marginTop: theme.spacing.spacing2
-  },
-  collapsedView: {
-    height: 150
-  },
-  expandedView: {
-
-  },
-  expandIcon: {
-    position: 'absolute',
-    width: '100%',
-    bottom: 0,
-    backgroundColor: 'rgba(247, 247, 247, 0.95)'
-  },
-  availView: {
-    backgroundColor: theme.colours.gray1
-  },
-  logoutButtonContainer: {
-    marginVertical: theme.spacing.spacing5,
-    alignSelf: 'center'
+    marginBottom: 5
   },
   logoutButton: {
-    backgroundColor: theme.colours.primary
+    marginTop: 30,
+    marginBottom: 20,
+    alignSelf: 'center'
   }
 })
 

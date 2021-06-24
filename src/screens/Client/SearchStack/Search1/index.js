@@ -1,111 +1,57 @@
-import React, { useState, useEffect } from 'react'
-import { FlatList, StyleSheet, View } from 'react-native'
-import { Text, CheckBox } from 'react-native-elements'
-import ScreenView from '../../../../components/atoms/ScreenView'
-import PrimaryButton from '../../../../components/atoms/PrimaryButton'
-import firestore from '@react-native-firebase/firestore'
-import _ from 'lodash'
-import theme from '../../../../styles/theme'
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
+import { Icon, Text } from 'react-native-elements'
 
-function index({ navigation, route }) {
+import PrimaryButton from '../../../../components/buttons/PrimaryButton'
+import TertiaryButton from '../../../../components/buttons/TertiaryButton'
+import GradientScreenView from '../../../../components/views/GradientScreenView'
 
-  let query = route.params
+import colours from '../../../../styles/colours'
 
-  const [data, setData] = useState([])
-  const [choices, setChoices] = useState({})
-  const [checked, setChecked] = useState([])
-  
-  const fetchData = async () => {
-    const dataDoc = await firestore().collection('ProviderAttributes').doc('1').get()
-    const dataMap = dataDoc.get('AnswerSet')
-    return Object.keys(dataMap).map(key => {
-      return {id: key, name: dataMap[key]}
-    })
-  }
-
-  const handleCheck = (item) => {
-    if (_.has(choices, item.id)) {
-      const {[item.id]: deleted, ...rest} = choices
-      setChoices(rest)
-    } else {
-      setChoices({...choices, ...{[item.id]: item.name}})
-    }
-    setChecked(checked.map((bool, index) => index == item.id ? !bool : bool))
-  }
-
-  const render = ({item}) => (
-    <CheckBox
-      containerStyle = {styles.checkbox}
-      title = {item.name}
-      checked = {checked[item.id]}
-      checkedColor = {theme.colours.primary}
-      onPress = {() => handleCheck(item)}
-      />
-  )
-
-  const submit = () => {
-    query.push(choices)
-    console.log(query)
-    navigation.navigate('Search2', query)
-  }
-
-  useEffect(() => {
-    fetchData().then((data) => {
-      setChecked(new Array(data.length).fill(false))
-      setData(data)
-    })
-  }, [])
-
+function index({ navigation }) {
   return (
-    <ScreenView style = {styles.container}>
-      <Text h1Style = {styles.header} h1>Find a service</Text>
-      <Text h4>Are you looking for individual sessions or group sessions?</Text>
-      <Text>(Select all that apply)</Text>
-      <View style = {styles.listView}>
-        <FlatList
-          data = {data}
-          renderItem = {render}
-          keyExtractor = {item => item.id}
-        />
+    <GradientScreenView style = {styles.container}>
+      <View style = {styles.iconContainer}>
+        <Icon name = 'search' size = {120} color = {'rgba(253, 254, 253, 0.9)'} containerStyle = {styles.icon}/>
       </View>
+      <Text h1>Looking for a service?</Text>
+      <Text h4Style = {styles.text} h4>Answer a few short questions and choose from a selection of professionals best suited to your needs!</Text>
       <PrimaryButton
-        title = "Next"
-        disabled = {Object.keys(choices).length === 0}
-        onPress = {() => {
-          submit()
-        }}
-        containerStyle = {styles.nextButton}
+        title = "Begin Search"
+        containerStyle = {styles.button}
+        buttonStyle = {styles.button}
+        onPress = {() => navigation.navigate('Search2')}
       />
-    </ScreenView>
+    </GradientScreenView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colours.gray1,
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingHorizontal: 30
   },
-  header: {
-    marginVertical: theme.spacing.spacing6
+  iconContainer: {
+    padding: 30,
+    backgroundColor: 'rgba(118, 223, 194, 0.6)',
+    width: 220,
+    borderRadius: 110,
+    marginTop: '25%',
+    marginBottom: 40
   },
-  listView: {
-    marginTop: 20,
-    borderRadius: 10,
-    width: 340,
-    height: 140,
-    padding: theme.spacing.spacing1,
-    backgroundColor: theme.colours.gray0,
-    borderColor: theme.colours.gray2,
-    borderWidth: 1
+  icon: {
+    padding: 20,
+    width: 160,
+    borderRadius: 80,
+    backgroundColor: 'rgba(172, 240, 221, 0.6)'
   },
-  checkbox: {
-    backgroundColor: 'transparent',
-    borderColor: 'transparent',
-    borderBottomColor: theme.colours.gray1,
-    borderWidth: 2
+  text: {
+    color: colours.gray0,
+    marginTop: 15,
+    marginBottom: 50
   },
-  nextButton: {
-    marginTop: 30
+  button: {
+    width: 160
   }
 })
 

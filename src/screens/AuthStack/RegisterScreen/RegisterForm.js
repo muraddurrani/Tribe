@@ -3,12 +3,13 @@ import { View, StyleSheet } from 'react-native'
 import { Input, Icon, Text } from 'react-native-elements'
 import { Formik } from 'formik'
 import * as yup from 'yup'
-import PrimaryButton from '../../../components/atoms/PrimaryButton'
-import ErrorOverlay from '../LoginScreen/ErrorOverlay'
-import SecondaryButton from '../../../components/atoms/SecondaryButton'
-import colours from '../../../styles/colours'
+
 import { AuthContext } from '../../../navigation/AuthProvider'
-import theme from '../../../styles/theme'
+import PrimaryButton from '../../../components/buttons/PrimaryButton'
+import SecondaryButton from '../../../components/buttons/SecondaryButton'
+import ErrorOverlay from '../LoginScreen/ErrorOverlay'
+
+import colours from '../../../styles/colours'
 
 const reviewSchema = yup.object({
   email: yup.string().required('Please provide your email address').email('Please provide a valid email'),
@@ -49,6 +50,7 @@ function RegisterForm() {
       {(formikProps) => (
         <View style = {styles.container}>
             <Input
+              containerStyle = {styles.emailInput}
               label = "Email Address"
               placeholder = "e.g. email@address.com"
               onChangeText = {formikProps.handleChange('email')}
@@ -59,8 +61,9 @@ function RegisterForm() {
               errorMessage = {formikProps.touched.email && formikProps.errors.email}
             />
             <Input
+              containerStyle = {styles.passwordInput}
               label = "Password"
-              placeholder = "Enter a password"
+              placeholder = "Enter password"
               onChangeText = {formikProps.handleChange('password')}
               value = {formikProps.values.password}
               leftIcon = {<Icon name = "key"/>}
@@ -69,10 +72,10 @@ function RegisterForm() {
               secureTextEntry = {!showPass}
               errorMessage = {formikProps.touched.password && formikProps.errors.password}
             />
-              <Text style = {{marginTop: 30}}>I am joining as a:</Text>
+              <Text style = {styles.text}>I am joining as a</Text>
               <View style = {styles.rowView}>
                 <SecondaryButton
-                  containerStyle = {styles.accTypeButton}
+                  containerStyle = {styles.selectAccountButton}
                   buttonStyle = {clientPressed ? styles.pressedButton : styles.unpressedButton}
                   titleStyle = {clientPressed ? styles.pressedTitle : styles.unpressedTitle}
                   title = "Parent"
@@ -84,7 +87,7 @@ function RegisterForm() {
                   }}
                 />
                 <SecondaryButton
-                  containerStyle = {styles.accTypeButton}
+                  containerStyle = {styles.selectAccountButton}
                   buttonStyle = {providerPressed ? styles.pressedButton : styles.unpressedButton}
                   titleStyle = {providerPressed ? styles.pressedTitle : styles.unpressedTitle}
                   title = "Professional"
@@ -98,7 +101,8 @@ function RegisterForm() {
               </View>
               <PrimaryButton
                 title = "Create Account"
-                containerStyle = {styles.createAccButton}
+                containerStyle = {styles.signUpButton}
+                buttonStyle = {styles.signUpButton}
                 disabled = {!canSubmit}
                 loading = {loading}
                 onPress = {formikProps.handleSubmit}
@@ -114,34 +118,39 @@ function RegisterForm() {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
-    backgroundColor: theme.colours.gray0,
-    borderRadius: 20,
-    paddingTop: theme.spacing.spacing6
+    alignItems: 'center'
+  },
+  emailInput: {
+    marginBottom: 15
+  },
+  passwordInput: {
+    marginBottom: 20
+  },
+  text: {
+    alignSelf: 'center'
   },
   rowView: {
-    marginTop: theme.spacing.spacing4,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginTop: 10,
+    marginBottom: 40
   },
-  pressedButton: {
-    backgroundColor: colours.gray5
+  selectAccountButton: {
+    marginHorizontal: 15
   },
   unpressedButton: {
-    backgroundColor: colours.gray0
+    borderColor: colours.gray5
   },
-  pressedTitle: {
-    color: colours.gray0
+  pressedButton: {
+    borderColor: colours.accent1
   },
   unpressedTitle: {
-    color: colours.gray6
+    color: colours.gray5
   },
-  accTypeButton: {
-    marginHorizontal: theme.spacing.spacing2
+  pressedTitle: {
+    color: colours.accent1
   },
-  createAccButton: {
-    marginTop: theme.spacing.spacing5,
-    marginBottom: theme.spacing.spacing5,
-    width: 150
+  signUpButton: {
+    width: 160
   }
 })
 
