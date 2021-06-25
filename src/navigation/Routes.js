@@ -1,112 +1,96 @@
-import React, {useContext, useState, useEffect} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
-import AuthStack from './AuthStack';
-import {AuthContext} from './AuthProvider';
+import React, {useContext, useState, useEffect} from 'react'
+import {NavigationContainer} from '@react-navigation/native'
+import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
 
-import CreateProviderProfileStack from './Provider/CreateProviderProfileStack';
-import CreateClientProfileStack from './Client/CreateClientProfileStack';
-import ClientHomeTab from './Client/ClientHomeTab';
-import ProviderHomeTab from './Provider/ProviderHomeTab';
-import LoadingScreen from '../screens/AuthStack/LoadingScreen/index';
+import { AuthContext } from './AuthProvider'
+import AuthStack from './AuthStack'
+import CreateProviderProfileStack from './Provider/CreateProviderProfileStack'
+import CreateClientProfileStack from './Client/CreateClientProfileStack'
+import ClientHomeTab from './Client/ClientHomeTab'
+import ProviderHomeTab from './Provider/ProviderHomeTab'
+import LoadingScreen from '../screens/AuthStack/LoadingScreen/index'
 
 function Routes() {
-  const {user, setUser, userData, setUserData, accType, setAccType} =
-    useContext(AuthContext);
-  const [isSignUp, setIsSignUp] = useState(null);
+  const {user, setUser, userData, setUserData } = useContext(AuthContext)
 
-  const [profileComplete, setProfileComplete] = useState(null);
+  const [userDocument, setUserDocument] = useState(null)
+  const [newAccount, setNewAccount] = useState(null)
+  const [accountType, setAccountType] = useState(null)
+  const [profileComplete, setProfileComplete] = useState(null)
 
   //Renders the appropriate navigator for the user based on their account type, whether they have just signed up, and if they have completed their profile
-  const roleSettings = (isSignUp, profileComplete) => ({
-    Clients: isSignUp ? (
+  const roleSettings = (newAccount, profileComplete) => ({
+    Clients: newAccount ? (
       <CreateClientProfileStack initialRouteName="CP0" />
     ) : profileComplete ? (
       <ClientHomeTab />
     ) : (
       <CreateClientProfileStack initialRouteName="IncompleteProfile" />
     ),
-    Providers: isSignUp ? (
+    Providers: newAccount ? (
       <CreateProviderProfileStack initialRouteName="CP0" />
     ) : profileComplete ? (
       <ProviderHomeTab />
     ) : (
       <CreateProviderProfileStack initialRouteName="IncompleteProfile" />
     ),
-  });
+  })
 
-  // Checks that all necessary date to route the user has loaded
-  const checkLoaded = () => {
-    return (
-      isSignUp != null &&
-      accType != null &&
-      profileComplete != null &&
-      userData != null
-    );
-  };
+  //Returns whether all necessary user data has loaded or not.
+  function checkUserLoaded(newAccount, accountType, profileComplete, userData) {
+    return (newAccount != null && accountType != null && profileComplete != null && userData != null)
+  }
 
-  //Sets account type of new user in Firestore for future log-ins
-  const handleSignUp = async user => {
-    setIsSignUp(true);
-    if (accType != null) {
-      await firestore()
-        .collection('Users')
-        .doc(user.uid)
-        .set({accType, profileComplete: false});
-      setProfileComplete(false);
-      firestore()
-        .collection(accType)
-        .doc(user.uid)
-        .onSnapshot(doc => setUserData(doc.data()));
-    }
-  };
-
-  //Fetches necessary user data for routing upon login
-  const handleLogin = async (user, data) => {
-    setIsSignUp(false);
-    firestore()
-      .collection(data.accType)
-      .doc(user.uid)
-      .onSnapshot(doc => setUserData(doc.data()));
-    setAccType(data.accType);
-    setProfileComplete(data.profileComplete);
-  };
-
+  //Listens for authentication state change and updates the user accordingly.
   useEffect(() => {
-    auth().onAuthStateChanged(user => {
-      setUser(user);
+    const subscriber = auth().onAuthStateChanged(user => {
+      setUser(user)
 
-      if (user == null) {
-        setProfileComplete(null)
-        setUserData(null)
-        setAccType(null)
-        setIsSignUp(null)
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      firestore()
-        .collection('Users')
-        .doc(user.uid)
-        .get()
-        .then(doc => {
+      if (user) {
+        console.log('IN Here')
+        const unsubscribe = firestore().collection('Users').doc(user.uid).onSnapshot(doc => {
           if (doc.exists) {
-            handleLogin(user, doc.data());
-          } else {
-            handleSignUp(user);
+            console.log('doc exists: ' + doc)
+            setUserDocument(doc)
+            unsubscribe()
           }
-        });
+        })
+      } else {
+        setUserDocument(null)
+        setNewAccount(null)
+        setAccountType(null)
+        setProfileComplete(null)
+      }
+
+    })
+
+    return subscriber
+  }, [])
+
+  /**
+   * If the user document has been fetched from firestore and exists, updates state with necessary information for routing.
+   */
+  useEffect(() => {
+    if (userDocument != null) {
+      const data = userDocument.data()
+      setNewAccount(data.newAccount)
+      setProfileComplete(data.profileComplete)
+      setAccountType(data.accType)
+
+      if ((data.newAccount) == true) {
+        firestore().collection('Users').doc(user.uid).update({ newAccount: false })
+      }
+  
+      firestore().collection(data.accType).doc(user.uid).onSnapshot(doc => setUserData(doc.data()))
     }
-  }, [accType, user]);
+  }, [userDocument])
 
   return (
     <NavigationContainer>
       {user ? (
-        checkLoaded() ? (
-          roleSettings(isSignUp, profileComplete)[accType]
+        checkUserLoaded(newAccount, accountType, profileComplete, userData) ? (
+          roleSettings(newAccount, profileComplete)[accountType]
         ) : (
           <LoadingScreen />
         )
