@@ -78,10 +78,10 @@ function Routes() {
       setUser(user);
 
       if (user == null) {
-        setProfileComplete(null);
-        setUserData(null);
-        setAccType(null);
-        setIsSignUp(null);
+        setProfileComplete(null)
+        setUserData(null)
+        setAccType(null)
+        setIsSignUp(null)
       }
     });
   }, []);
