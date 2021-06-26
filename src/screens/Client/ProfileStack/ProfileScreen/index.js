@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { StyleSheet, Image } from 'react-native'
+import { View, StyleSheet, Image } from 'react-native'
 import { Avatar, Text, Divider } from 'react-native-elements'
 import { AuthContext } from '../../../../navigation/AuthProvider'
 import auth from '@react-native-firebase/auth'
@@ -84,12 +84,27 @@ function index({ navigation }) {
       <Text style = {styles.text}>{parentName}</Text>
       <Text style = {styles.text}>Your email: {email}</Text>
       <Text style = {styles.text}>Your number: {number}</Text>
+
+      <View style={styles.rowView}>
+
+      <PrimaryButton
+        title = "Edit Profile"
+        onPress = {() => {
+          navigation.navigate('EditProfileScreen')
+        }}
+        containerStyle = {styles.logoutButtonContainer}
+        buttonStyle = {styles.logoutButton}
+      />
+
       <PrimaryButton
         title = "Log Out"
         onPress = {() => logout()}
         containerStyle = {styles.logoutButtonContainer}
         buttonStyle = {styles.logoutButton}
       />
+
+      </View>
+
     </ScreenView>
   )
 }
@@ -130,11 +145,15 @@ const styles = StyleSheet.create({
     marginBottom: theme.spacing.spacing1
   },
   logoutButtonContainer: {
-    marginVertical: theme.spacing.spacing4,
+    marginTop: theme.spacing.spacing4,
     alignSelf: 'center'
   },
   logoutButton: {
     backgroundColor: theme.colours.primary
+  },
+  rowView: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
   }
 })
 

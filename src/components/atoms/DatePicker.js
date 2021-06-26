@@ -19,7 +19,7 @@ function DatePicker(props) {
         <Input
           containerStyle = {styles.input}
           editable = {false}
-          value = {value}
+          value = {props.value ? props.value.toDateString().substring(4) : value}
           label = {props.label}
           placeholder = {props.placeholder}
           rightIcon = {<Icon name = 'calendar'/>}
