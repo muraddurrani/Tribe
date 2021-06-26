@@ -2,10 +2,12 @@ import colours from '../colours'
 
 const Input = {
   containerStyle: {
-    width: 320
+    height: 80,
+    width: 340
   },
   inputContainerStyle: {
     height: 40,
+    width: 320
   },
   labelStyle: {
     color: colours.gray6,

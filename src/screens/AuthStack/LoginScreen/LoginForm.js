@@ -1,14 +1,14 @@
 import React, { useState, useContext } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { StyleSheet, View } from 'react-native'
 import { Input, Icon } from 'react-native-elements'
 import { Formik } from 'formik'
 import * as yup from 'yup'
-import PrimaryButton from '../../../components/atoms/PrimaryButton'
-import TertiaryButton from '../../../components/atoms/TertiaryButton'
-import ErrorOverlay from './ErrorOverlay'
+
 import { AuthContext } from '../../../navigation/AuthProvider'
-import theme from '../../../styles/theme'
-import { useNavigation } from '@react-navigation/native'
+import PrimaryButton from '../../../components/buttons/PrimaryButton'
+import TertiaryButton from '../../../components/buttons/TertiaryButton'
+import ErrorOverlay from './ErrorOverlay'
 
 const reviewSchema = yup.object({
   email: yup.string().required('Please provide your email address').email('Please provide a valid email'),
@@ -42,9 +42,9 @@ function LoginForm() {
       }}
       >
       {(formikProps) => (
-        <View style = {styles.container}>
+        <View>
           <Input
-            containerStyle = {styles.inputContainer}
+            containerStyle = {styles.emailInput}
             label = "Email Address"
             placeholder = "e.g. email@address.com"
             onChangeText = {formikProps.handleChange('email')}
@@ -55,7 +55,6 @@ function LoginForm() {
             errorMessage = {formikProps.touched.email && formikProps.errors.email}
           />
           <Input
-            containerStyle = {styles.inputContainer}
             label = "Password"
             placeholder = "Your password"
             onChangeText = {formikProps.handleChange('password')}
@@ -67,7 +66,7 @@ function LoginForm() {
             errorMessage = {formikProps.touched.password && formikProps.errors.password}
           />
           <TertiaryButton
-            containerStyle = {styles.forgotPassButton}
+            style = {styles.forgotPasswordButton}
             title = "Forgot Password?"
             onPress = {() => navigation.navigate('ResetPassword')}
           />
@@ -85,28 +84,16 @@ function LoginForm() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: theme.colours.gray0,
-    padding: theme.spacing.spacing4,
-    borderRadius: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,  
-    elevation: 5
+  emailInput: {
+    marginBottom: 20
   },
-  inputContainer: {
-    marginTop: theme.spacing.spacing1,
-  },
-  forgotPassButton: {
-    alignSelf: 'flex-end',
-    width: 140,
-    height: 30
+  forgotPasswordButton: {
+    alignSelf: 'flex-end'
   },
   loginButton: {
-    marginTop: theme.spacing.spacing5
-  },
+    marginTop: 40,
+    alignSelf: 'center'
+  }
 })
 
 export default LoginForm

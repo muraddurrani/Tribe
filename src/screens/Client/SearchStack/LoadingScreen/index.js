@@ -1,17 +1,14 @@
-import React from 'react';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import React from 'react'
+import LottieView from 'lottie-react-native'
 
-export default function Loading() {
+import colours from '../../../../styles/colours'
+
+function index() {
   return (
-    <View style={styles.loadingContainer}>
-      <ActivityIndicator size='large' color='#6646ee' />
-    </View>
-  );
+    <LottieView
+    style = {{flex: 1, backgroundColor: colours.primary}}
+    source = {require('../../../../assets/13187-searching-message.json')} autoPlay loop/>
+  )
 }
-const styles = StyleSheet.create({
-  loadingContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
+
+export default index

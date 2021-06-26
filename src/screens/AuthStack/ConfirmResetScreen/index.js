@@ -1,44 +1,51 @@
 import React from 'react'
 import { Text } from 'react-native-elements'
-import { StyleSheet, View } from 'react-native'
-import ScreenView from '../../../components/atoms/ScreenView'
-import PrimaryButton from '../../../components/atoms/PrimaryButton'
-import theme from '../../../styles/theme'
+import { StyleSheet } from 'react-native'
+
+import KeyboardScrollView from '../../../components/views/KeyboardScrollView'
+import Card from '../../../components/atoms/Card'
+import PrimaryButton from '../../../components/buttons/PrimaryButton'
 
 function index({ navigation }) {
   return (
-    <ScreenView style = {styles.container}>
-      <View style = {styles.content}>
-        <Text h3>Reset your password</Text>
-        <Text style = {styles.body}>An email has been sent to your email address to reset your password.</Text>
+    <KeyboardScrollView style = {styles.container}>
+      <Image style = {styles.image} source = {require('../../../assets/images/Logo_Icon_White.png')}/>
+      <Card style = {styles.card}>
+        <Text h2Style = {styles.header} h2>Reset your password</Text>
+        <Text>An email has been sent to your email address to reset your password.</Text>
         <PrimaryButton
-          containerStyle = {styles.buttonContainer}
-          title = "Return to Login"
+          containerStyle = {styles.button}
+          title = "Back to Login"
           onPress = {() => navigation.popToTop()}
         />
-      </View>
-    </ScreenView>
+      </Card>
+    </KeyboardScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  content: {
-    marginHorizontal: theme.spacing.spacing3,
-    backgroundColor: theme.colours.gray1,
-    paddingVertical: theme.spacing.spacing5,
-    paddingHorizontal: theme.spacing.spacing4,
-    borderRadius: 10
+  header: {
+    marginBottom: 15
   },
-  body: {
-    marginTop: theme.spacing.spacing2
+  image: {
+    height: 40,
+    width: 40,
+    position: 'absolute',
+    top: 15,
+    right: 20
   },
-  buttonContainer: {
-    marginTop: theme.spacing.spacing4,
-    width: 140,
-    alignSelf: 'center'
+  card: {
+    paddingVertical: 30,
+    paddingHorizontal: 20,
+    width: '95%'
+  },
+  button: {
+    alignSelf: 'center',
+    marginTop: 30
   }
 })
 

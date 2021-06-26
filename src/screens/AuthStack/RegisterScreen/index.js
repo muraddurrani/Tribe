@@ -1,35 +1,57 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
-import KeyboardView from '../../../components/atoms/KeyboardView'
-import ScreenView from '../../../components/atoms/ScreenView'
+import { Image, StyleSheet } from 'react-native'
+import { Text } from 'react-native-elements'
+
 import RegisterForm from './RegisterForm'
-import TertiaryButton from '../../../components/atoms/TertiaryButton'
-import theme from '../../../styles/theme'
-import Header from '../../../components/atoms/Header'
+import KeyboardScrollView from '../../../components/views/KeyboardScrollView'
+import TertiaryButton from '../../../components/buttons/TertiaryButton'
+import Card from '../../../components/atoms/Card'
+
+import colours from '../../../styles/colours'
 
 function index({ navigation }) {
   return (
-    <KeyboardView style = {styles.container}>
-      <Header>Create account</Header>
-      <ScreenView style = {styles.card} >
+    <KeyboardScrollView style = {styles.container}>
+      <Image style = {styles.logo}
+        source = {require('../../../assets/images/Logo_Ubuntu_White.png')}
+      />
+      <Text h1>Create an account</Text>
+      <Card style = {styles.card}>
         <RegisterForm />
-        <TertiaryButton
-          title = "Back to Login"
-          onPress = {() => navigation.goBack()}
-        />
-      </ScreenView>
-    </KeyboardView>
+      </Card>
+      <TertiaryButton
+        title = "Back to Login"
+        style = {styles.loginButton}
+        titleStyle = {styles.loginButtonStyle}
+        onPress = {() => navigation.goBack()}
+      />
+    </KeyboardScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colours.primary
+    alignItems: 'center'
+  },
+  logo: {
+    height: 50,
+    width: 170,
+    resizeMode: 'contain',
+    marginTop: '15%',
+    marginBottom: 35
   },
   card: {
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingVertical: 30,
+    paddingHorizontal: 15,
+    marginTop: 10
+  },
+  loginButton: {
+    position: 'absolute',
+    bottom: 30
+  },
+  loginButtonStyle: {
+    color: colours.gray0
   }
 })
 

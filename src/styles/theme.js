@@ -9,7 +9,6 @@ import Text from './components/Text'
 const theme = {
   colours,
   spacing,
-  Button,
   Icon,
   Input,
   Text
