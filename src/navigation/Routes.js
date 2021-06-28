@@ -44,14 +44,12 @@ function Routes() {
 
   //Listens for authentication state change and updates the user accordingly.
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(user => {
+    auth().onAuthStateChanged(user => {
       setUser(user)
 
       if (user) {
-        console.log('IN Here')
         const unsubscribe = firestore().collection('Users').doc(user.uid).onSnapshot(doc => {
-          if (doc.exists) {
-            console.log('doc exists: ' + doc)
+          if (doc) {
             setUserDocument(doc)
             unsubscribe()
           }
@@ -61,11 +59,11 @@ function Routes() {
         setNewAccount(null)
         setAccountType(null)
         setProfileComplete(null)
+        setUserData(null)
       }
 
     })
 
-    return subscriber
   }, [])
 
   /**
@@ -82,7 +80,11 @@ function Routes() {
         firestore().collection('Users').doc(user.uid).update({ newAccount: false })
       }
   
-      firestore().collection(data.accType).doc(user.uid).onSnapshot(doc => setUserData(doc.data()))
+      firestore().collection(data.accType).doc(user.uid).onSnapshot(doc => {
+        if (doc) {
+          setUserData(doc.data())
+        }
+      })
     }
   }, [userDocument])
 

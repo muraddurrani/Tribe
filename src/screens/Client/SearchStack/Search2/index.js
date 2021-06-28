@@ -54,7 +54,7 @@ function index({ navigation }) {
     <KeyboardGradientView style = {styles.container}>
       <Image source = {require('../../../../assets/images/Logo_Icon_White.png')} style = {styles.image} />
       <Card style = {styles.card}>
-        <Text h4>Which of the following best describes your service?</Text>
+        <Text h4>Which type of service are you looking for?</Text>
         <Input
           containerStyle = {styles.searchBar}
           value = {search}

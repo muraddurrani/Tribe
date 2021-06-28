@@ -38,7 +38,7 @@ function index({ navigation }) {
       <Image source = {require('../../../../assets/images/Logo_Icon_White.png')} style = {styles.image} />
       <Text h1Style = {styles.header} h1>Create your profile</Text>
       <Card style = {styles.card}>
-        <Text h4>Which age groups do you support?</Text>
+        <Text h4>How many years experience do you have?</Text>
         <Text>(Select all that apply)</Text>
         <SingleChoiceChecklist
           style = {styles.checklist}

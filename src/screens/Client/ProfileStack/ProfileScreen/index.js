@@ -29,7 +29,7 @@ function index() {
         <ProfilePicture photo = {userData.profilePhoto} style = {styles.profile}/>
         <Text h4Style = {styles.name} h4>{userData.childFullName}</Text>
         <Text>{age} years old</Text>
-        {userData.childGender.length != 0 && <Text>{userData.childGender}</Text>}
+        {userData.childGender && userData.childGender.length != 0 && <Text>{userData.childGender}</Text>}
         <Section title = "My Particulars">
           <Text style = {styles.text}>{userData.parentFullName}</Text>
           <Text>Location: {userData.location}</Text>

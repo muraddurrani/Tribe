@@ -38,6 +38,7 @@ function LoginForm() {
               setErrorMsg("The password you entered is incorrect.")
             }
             setFBError(true)
+            setLoading(false)
           })
       }}
       >
