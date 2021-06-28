@@ -36,12 +36,23 @@ function index() {
           <Text>Email: {userData.email}</Text>
           <Text>Mobile number: {userData.phoneNumber}</Text>
         </Section>
-        <PrimaryButton
-          title = "Log Out"
-          containerStyle = {styles.logoutButton}
-          buttonStyle = {styles.logoutButton}
-          onPress = {() => logout()}
-        />
+        <View style={styles.rowView}>
+          <PrimaryButton
+            title = "Edit Profile"
+            onPress = {() => {
+              navigation.navigate('EditProfileScreen')
+            }}
+            containerStyle = {styles.logoutButtonContainer}
+            buttonStyle = {styles.logoutButton}
+          />
+          <PrimaryButton
+            title = "Log Out"
+            containerStyle = {styles.logoutButton}
+            buttonStyle = {styles.logoutButton}
+            onPress = {() => logout()}
+          />
+        </View>
+
       </View>
     </GradientScreenView>
   )
@@ -64,6 +75,19 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   text: {
+    lineHeight: 18,
+    marginBottom: theme.spacing.spacing1
+  },
+  logoutButtonContainer: {
+    marginTop: theme.spacing.spacing4,
+    alignSelf: 'center'
+  },
+  logoutButton: {
+    backgroundColor: theme.colours.primary
+  },
+  rowView: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
     marginBottom: 5
   },
   logoutButton: {
