@@ -26,6 +26,7 @@ function index({ navigation }) {
         <TertiaryButton
           title = "What is Tribe?"
           style = {styles.detailsButton}
+          onPress = {() => navigation.navigate('Details')}
         />
       </View>
     </KeyboardGradientView>
