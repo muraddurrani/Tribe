@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Button } from 'react-native-elements'
-
 import colours from '../../styles/colours'
 
 function PrimaryButton({containerStyle, buttonStyle, titleStyle, ...props}) {
@@ -18,12 +17,14 @@ function PrimaryButton({containerStyle, buttonStyle, titleStyle, ...props}) {
 const styles = StyleSheet.create({
   container: {
     width: 120,
+    height: 40,
     borderRadius: 20
   },
   button: {
-    backgroundColor: colours.accent1,
-    borderRadius: 20,
-    width: 120
+    backgroundColor: colours.midpoint1,
+    width: 120,
+    height: 40,
+    borderRadius: 20
   },
   title: {
     color: colours.gray0

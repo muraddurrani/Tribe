@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Button } from 'react-native-elements'
-
 import colours from '../../styles/colours'
 
 function SecondaryButton({containerStyle, buttonStyle, titleStyle, ...props}) {
@@ -23,15 +22,14 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: 'transparent',
+    width: 120,
+    height: 40,
     borderRadius: 20,
     borderWidth: 2,
-    borderColor: colours.accent1,
-    width: 120,
-    height: 40
+    borderColor: colours.midpoint1
   },
   title: {
-    color: colours.accent1,
-    fontSize: 14
+    color: colours.midpoint1
   }
 })
 

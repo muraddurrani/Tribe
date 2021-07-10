@@ -1,8 +1,8 @@
-const colors = {
-  primary: "#4ECBA8",
-  secondary: "#2EB690",
-  accent1: "#FFC262",
-  accent2: "#F55E7C",
+const colours = {
+  primary: "#ff5a66",
+  secondary: "#ffa05a",
+  midpoint1: "#FF6C63",
+  midpoint3: "#FF7D8E",
   gray0: "#fdfdfd",
   gray1: "#f7f7f7",
   gray2: "#ededed",
@@ -14,4 +14,4 @@ const colors = {
   gray8: "#272727"
 }
 
-export default colors
+export default colours

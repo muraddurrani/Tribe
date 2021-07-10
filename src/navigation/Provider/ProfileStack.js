@@ -5,7 +5,7 @@ import ProfileScreen from '../../screens/Provider/ProfileStack/ProfileScreen/ind
 
 const Stack = createStackNavigator()
 
-function SearchStack() {
+function ProfileStack() {
   return (
     <Stack.Navigator initialRouteName = "ProfileScreen" screenOptions = {{headerShown: false}}>
       <Stack.Screen name = "ProfileScreen" component = {ProfileScreen} />
@@ -13,4 +13,4 @@ function SearchStack() {
   )
 }
 
-export default SearchStack
+export default ProfileStack

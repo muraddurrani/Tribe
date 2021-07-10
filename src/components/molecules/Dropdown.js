@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { View, StyleSheet, TouchableHighlight, ScrollView } from 'react-native'
 import { Input, Icon } from 'react-native-elements'
-
 import TertiaryButton from '../buttons/TertiaryButton'
 
 import colours from '../../styles/colours'
 
-function Dropdown({width, height, label, placeholder, data, onSelect}) {
-
+function Dropdown({width, height, label, placeholder, data, onSelect, style}) {
   const [expand, setExpand] = useState(false)
   const [value, setValue] = useState('')
 
@@ -25,14 +23,14 @@ function Dropdown({width, height, label, placeholder, data, onSelect}) {
   )
 
   return (
-    <View style = {{width: width}}>
+    <View style = {{...style, width: width}}>
       <TouchableHighlight
         style = {styles.touchable}
         underlayColor = {colours.gray1}
         onPress = {() => setExpand(!expand)}
       >
         <Input
-          containerStyle = {{width: width}}
+          containerStyle = {{...styles.input, width: width}}
           inputContainerStyle = {{width: width - 20}}
           editable = {false}
           value = {value}
@@ -55,8 +53,11 @@ function Dropdown({width, height, label, placeholder, data, onSelect}) {
 }
 
 const styles = StyleSheet.create({
+  input: {
+    height: 60
+  },
   touchable: {
-    borderRadius: 20
+    borderRadius: 10
   },
   button: {
     height: 40,

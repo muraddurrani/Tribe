@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 import { CheckBox } from 'react-native-elements'
 
 import colours from '../../styles/colours'
 
 function SingleChoiceChecklist({data, title, width, height, onCheck, style, ...props}) {
-
   const [checked, setChecked] = useState()
 
   const handleCheck = (item) => {
@@ -13,21 +12,21 @@ function SingleChoiceChecklist({data, title, width, height, onCheck, style, ...p
   }
 
   const render = ({item}) => (
-      <CheckBox
-        containerStyle = {styles.checkbox}
-        title = {title ? title : item.name}
-        textStyle = {styles.title}
-        checked = {checked == item.id}
-        checkedColor = {colours.primary}
-        onPress = {() => {
-          handleCheck(item)
-          onCheck(item)
-        }}
-      />
+    <CheckBox
+      containerStyle = {styles.checkbox}
+      title = {title ? title : item.name}
+      textStyle = {styles.title}
+      checked = {checked == item.id}
+      checkedColor = {colours.midpoint3}
+      onPress = {() => {
+        handleCheck(item)
+        onCheck(item)
+      }}
+    />
   )
 
   return (
-    <View style = {{height, width, ...styles.view, ...style}}>
+    <View style = {{height, width, ...style}}>
       <FlatList
         {...props}
         showsVerticalScrollIndicator = {false}
@@ -42,18 +41,12 @@ function SingleChoiceChecklist({data, title, width, height, onCheck, style, ...p
 const styles = StyleSheet.create({
   checkbox: {
     backgroundColor: 'transparent',
-    borderColor: 'transparent',
-    borderBottomColor: colours.gray2
+    borderColor: 'transparent'
   },
   title: {
-    color: colours.gray6
-  },
-  view: {
-    borderWidth: 2,
-    borderRadius: 20,
-    borderColor: colours.gray2
+    color: colours.gray6,
+    fontWeight: '400'
   }
-  
 })
 
 export default SingleChoiceChecklist

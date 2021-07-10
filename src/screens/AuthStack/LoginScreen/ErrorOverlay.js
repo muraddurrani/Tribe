@@ -1,22 +1,22 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import {Overlay, Text, Icon } from 'react-native-elements'
-import theme from '../../../styles/theme'
+import colours from '../../../styles/colours'
 
-function ErrorOverlay(props) {
+function ErrorOverlay({isVisible, onPress, message}) {
   return (
     <Overlay
       overlayStyle = {styles.container}
-      isVisible = {props.isVisible}
+      isVisible = {isVisible}
       >
 
-      <Text style = {styles.header} h3>Oops!</Text>
-      <Text> {props.message} </Text>
+      <Text h2Style = {styles.header} h2>Oops!</Text>
+      <Text> {message} </Text>
       <Icon
         containerStyle = {styles.icon}
         name = "x"
-        color = {theme.colours.accent2}
-        onPress = {props.onPress}
+        color = {colours.midpoint3}
+        onPress = {onPress}
       />
     </Overlay>
   )
@@ -24,16 +24,17 @@ function ErrorOverlay(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: 320,
-    paddingHorizontal: theme.spacing.spacing3,
-    paddingVertical: theme.spacing.spacing4,
-    alignItems: 'center'
+    width: 300,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    alignItems: 'center',
+    borderRadius: 15
   },
   header: {
-    marginBottom: theme.spacing.spacing1
+    marginBottom: 10
   },
   icon: {
-    marginTop: theme.spacing.spacing3
+    marginTop: 10
   }
 })
 

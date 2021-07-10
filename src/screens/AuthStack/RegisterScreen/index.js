@@ -1,19 +1,18 @@
 import React from 'react'
 import { Image, StyleSheet } from 'react-native'
 import { Text } from 'react-native-elements'
-
-import RegisterForm from './RegisterForm'
-import KeyboardScrollView from '../../../components/views/KeyboardScrollView'
 import TertiaryButton from '../../../components/buttons/TertiaryButton'
+import KeyboardGradientView from '../../../components/views/KeyboardGradientView'
 import Card from '../../../components/atoms/Card'
-
+import RegisterForm from './RegisterForm'
 import colours from '../../../styles/colours'
 
 function index({ navigation }) {
   return (
-    <KeyboardScrollView style = {styles.container}>
-      <Image style = {styles.logo}
-        source = {require('../../../assets/images/Logo_Ubuntu_White.png')}
+    <KeyboardGradientView style = {styles.container}>
+      <Image
+        style = {styles.logo}
+        source = {require('../../../assets/images/Logo_Text_White.png')}
       />
       <Text h1>Create an account</Text>
       <Card style = {styles.card}>
@@ -25,7 +24,7 @@ function index({ navigation }) {
         titleStyle = {styles.loginButtonStyle}
         onPress = {() => navigation.goBack()}
       />
-    </KeyboardScrollView>
+    </KeyboardGradientView>
   )
 }
 
@@ -35,20 +34,20 @@ const styles = StyleSheet.create({
   },
   logo: {
     height: 50,
-    width: 170,
+    width: 147,
     resizeMode: 'contain',
-    marginTop: '15%',
-    marginBottom: 35
+    marginTop: '10%',
+    marginBottom: 30
   },
   card: {
     alignItems: 'center',
-    paddingVertical: 30,
-    paddingHorizontal: 15,
+    paddingTop: 40,
+    paddingBottom: 20,
+    width: '90%',
     marginTop: 10
   },
   loginButton: {
-    position: 'absolute',
-    bottom: 30
+    marginTop: 30
   },
   loginButtonStyle: {
     color: colours.gray0

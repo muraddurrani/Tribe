@@ -41,58 +41,59 @@ function LoginForm() {
             setLoading(false)
           })
       }}
-      >
-      {(formikProps) => (
-        <View>
-          <Input
-            containerStyle = {styles.emailInput}
-            label = "Email Address"
-            placeholder = "e.g. email@address.com"
-            onChangeText = {formikProps.handleChange('email')}
-            value = {formikProps.values.email}
-            leftIcon = {<Icon name = "mail"/>}
-            keyboardType = 'email-address'
-            onBlur = {formikProps.handleBlur('email')}
-            errorMessage = {formikProps.touched.email && formikProps.errors.email}
-          />
-          <Input
-            label = "Password"
-            placeholder = "Your password"
-            onChangeText = {formikProps.handleChange('password')}
-            value = {formikProps.values.password}
-            leftIcon = {<Icon name = "key"/>}
-            rightIcon = {<Icon name = {showPass ? "eye-off" : "eye"} onPress = {() => setShowPass(!showPass)}/>}
-            secureTextEntry = {!showPass}
-            onBlur = {formikProps.handleBlur('password')}
-            errorMessage = {formikProps.touched.password && formikProps.errors.password}
-          />
-          <TertiaryButton
-            style = {styles.forgotPasswordButton}
-            title = "Forgot Password?"
-            onPress = {() => navigation.navigate('ResetPassword')}
-          />
-          <PrimaryButton
-            containerStyle = {styles.loginButton}
-            title = "Log In"
-            loading = {loading}
-            onPress = {formikProps.handleSubmit}
-          />
-          <ErrorOverlay isVisible = {fbError} message = {errorMsg} onPress = {() => setFBError(false)}/>
-        </View>
-      )}
+    >
+        {(formikProps) => (
+          <View>
+            <Input
+              containerStyle = {styles.emailInput}
+              label = "Email Address"
+              placeholder = "e.g. email@address.com"
+              onChangeText = {formikProps.handleChange('email')}
+              value = {formikProps.values.email}
+              leftIcon = {<Icon name = "mail"/>}
+              keyboardType = 'email-address'
+              onBlur = {formikProps.handleBlur('email')}
+              errorMessage = {formikProps.touched.email && formikProps.errors.email}
+            />
+            <Input
+              label = "Password"
+              placeholder = "Your password"
+              onChangeText = {formikProps.handleChange('password')}
+              value = {formikProps.values.password}
+              leftIcon = {<Icon name = "key"/>}
+              rightIcon = {<Icon name = {showPass ? "eye-off" : "eye"} onPress = {() => setShowPass(!showPass)}/>}
+              secureTextEntry = {!showPass}
+              onBlur = {formikProps.handleBlur('password')}
+              errorMessage = {formikProps.touched.password && formikProps.errors.password}
+            />
+            <TertiaryButton
+              style = {styles.forgotPasswordButton}
+              title = "Forgot Password?"
+              onPress = {() => navigation.navigate('ResetPassword')}
+            />
+            <PrimaryButton
+              containerStyle = {styles.loginButton}
+              title = "Log In"
+              loading = {loading}
+              onPress = {formikProps.handleSubmit}
+            />
+            <ErrorOverlay isVisible = {fbError} message = {errorMsg} onPress = {() => setFBError(false)}/>
+          </View>
+        )}
     </Formik>
   )
 }
 
 const styles = StyleSheet.create({
   emailInput: {
-    marginBottom: 20
+    marginBottom: 40
   },
   forgotPasswordButton: {
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    marginRight: 10
   },
   loginButton: {
-    marginTop: 40,
+    marginTop: 30,
     alignSelf: 'center'
   }
 })

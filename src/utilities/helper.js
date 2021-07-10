@@ -1,7 +1,6 @@
 import firestore from '@react-native-firebase/firestore'
 import auth, { firebase } from '@react-native-firebase/auth'
 
-
 //Fetches the  answer set for the question as specified by docNumber
 export async function fetchProviderAttribute(docNumber) {
   const doc = await firestore().collection('ProviderAttributes').doc(docNumber).get()

@@ -5,7 +5,6 @@ import { CheckBox } from 'react-native-elements'
 import colours from '../../styles/colours'
 
 function MultiChoiceChecklist({data, title, width, height, onCheck, style, ...props}) {
-
   const [checked, setChecked] = useState([])
 
   const handleCheck = (i) => {
@@ -13,17 +12,17 @@ function MultiChoiceChecklist({data, title, width, height, onCheck, style, ...pr
   }
 
   const render = (item) => (
-      <CheckBox
-        containerStyle = {styles.checkbox}
-        title = {title ? title : item.item.name}
-        textStyle = {styles.title}
-        checked = {checked[item.index]}
-        checkedColor = {colours.primary}
-        onPress = {() => {
-          handleCheck(item.index)
-          onCheck(item.item)
-        }}
-      />
+    <CheckBox
+      containerStyle = {styles.checkbox}
+      title = {title ? title : item.item.name}
+      textStyle = {styles.title}
+      checked = {checked[item.index]}
+      checkedColor = {colours.midpoint3}
+      onPress = {() => {
+        handleCheck(item.index)
+        onCheck(item.item)
+      }}
+    />
   )
 
   useEffect(() => {
@@ -32,7 +31,7 @@ function MultiChoiceChecklist({data, title, width, height, onCheck, style, ...pr
   }, [data])
 
   return (
-    <View style = {{height, width, ...styles.view, ...style}}>
+    <View style = {{height, width, ...style}}>
       <FlatList
         {...props}
         showsVerticalScrollIndicator = {false}
@@ -47,18 +46,12 @@ function MultiChoiceChecklist({data, title, width, height, onCheck, style, ...pr
 const styles = StyleSheet.create({
   checkbox: {
     backgroundColor: 'transparent',
-    borderColor: 'transparent',
-    borderBottomColor: colours.gray2
+    borderColor: 'transparent'
   },
   title: {
-    color: colours.gray6
-  },
-  view: {
-    borderWidth: 2,
-    borderRadius: 20,
-    borderColor: colours.gray2
+    color: colours.gray6,
+    fontWeight: '400'
   }
-  
 })
 
 export default MultiChoiceChecklist

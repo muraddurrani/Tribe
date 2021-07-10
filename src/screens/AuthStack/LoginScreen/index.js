@@ -1,22 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-elements'
-
-import LoginForm from './LoginForm'
-import DetailsOverlay from './DetailsOverlay'
-import KeyboardScrollView from '../../../components/views/KeyboardScrollView'
 import TertiaryButton from '../../../components/buttons/TertiaryButton'
-
+import KeyboardGradientView from '../../../components/views/KeyboardGradientView'
+import LoginForm from './LoginForm'
 import colours from '../../../styles/colours'
 
 function index({ navigation }) {
-
-  const [showOverlay, setShowOverlay] = useState(false)
-
   return (
-    <KeyboardScrollView>
-      <Image style = {styles.logo}
-        source = {require('../../../assets/images/Logo_Ubuntu_White.png')}
+    <KeyboardGradientView>
+      <Image
+        style = {styles.logo}
+        source = {require('../../../assets/images/Logo_Text_White.png')}
       />
       <View style = {styles.card}>
         <LoginForm />
@@ -24,28 +19,23 @@ function index({ navigation }) {
           <Text>Don't have an account?</Text>
           <TertiaryButton
             title = "Sign up!"
-            style = {styles.signUpButton}
+            style = {styles.signupButton}
             onPress = {() => navigation.navigate('Register')}
           />
         </View>
         <TertiaryButton
           title = "What is Tribe?"
           style = {styles.detailsButton}
-          onPress = {() => setShowOverlay(true)}
         />
       </View>
-      <DetailsOverlay
-        isVisible = {showOverlay}
-        onPress = {() => setShowOverlay(false)}
-      />
-    </KeyboardScrollView>
+    </KeyboardGradientView>
   )
 }
 
 const styles = StyleSheet.create({
   logo: {
-    height: 70,
-    width: 235,
+    height: 60,
+    width: 176,
     resizeMode: 'contain',
     alignSelf: 'center',
     marginTop: '25%'
@@ -54,22 +44,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colours.gray0,
     alignItems: 'center',
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    paddingTop: 40,
-    marginTop: '10%'
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    paddingTop: 50,
+    marginTop: 30
   },
   rowView: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 15
+    marginTop: 10
   },
-  signUpButton: {
+  signupButton: {
     marginLeft: 10
   },
   detailsButton: {
-    position: 'absolute',
-    bottom: 30
+    marginTop: 50
   }
 })
 

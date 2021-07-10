@@ -17,7 +17,6 @@ const reviewSchema = yup.object({
 })
 
 function RegisterForm() {
-
   const [fbError, setFBError] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
@@ -46,72 +45,68 @@ function RegisterForm() {
             setLoading(false)
           })
       }}
-      >
+    >
       {(formikProps) => (
         <View style = {styles.container}>
-            <Input
-              containerStyle = {styles.emailInput}
-              label = "Email Address"
-              placeholder = "e.g. email@address.com"
-              onChangeText = {formikProps.handleChange('email')}
-              value = {formikProps.values.email}
-              leftIcon = {<Icon name = "mail"/>}
-              onBlur = {formikProps.handleBlur('email')}
-              keyboardType = 'email-address'
-              errorMessage = {formikProps.touched.email && formikProps.errors.email}
+          <Input
+            containerStyle = {styles.input}
+            label = "Email Address"
+            placeholder = "e.g. email@address.com"
+            onChangeText = {formikProps.handleChange('email')}
+            value = {formikProps.values.email}
+            leftIcon = {<Icon name = "mail"/>}
+            onBlur = {formikProps.handleBlur('email')}
+            keyboardType = 'email-address'
+            errorMessage = {formikProps.touched.email && formikProps.errors.email}
+          />
+          <Input
+            containerStyle = {styles.input}
+            label = "Password"
+            placeholder = "Enter password"
+            onChangeText = {formikProps.handleChange('password')}
+            value = {formikProps.values.password}
+            leftIcon = {<Icon name = "key"/>}
+            rightIcon = {<Icon name = {showPass ? "eye-off" : "eye"} onPress = {() => setShowPass(!showPass)}/>}
+            onBlur = {formikProps.handleBlur('password')}
+            secureTextEntry = {!showPass}
+            errorMessage = {formikProps.touched.password && formikProps.errors.password}
+          />
+          <Text>I am joining as a</Text>
+          <View style = {styles.rowView}>
+            <SecondaryButton
+              title = "Parent"
+              containerStyle = {styles.accountButtonContainer}
+              buttonStyle = {styles.accountButton}
+              titleStyle = {clientPressed ? styles.pressed : styles.unpressed}
+              onPress = {() => {
+                setAccType('Clients')
+                setClientPressed(true)
+                setProviderPressed(false)
+                setCanSubmit(true)
+              }}
             />
-            <Input
-              containerStyle = {styles.passwordInput}
-              label = "Password"
-              placeholder = "Enter password"
-              onChangeText = {formikProps.handleChange('password')}
-              value = {formikProps.values.password}
-              leftIcon = {<Icon name = "key"/>}
-              rightIcon = {<Icon name = {showPass ? "eye-off" : "eye"} onPress = {() => setShowPass(!showPass)}/>}
-              onBlur = {formikProps.handleBlur('password')}
-              secureTextEntry = {!showPass}
-              errorMessage = {formikProps.touched.password && formikProps.errors.password}
+            <SecondaryButton
+              title = "Professional"
+              containerStyle = {styles.accountButtonContainer}
+              buttonStyle = {styles.accountButton}
+              titleStyle = {providerPressed ? styles.pressed : styles.unpressed}
+              onPress = {() => {
+                setAccType('Providers')
+                setProviderPressed(true)
+                setClientPressed(false)
+                setCanSubmit(true)
+              }}
             />
-              <Text style = {styles.text}>I am joining as a</Text>
-              <View style = {styles.rowView}>
-                <SecondaryButton
-                  containerStyle = {styles.selectAccountButton}
-                  buttonStyle = {clientPressed ? styles.pressedButton : styles.unpressedButton}
-                  titleStyle = {clientPressed ? styles.pressedTitle : styles.unpressedTitle}
-                  title = "Parent"
-                  onPress = {() => {
-                    setAccType('Clients')
-                    setClientPressed(true)
-                    setProviderPressed(false)
-                    setCanSubmit(true)
-                  }}
-                />
-                <SecondaryButton
-                  containerStyle = {styles.selectAccountButton}
-                  buttonStyle = {providerPressed ? styles.pressedButton : styles.unpressedButton}
-                  titleStyle = {providerPressed ? styles.pressedTitle : styles.unpressedTitle}
-                  title = "Professional"
-                  onPress = {() => {
-                    setAccType('Providers')
-                    setProviderPressed(true)
-                    setClientPressed(false)
-                    setCanSubmit(true)
-                  }}
-                />
-              </View>
-              <PrimaryButton
-                title = "Create Account"
-                containerStyle = {styles.signUpButton}
-                buttonStyle = {styles.signUpButton}
-                disabled = {!canSubmit}
-                loading = {loading}
-                onPress = {formikProps.handleSubmit}
-              />
-              <ErrorOverlay isVisible = {fbError} message = {errorMsg} onPress = {() => setFBError(false)}/>
-              
+          </View>
+          <PrimaryButton
+            title = "Sign Up"
+            disabled = {!canSubmit}
+            loading = {loading}
+            onPress = {formikProps.handleSubmit}
+          />
+          <ErrorOverlay isVisible = {fbError} message = {errorMsg} onPress = {() => setFBError(false)}/>
         </View>
-      )  
-      }
+      )}
     </Formik>
   )
 }
@@ -120,37 +115,25 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center'
   },
-  emailInput: {
-    marginBottom: 15
-  },
-  passwordInput: {
-    marginBottom: 20
-  },
-  text: {
-    alignSelf: 'center'
+  input: {
+    marginBottom: 30
   },
   rowView: {
     flexDirection: 'row',
     marginTop: 10,
-    marginBottom: 40
+    marginBottom: 30
   },
-  selectAccountButton: {
-    marginHorizontal: 15
+  accountButtonContainer: {
+    marginHorizontal: 10
   },
-  unpressedButton: {
-    borderColor: colours.gray5
+  accountButton: {
+    borderColor: 'transparent'
   },
-  pressedButton: {
-    borderColor: colours.accent1
+  unpressed: {
+    color: colours.gray4
   },
-  unpressedTitle: {
-    color: colours.gray5
-  },
-  pressedTitle: {
-    color: colours.accent1
-  },
-  signUpButton: {
-    width: 160
+  pressed: {
+    color: colours.midpoint1
   }
 })
 

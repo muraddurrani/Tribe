@@ -23,7 +23,7 @@ function AuthProvider({ children }) {
 
         signup: async (email, password, accType) => {
           await auth().createUserWithEmailAndPassword(email, password)
-          await firestore().collection('Users').doc(auth().currentUser.uid).set({ accType, profileComplete: false, newAccount: true })
+          await firestore().collection('Users').doc(auth().currentUser.uid).set({ accountType: accType, profileComplete: false, newAccount: true })
           await firestore().collection(accType).doc(auth().currentUser.uid).set({ email })
         },
 

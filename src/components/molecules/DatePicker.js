@@ -6,10 +6,9 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 import colours from '../../styles/colours'
 
 function DatePicker({width, label, placeholder, onSelect}) {
-
   const [expand, setExpand] = useState(false)
   const [value, setValue] = useState('')
-
+  
   return (
     <View style = {{width}}>
       <TouchableHighlight
@@ -18,7 +17,7 @@ function DatePicker({width, label, placeholder, onSelect}) {
         onPress = {() => setExpand(!expand)}
       >
         <Input
-          containerStyle = {{width: width}}
+          containerStyle = {{...styles.input, width: width}}
           inputContainerStyle = {{width: width - 20}}
           editable = {false}
           value = {value}
@@ -45,8 +44,11 @@ function DatePicker({width, label, placeholder, onSelect}) {
 }
 
 const styles = StyleSheet.create({
+  input: {
+    height: 60
+  },
   touchable: {
-    borderRadius: 20
+    borderRadius: 10
   }
 })
 

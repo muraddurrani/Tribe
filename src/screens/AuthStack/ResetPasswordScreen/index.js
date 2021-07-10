@@ -1,26 +1,28 @@
 import React from 'react'
 import { Image, StyleSheet } from 'react-native'
 import { Text } from 'react-native-elements'
-import ForgotPasswordForm from './ResetPasswordForm'
-
-import KeyboardScrollView from '../../../components/views/KeyboardScrollView'
+import KeyboardGradientView from '../../../components/views/KeyboardGradientView'
 import Card from '../../../components/atoms/Card'
+import ForgotPasswordForm from './ResetPasswordForm'
 
 function index() {
   return (
-    <KeyboardScrollView style = {styles.container}>
-      <Image style = {styles.image} source = {require('../../../assets/images/Logo_Icon_White.png')}/>
+    <KeyboardGradientView style = {styles.container}>
+      <Image
+        style = {styles.image}
+        source = {require('../../../assets/images/Logo_Icon_White.png')}
+      />
       <Card style = {styles.card}>
-        <Text h2>Reset your password</Text>
+        <Text h2Style = {styles.header} h2> Reset your password</Text>
+        <Text>Provide your email address to reset your password.</Text>
         <ForgotPasswordForm />
       </Card>
-    </KeyboardScrollView>
+    </KeyboardGradientView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
     alignItems: 'center'
   },
   image: {
@@ -28,12 +30,17 @@ const styles = StyleSheet.create({
     width: 40,
     position: 'absolute',
     top: 15,
-    right: 20
+    right: 15
+  },
+  header: {
+    marginBottom: 5
   },
   card: {
+    marginTop: '40%',
+    width: '90%',
     paddingVertical: 30,
     paddingHorizontal: 20,
-    width: '95%'
   }
 })
+
 export default index

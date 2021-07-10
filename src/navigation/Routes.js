@@ -5,10 +5,10 @@ import firestore from '@react-native-firebase/firestore'
 
 import { AuthContext } from './AuthProvider'
 import AuthStack from './AuthStack'
-import CreateProviderProfileStack from './Provider/CreateProviderProfileStack'
-import CreateClientProfileStack from './Client/CreateClientProfileStack'
-import ClientHomeTab from './Client/ClientHomeTab'
-import ProviderHomeTab from './Provider/ProviderHomeTab'
+import CreateProviderProfileStack from './Provider/CreateProfileStack'
+import CreateClientProfileStack from './Client/CreateProfileStack'
+import ClientHomeTab from './Client/HomeTab'
+import ProviderHomeTab from './Provider/HomeTab'
 import LoadingScreen from '../screens/AuthStack/LoadingScreen/index'
 
 function Routes() {
@@ -22,14 +22,14 @@ function Routes() {
   //Renders the appropriate navigator for the user based on their account type, whether they have just signed up, and if they have completed their profile
   const roleSettings = (newAccount, profileComplete) => ({
     Clients: newAccount ? (
-      <CreateClientProfileStack initialRouteName="CP0" />
+      <CreateClientProfileStack initialRouteName="CP1" />
     ) : profileComplete ? (
       <ClientHomeTab />
     ) : (
       <CreateClientProfileStack initialRouteName="IncompleteProfile" />
     ),
     Providers: newAccount ? (
-      <CreateProviderProfileStack initialRouteName="CP0" />
+      <CreateProviderProfileStack initialRouteName="CP1" />
     ) : profileComplete ? (
       <ProviderHomeTab />
     ) : (
@@ -74,13 +74,13 @@ function Routes() {
       const data = userDocument.data()
       setNewAccount(data.newAccount)
       setProfileComplete(data.profileComplete)
-      setAccountType(data.accType)
+      setAccountType(data.accountType)
 
       if ((data.newAccount) == true) {
         firestore().collection('Users').doc(user.uid).update({ newAccount: false })
       }
   
-      firestore().collection(data.accType).doc(user.uid).onSnapshot(doc => {
+      firestore().collection(data.accountType).doc(user.uid).onSnapshot(doc => {
         if (doc) {
           setUserData(doc.data())
         }

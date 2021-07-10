@@ -10,16 +10,11 @@ import PrimaryButton from '../../../components/buttons/PrimaryButton'
 import SecondaryButton from '../../../components/buttons/SecondaryButton'
 import ErrorOverlay from '../LoginScreen/ErrorOverlay'
 
-
 const reviewSchema = yup.object({
   email: yup.string().required('Please provide your email address').email('Please provide a valid email')
 })
 
-
-
-
 function ResetPasswordForm() {
-
   const [fbError, setFBError] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
@@ -35,7 +30,6 @@ function ResetPasswordForm() {
         setErrorMsg("There is no user registered to this email address.")
       }
       setFBError(true)
-    } finally {
       setLoading(false)
     }
   }
@@ -63,16 +57,14 @@ function ResetPasswordForm() {
           />
           <View style = {styles.rowView} >
             <SecondaryButton
-              containerStyle = {styles.buttonContainer}
-              buttonStyle = {styles.button}
                title = "Cancel"
+               containerStyle = {styles.buttonContainer}
                onPress = {() => navigation.goBack()}
             />
             <PrimaryButton
-              containerStyle = {styles.buttonContainer}
-              buttonStyle = {styles.button}
               loading = {loading}
               title = {"Reset"}
+              containerStyle = {styles.buttonContainer}
               onPress = {formikProps.handleSubmit}
             />
           </View>
@@ -91,12 +83,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'flex-end'
   },
-  buttonContainer: {
-    marginHorizontal: 5,
-    width: 110
+  input: {
+    marginTop: 40,
+    marginBottom: 10
   },
-  button: {
-    width: 110
+  buttonContainer: {
+    marginRight: 10
   }
 })
 

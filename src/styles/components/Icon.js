@@ -1,7 +1,8 @@
-import colors from '../colours'
+import colours from "../colours"
+
 const Icon = {
   type: 'feather',
-  color: colors.gray5
+  color: colours.gray5
 }
 
 export default Icon
