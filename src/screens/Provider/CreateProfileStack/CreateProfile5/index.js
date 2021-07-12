@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from 'react'
-import { useFocusEffect } from '@react-navigation/native'
+import React, { useState, useEffect } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-elements'
 import auth from '@react-native-firebase/auth'
@@ -17,6 +16,7 @@ import { fetchProviderAttribute, updateSearchProviders } from '../../../../utili
 function index({ navigation }) {
   const [data, setData] = useState([])
   const [choices, setChoices] = useState({})
+  const [checked, setChecked] = useState([])
 
   const onCheck = (item) => {
     if (_.has(choices, item.id)) {
@@ -33,16 +33,12 @@ function index({ navigation }) {
     navigation.navigate('CP6')
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      fetchProviderAttribute('3').then((data) => {
-        setData(data)
-      })
-
-      return () => {
-        setChoices({})
-      }
-    }, []))
+  useEffect(() => {
+    fetchProviderAttribute('3').then((data) => {
+      setData(data)
+      setChecked(new Array(data.length).fill(false))
+    })
+  }, [])
 
 
   return (
@@ -57,6 +53,7 @@ function index({ navigation }) {
           height = {330}
           width = {'95%'}
           data = {data}
+          checkArray = {checked}
           onCheck = {onCheck}
         />
         <View style = {styles.rowView}>

@@ -27,22 +27,31 @@ function index({ navigation }) {
         onPress = {() => {
             setLoading(true)
             if (!_.has(userData, 'fullName')) {
+              setLoading(false)
               navigation.navigate('CP1')
             } else if (!_.has(userData, 'Responses.0')) {
+              setLoading(false)
               navigation.navigate('CP2')
             } else if (!_.has(userData, 'Responses.1')) {
+              setLoading(false)
               navigation.navigate('CP3')
             } else if (!_.has(userData, 'Responses.2')) {
+              setLoading(false)
               navigation.navigate('CP4')
             } else if (!_.has(userData, 'Responses.3')) {
+              setLoading(false)
               navigation.navigate('CP5')
             } else if (!_.has(userData, 'Responses.4')) {
+              setLoading(false)
               navigation.navigate('CP6')
             } else if (!_.has(userData, 'Responses.5')) {
+              setLoading(false)
               navigation.navigate('CP7')
             } else if (!_.has(userData, 'Responses.6')) {
+              setLoading(false)
               navigation.navigate('CP8')
             } else if (!_.has(userData, 'serviceDescription')) {
+              setLoading(false)
               navigation.navigate('CP9')
             }
         }}

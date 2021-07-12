@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from 'react'
-import { useFocusEffect } from '@react-navigation/native'
+import React, { useState, useEffect } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-elements'
 import auth from '@react-native-firebase/auth'
@@ -28,16 +27,11 @@ function index({ navigation }) {
     navigation.navigate('CP9')
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      fetchProviderAttribute('6').then((data) => {
-        setData(data)
-      })
-
-      return () => {
-        setExperience({})
-      }
-    }, []))
+  useEffect(() => {
+    fetchProviderAttribute('6').then((data) => {
+      setData(data)
+    })
+  }, [])
 
 
   return (

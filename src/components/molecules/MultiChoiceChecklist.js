@@ -4,7 +4,7 @@ import { CheckBox } from 'react-native-elements'
 
 import colours from '../../styles/colours'
 
-function MultiChoiceChecklist({data, title, width, height, onCheck, style, ...props}) {
+function MultiChoiceChecklist({data, title, width, height, onCheck, style, checkArray, ...props}) {
   const [checked, setChecked] = useState([])
 
   const handleCheck = (i) => {
@@ -26,9 +26,8 @@ function MultiChoiceChecklist({data, title, width, height, onCheck, style, ...pr
   )
 
   useEffect(() => {
-    const len = data.length
-    setChecked(new Array(len).fill(false))
-  }, [data])
+    setChecked(checkArray)
+  }, [checkArray])
 
   return (
     <View style = {{height, width, ...style}}>

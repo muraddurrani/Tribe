@@ -10,11 +10,24 @@ export async function fetchProviderAttribute(docNumber) {
   })
 }
 
+//Fetches the response of a given provider for a given question number
+export async function fetchProviderResponse(number, id) {
+  const doc = await firestore().collection('Providers').doc(id).get()
+  return doc.data().Responses[number]
+}
+
 //Updates SearchProviders collection in firestore based on choices provided
 export function updateSearchProviders(choices, docNumber) {
   const ansCollection = firestore().collection('SearchProviders').doc(docNumber).collection('Answers')
   for (const choice in choices) {
     ansCollection.doc(choice).update({IDs: firebase.firestore.FieldValue.arrayUnion(auth().currentUser.uid)})
+  }
+}
+
+export function removeFromSearchProviders(choices, docNumber) {
+  const ansCollection = firestore().collection('SearchProviders').doc(docNumber).collection('Answers')
+  for (const choice in choices) {
+    ansCollection.doc(choice).update({IDs: firebase.firestore.FieldValue.arrayRemove(auth().currentUser.uid)})
   }
 }
 

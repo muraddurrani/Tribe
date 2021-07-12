@@ -10,8 +10,7 @@ import colours from '../../../../styles/colours'
 import MultiChoiceChecklist from '../../../../components/molecules/MultiChoiceChecklist'
 import Card from '../../../../components/atoms/Card'
 import PrimaryButton from '../../../../components/buttons/PrimaryButton'
-import SecondaryButton from '../../../../components/buttons/SecondaryButton'
-import { fetchProviderAttribute, updateSearchProviders } from '../../../../utilities/helper'
+import { fetchProviderAttribute, fetchProviderResponse, updateSearchProviders, removeFromSearchProviders } from '../../../../utilities/helper'
 
 function index({ navigation }) {
   const [data, setData] = useState([])
@@ -30,13 +29,19 @@ function index({ navigation }) {
   const submit = () => {
     updateSearchProviders(choices, '5')
     firestore().collection('Providers').doc(auth().currentUser.uid).update({ 'Responses.5': {...choices} } )
-    navigation.navigate('CP8')
+    navigation.navigate('EditProfile8')
   }
 
     useEffect(() => {
       fetchProviderAttribute('5').then((data) => {
         setData(data)
-        setChecked(new Array(data.length).fill(false))
+        
+        fetchProviderResponse(5, auth().currentUser.uid).
+        then(response => {
+          setChecked(new Array(data.length).fill(false).map((item, index) => response[index]))
+          setChoices(response)
+          removeFromSearchProviders(response, '5')
+        })
       })
     }, [])
 
@@ -44,7 +49,7 @@ function index({ navigation }) {
   return (
     <GradientView style = {styles.container}>
       <Image source = {require('../../../../assets/images/Logo_Icon_White.png')} style = {styles.image}/>
-      <Text h2Style = {styles.header} h2>Create your profile</Text>
+      <Text h2Style = {styles.header} h2>Edit your profile</Text>
       <Card style = {styles.card}>
         <Text h4>Which age groups do you support?</Text>
         <Text>(Select all that apply)</Text>
@@ -57,11 +62,6 @@ function index({ navigation }) {
           onCheck = {onCheck}
         />
         <View style = {styles.rowView}>
-          <SecondaryButton
-            title = "Back"
-            containerStyle = {styles.button}
-            onPress = {() => navigation.goBack()}
-          />
           <PrimaryButton
             title = "Next"
             disabled = {Object.keys(choices).length === 0}

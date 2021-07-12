@@ -10,8 +10,7 @@ import colours from '../../../../styles/colours'
 import MultiChoiceChecklist from '../../../../components/molecules/MultiChoiceChecklist'
 import Card from '../../../../components/atoms/Card'
 import PrimaryButton from '../../../../components/buttons/PrimaryButton'
-import SecondaryButton from '../../../../components/buttons/SecondaryButton'
-import { fetchProviderAttribute, updateSearchProviders } from '../../../../utilities/helper'
+import { fetchProviderAttribute, fetchProviderResponse, updateSearchProviders, removeFromSearchProviders } from '../../../../utilities/helper'
 
 function index({ navigation }) {
   const [data, setData] = useState([])
@@ -33,16 +32,22 @@ function index({ navigation }) {
   const submit = () => {
     updateSearchProviders(choices, '2')
     firestore().collection('Providers').doc(auth().currentUser.uid).update({ 'Responses.2': {...choices} } )
-    navigation.navigate('CP5')
+    navigation.navigate('EditProfile5')
   }
 
     useEffect(() => {
       fetchProviderAttribute('2').then((data) => {
         const initData = data.splice(0, 2)
         setData(initData)
-        setFirstChecked(new Array(initData.length).fill(false))
         setLocationData(data)
-        setSecondChecked(new Array(data.length).fill(false))
+
+        fetchProviderResponse(2, auth().currentUser.uid).
+        then(response => {
+          setFirstChecked(new Array(data.length).fill(false).map((item, index) => response[index]))
+          setSecondChecked(new Array(data.length).fill(false).map((item, index) => response[index + initData.length]))
+          setChoices(response)
+          removeFromSearchProviders(response, '2')
+        })
       })
     }, [])
 
@@ -50,7 +55,7 @@ function index({ navigation }) {
   return (
     <GradientView style = {styles.container}>
       <Image source = {require('../../../../assets/images/Logo_Icon_White.png')} style = {styles.image}/>
-      <Text h2Style = {styles.header} h2>Create your profile</Text>
+      <Text h2Style = {styles.header} h2>Edit your profile</Text>
       <Card style = {styles.card}>
         <Text h4>Where is your service based?</Text>
         <Text>(Select all that apply)</Text>
@@ -87,11 +92,6 @@ function index({ navigation }) {
           )
         }
         <View style = {styles.rowView}>
-          <SecondaryButton
-            title = "Back"
-            containerStyle = {styles.button}
-            onPress = {() => navigation.goBack()}
-          />
           <PrimaryButton
             title = "Next"
             disabled = {Object.keys(choices).length === 0}

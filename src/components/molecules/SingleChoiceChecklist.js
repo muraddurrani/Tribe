@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
 import { CheckBox } from 'react-native-elements'
 
 import colours from '../../styles/colours'
 
-function SingleChoiceChecklist({data, title, width, height, onCheck, style, ...props}) {
+function SingleChoiceChecklist({data, title, width, height, onCheck, initChecked, style, ...props}) {
   const [checked, setChecked] = useState()
 
   const handleCheck = (item) => {
@@ -24,6 +24,12 @@ function SingleChoiceChecklist({data, title, width, height, onCheck, style, ...p
       }}
     />
   )
+
+  useEffect(() => {
+    if (initChecked) {
+      setChecked(initChecked)
+    }
+  }, [initChecked])
 
   return (
     <View style = {{height, width, ...style}}>

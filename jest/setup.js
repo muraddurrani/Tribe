@@ -1,9 +1,7 @@
-jest.mock('Linking', () => {
-  return {
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    openURL: jest.fn(),
-    canOpenURL: jest.fn(),
-    getInitialURL: jest.fn(),
-  }
-})
+import { NativeModules } from 'react-native'
+
+jest.mock('@react-native-firebase/app', () => ({
+  show: () => {},
+}))
+
+NativeModules.RNFBAppModule = {}

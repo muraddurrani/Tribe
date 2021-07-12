@@ -5,9 +5,9 @@ import TertiaryButton from '../buttons/TertiaryButton'
 
 import colours from '../../styles/colours'
 
-function Dropdown({width, height, label, placeholder, data, onSelect, style}) {
+function Dropdown({width, height, label, placeholder, data, onSelect, style, defaultValue = ''}) {
   const [expand, setExpand] = useState(false)
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState(defaultValue)
 
   const render = (item, index) => (
     <TertiaryButton

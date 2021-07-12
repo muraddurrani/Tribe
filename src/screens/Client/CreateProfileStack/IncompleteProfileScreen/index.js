@@ -27,8 +27,10 @@ function index({ navigation }) {
         onPress = {() => {
           setLoading(true)
           if (_.has(userData, 'parentFullName')) {
+            setLoading(false)
             navigation.navigate('CP2')
           } else {
+            setLoading(false)
             navigation.navigate('CP1')
           }
       }}

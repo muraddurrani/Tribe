@@ -51,6 +51,7 @@
     "setupFiles": [
       "./jest/setup.js"
     ],
+    "setupFilesAfterEnv": ["./__mocks__/mockFirebase.js"],
     "transform": {
       "^.+\\.js?$": "babel-jest"
     },

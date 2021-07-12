@@ -5,9 +5,9 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 import colours from '../../styles/colours'
 
-function DatePicker({width, label, placeholder, onSelect}) {
+function DatePicker({width, label, placeholder, onSelect, defaultValue = ''}) {
   const [expand, setExpand] = useState(false)
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState(defaultValue)
   
   return (
     <View style = {{width}}>

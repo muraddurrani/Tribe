@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Image, StyleSheet, View } from 'react-native'
-import { Text } from 'react-native-elements'
+import { Image, Keyboard, StyleSheet, View } from 'react-native'
+import { Text, Input, Icon } from 'react-native-elements'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import _ from 'lodash'
@@ -10,11 +10,12 @@ import colours from '../../../../styles/colours'
 import MultiChoiceChecklist from '../../../../components/molecules/MultiChoiceChecklist'
 import Card from '../../../../components/atoms/Card'
 import PrimaryButton from '../../../../components/buttons/PrimaryButton'
-import SecondaryButton from '../../../../components/buttons/SecondaryButton'
-import { fetchProviderAttribute, updateSearchProviders } from '../../../../utilities/helper'
+import { fetchProviderAttribute, fetchProviderResponse, updateSearchProviders, removeFromSearchProviders } from '../../../../utilities/helper'
 
 function index({ navigation }) {
+  const [masterData, setMasterData] = useState([])
   const [data, setData] = useState([])
+  const [search, setSearch] = useState('')
   const [choices, setChoices] = useState({})
   const [checked, setChecked] = useState([])
 
@@ -27,41 +28,60 @@ function index({ navigation }) {
     }
   }
 
-  const submit = () => {
-    updateSearchProviders(choices, '5')
-    firestore().collection('Providers').doc(auth().currentUser.uid).update({ 'Responses.5': {...choices} } )
-    navigation.navigate('CP8')
+  const filterSearch = (text) => {
+    const value = text.toLowerCase()
+    const filtered = _.filter(masterData, item => item.name.includes(value))
+    setData(filtered)
+    setSearch(text)
   }
 
-    useEffect(() => {
-      fetchProviderAttribute('5').then((data) => {
-        setData(data)
-        setChecked(new Array(data.length).fill(false))
-      })
-    }, [])
+  const submit = () => {
+    updateSearchProviders(choices, '0')
+    firestore().collection('Providers').doc(auth().currentUser.uid).update({ 'Responses.0': {...choices} })
+    navigation.navigate('EditProfile3')
+  }
+
+  useEffect(() => {
+    fetchProviderAttribute('0').then((data) => {
+      setData(data)
+      setMasterData(data)
+
+      fetchProviderResponse(0, auth().currentUser.uid).
+        then(response => {
+          setChecked(new Array(data.length).fill(false).map((item, index) => response[index]))
+          setChoices(response)
+          removeFromSearchProviders(response, '0')
+        })
+    })
+  }, [])
 
 
   return (
     <GradientView style = {styles.container}>
       <Image source = {require('../../../../assets/images/Logo_Icon_White.png')} style = {styles.image}/>
-      <Text h2Style = {styles.header} h2>Create your profile</Text>
+      <Text h2Style = {styles.header} h2>Edit your profile</Text>
       <Card style = {styles.card}>
-        <Text h4>Which age groups do you support?</Text>
+        <Text h4>Which of the following best describes your service?</Text>
         <Text>(Select all that apply)</Text>
+        <Input
+          containerStyle = {styles.searchBar}
+          value = {search}
+          placeholder = "Search..."
+          onChangeText = {(text) => filterSearch(text)} 
+          leftIcon = {<Icon name = "search"/>}
+          rightIcon = {<Icon name = "x" onPress = {() => {
+            Keyboard.dismiss()
+            filterSearch('')
+          }}/>}
+        />
         <MultiChoiceChecklist
-          style = {styles.checklist}
-          height = {170}
+          height = {260}
           width = {'95%'}
           data = {data}
           checkArray = {checked}
           onCheck = {onCheck}
         />
         <View style = {styles.rowView}>
-          <SecondaryButton
-            title = "Back"
-            containerStyle = {styles.button}
-            onPress = {() => navigation.goBack()}
-          />
           <PrimaryButton
             title = "Next"
             disabled = {Object.keys(choices).length === 0}
@@ -96,8 +116,9 @@ const styles = StyleSheet.create({
     width: '90%',
     marginTop: 10
   },
-  checklist: {
-    marginTop: 10
+  searchBar: {
+    marginTop: 20,
+    height: 60
   },
   rowView: {
     flexDirection: 'row',
