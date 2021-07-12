@@ -1,5 +1,5 @@
 import React from 'react'
-import { Keyboard, TouchableWithoutFeedback } from 'react-native'
+import { Keyboard, TouchableWithoutFeedback, StyleSheet } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import ScreenView from './ScreenView'
 
@@ -22,6 +22,12 @@ function KeyboardScreenView({children, style, ...props}) {
     </TouchableWithoutFeedback>
   )
 }
+
+const styles = StyleSheet.create({
+  content: {
+    flexGrow: 1
+  }
+})
 
 
 export default KeyboardScreenView

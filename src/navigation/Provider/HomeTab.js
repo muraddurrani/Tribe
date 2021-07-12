@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Icon } from 'react-native-elements'
 
 import ProfileStack from './ProfileStack'
+import SettingsStack from './SettingsStack'
 
 import colours from '../../styles/colours'
 
@@ -16,6 +17,11 @@ function HomeTab() {
       <Tab.Screen name = "Profile" component = {ProfileStack} options = {{
         tabBarIcon: ({focused}) => (
           <Icon name = 'user' color = {colours.gray5}/>
+        )
+      }}/>
+      <Tab.Screen name = "Settings" component = {SettingsStack} options = {{
+        tabBarIcon: ({focused}) => (
+          <Icon name = 'settings' color = {colours.gray5}/>
         )
       }}/>
     </Tab.Navigator>
