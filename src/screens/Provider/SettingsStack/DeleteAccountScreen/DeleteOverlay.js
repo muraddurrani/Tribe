@@ -50,6 +50,7 @@ function DeleteOverlay({isVisible, onPress}) {
             then(() => {
               clearFromSearchProviders(user.uid)
               firestore().collection('Providers').doc(user.uid).delete()
+              firestore().collection('Users').doc(user.uid).delete()
               user.delete()
             }).
             catch((error) => {

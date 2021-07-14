@@ -39,6 +39,7 @@ function DeleteOverlay({isVisible, onPress}) {
           user.reauthenticateWithCredential(cred).
             then(() => {
               firestore().collection('Clients').doc(user.uid).delete()
+              firestore().collection('Users').doc(user.uid).delete()
               user.delete()
             }).
             catch((error) => {

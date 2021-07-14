@@ -55,6 +55,7 @@ function index({ navigation }) {
           data = {list}
           renderItem = {render}
           keyExtractor = {(item, index) => index}
+          showsVerticalScrollIndicator = {false}
         />
       </View>
     </ScreenView>
