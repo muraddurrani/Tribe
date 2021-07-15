@@ -7,54 +7,49 @@ import firestore from '@react-native-firebase/firestore'
 import ScreenView from '../../../../components/views/ScreenView'
 import Header from '../../../../components/molecules/Header'
 import Card from '../../../../components/atoms/Card'
-import PrimaryButton from '../../../../components/buttons/PrimaryButton'
-import ChatItem from './ChatItem'
+import MatchItem from './MatchItem'
 
-function index({ navigation }) {
-  const [chats, setChats] = useState([])
+function index() {
+  const [matches, setMatches] = useState([])
 
-  const render = ({item}) => (
-    <ChatItem
-      item = {item}
+  const render = (item) => (
+    <MatchItem
+      item = {item.item} index = {item.index}
     />
   )
 
   useEffect(() => {
-    const unsubscribe = firestore().collection('Clients').doc(auth().currentUser.uid).collection('Chats').orderBy('lastUpdated', 'desc').
+    const unsubscribe = firestore().collection('Providers').doc(auth().currentUser.uid).collection('PendingMatches').orderBy('createdAt', 'desc').
       onSnapshot(snapshot => {
-        setChats(snapshot.docs.map(doc => doc.data()))
+        setMatches(snapshot.docs.map(doc => doc.data()))
       })
 
     return unsubscribe
   }, [])
 
-
   return (
     <ScreenView>
-      <Header title = "Chats" />
+      <Header title = "Pending Matches" />
       {
-        chats.length == 0
+        matches.length == 0
           ? (
-            <Card style = {styles.card} >
-              <Text h2 h2Style = {styles.header}>No matches!</Text>
-              <Text>You don't have any matches right now.</Text>
-              <PrimaryButton
-                title = "Find Matches"
-                containerStyle = {styles.buttonContainer}
-                buttonStyle = {styles.button}
-                onPress = {() => console.log('hi')}
-              />
+            <Card style = {styles.card}>
+              <Text h2 h2Style = {styles.header}>No pending matches!</Text>
+              <Text>You don't have any pending matches.</Text>
+              <Text>Check again soon!</Text>
             </Card>
           )
           : (
             <FlatList
-              data = {chats}
+              style = {styles.list}
+              data = {matches}
               renderItem = {render}
               keyExtractor = {(item, index) => index}
               showsVerticalScrollIndicator = {false}
             />
           )
       }
+
     </ScreenView>
   )
 }
@@ -67,15 +62,13 @@ const styles = StyleSheet.create({
     padding: 30,
     alignItems: 'center'
   },
+  list: {
+    marginTop: 20,
+    alignSelf: 'center',
+    width: '95%'
+  },
   header: {
     marginBottom: 5
-  },
-  buttonContainer: {
-    marginTop: 30,
-    width: 160
-  },
-  button: {
-    width: 160
   }
 })
 

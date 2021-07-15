@@ -23,7 +23,7 @@ function index({ navigation }) {
           <Text style = {styles.featureText}>{getAge(userData.childDOB.seconds)} years old</Text>
         </View>
         <View style = {styles.rowView}>
-        <Icon name = "transgender" type = "font-awesome" size = {16} color = {colours.gray0} containerStyle = {styles.featureIcon}/>
+          <Icon name = "transgender" type = "font-awesome" size = {16} color = {colours.gray0} containerStyle = {styles.featureIcon}/>
           {userData.childGender.length !=0 && <Text style = {styles.featureText}>{userData.childGender}</Text>}
         </View>
       </LinearGradient>

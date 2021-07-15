@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { FlatList } from 'react-native'
+import { FlatList, StyleSheet } from 'react-native'
+import { Text } from 'react-native-elements'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 
 import ScreenView from '../../../../components/views/ScreenView'
 import Header from '../../../../components/molecules/Header'
+import Card from '../../../../components/atoms/Card'
 import ChatItem from './ChatItem'
 
 function index() {
-  const [chats, setChats] = useState(null)
+  const [chats, setChats] = useState([])
 
   const render = ({item}) => (
     <ChatItem
@@ -29,14 +31,38 @@ function index() {
   return (
     <ScreenView>
       <Header title = "Chats" />
-      <FlatList
-        data = {chats}
-        renderItem = {render}
-        keyExtractor = {(item, index) => index}
-        showsVerticalScrollIndicator = {false}
-      />
+      {
+        chats.length == 0
+          ? (
+            <Card style = {styles.card}>
+              <Text h2 h2Style = {styles.header}>No matches!</Text>
+              <Text>You don't have any matches right now.</Text>
+            </Card>
+          )
+          : (
+            <FlatList
+              data = {chats}
+              renderItem = {render}
+              keyExtractor = {(item, index) => index}
+              showsVerticalScrollIndicator = {false}
+            />
+          )
+      }
     </ScreenView>
   )
 }
+
+const styles = StyleSheet.create({
+  card: {
+    alignSelf: 'center',
+    marginTop: '45%',
+    width: '90%',
+    padding: 30,
+    alignItems: 'center'
+  },
+  header: {
+    marginBottom: 5
+  }
+})
 
 export default index

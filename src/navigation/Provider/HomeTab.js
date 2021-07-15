@@ -5,6 +5,7 @@ import { Icon } from 'react-native-elements'
 import ProfileStack from './ProfileStack'
 import SettingsStack from './SettingsStack'
 import ChatStack from './ChatStack'
+import MatchStack from './MatchStack'
 
 import colours from '../../styles/colours'
 
@@ -15,6 +16,11 @@ function HomeTab() {
     <Tab.Navigator initialRouteName = "Profile" screenOptions = {{headerShown: false}}
       tabBarOptions = {{showLabel: false, keyboardHidesTabBar: true, activeBackgroundColor: colours.gray3, inactiveBackgroundColor: colours.gray2}}
     >
+      <Tab.Screen name = "Match" component = {MatchStack} options = {{
+        tabBarIcon: ({focused}) => (
+          <Icon name = 'puzzle-plus-outline' type = 'material-community' color = {colours.gray5}/>
+        )
+      }}/>
       <Tab.Screen name = "Chat" component = {ChatStack} options = {{
         tabBarIcon: ({focused}) => (
           <Icon name = 'message-square' color = {colours.gray5}/>
