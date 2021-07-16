@@ -23,6 +23,13 @@ function index({ navigation }) {
     const unsubscribe = firestore().collection('Clients').doc(auth().currentUser.uid).collection('Chats').orderBy('lastUpdated', 'desc').
       onSnapshot(snapshot => {
         setChats(snapshot.docs.map(doc => doc.data()))
+    })
+
+    firestore().collection('Clients').doc(auth().currentUser.uid).collection('Matches').where('seen', '==', false).get().
+      then((snapshot) => {
+        snapshot.forEach(doc => {
+          firestore().collection('Clients').doc(auth().currentUser.uid).collection('Matches').doc(doc.id).update( { seen: true })
+        })
       })
 
     return unsubscribe

@@ -6,6 +6,7 @@ import ProfileStack from './ProfileStack'
 import SettingsStack from './SettingsStack'
 import ChatStack from './ChatStack'
 import MatchStack from './MatchStack'
+import HomeScreen from '../../screens/Provider/HomeScreen/index'
 
 import colours from '../../styles/colours'
 
@@ -13,12 +14,17 @@ const Tab = createBottomTabNavigator()
 
 function HomeTab() {
   return (
-    <Tab.Navigator initialRouteName = "Profile" screenOptions = {{headerShown: false}}
+    <Tab.Navigator initialRouteName = "Home" screenOptions = {{headerShown: false}}
       tabBarOptions = {{showLabel: false, keyboardHidesTabBar: true, activeBackgroundColor: colours.gray3, inactiveBackgroundColor: colours.gray2}}
     >
+      <Tab.Screen name = "Home" component = {HomeScreen} options = {{
+        tabBarIcon: ({focused}) => (
+          <Icon name = 'home' color = {colours.gray5}/>
+        )
+      }}/>
       <Tab.Screen name = "Match" component = {MatchStack} options = {{
         tabBarIcon: ({focused}) => (
-          <Icon name = 'puzzle-plus-outline' type = 'material-community' color = {colours.gray5}/>
+          <Icon name = 'puzzle-outline' type = 'material-community' color = {colours.gray5}/>
         )
       }}/>
       <Tab.Screen name = "Chat" component = {ChatStack} options = {{

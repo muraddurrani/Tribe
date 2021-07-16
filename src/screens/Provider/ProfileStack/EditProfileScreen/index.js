@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20
   },
   tile: {
-    marginTop: 20
+    marginTop: 15
   },
   profile: {
     alignSelf: 'center'
