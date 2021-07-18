@@ -4,6 +4,7 @@ import { Icon, Text, ListItem } from 'react-native-elements'
 import firestore from '@react-native-firebase/firestore'
 import { useNavigation } from '@react-navigation/native'
 
+import { mapObjectToSentence } from '../../../utilities/helper'
 import HomeTile from '../../../components/molecules/HomeTile'
 import ProfileIcon from '../../../components/molecules/ProfileIcon'
 import colours from '../../../styles/colours'
@@ -20,7 +21,7 @@ function MatchTile({data, style}) {
     if (data.length > 0) {
       setMentions(data.length - 1)
       const featured = data[0]
-      setService(featured.service)
+      setService(mapObjectToSentence(featured.attributes[0])[0])
       firestore().collection('Providers').doc(featured.ID).get().
         then(doc => {
           setPhoto(doc.data().profilePhoto)

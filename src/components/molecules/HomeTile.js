@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colours.gray0,
     borderRadius: 10,
-    width: '80%'
+    width: '90%'
   },
   headerView: {
     flexDirection: 'row',

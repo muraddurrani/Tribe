@@ -4,6 +4,7 @@ import { Icon, Text, ListItem } from 'react-native-elements'
 import firestore from '@react-native-firebase/firestore'
 import { useNavigation } from '@react-navigation/native'
 
+import { mapObjectToSentence } from '../../../utilities/helper'
 import HomeTile from '../../../components/molecules/HomeTile'
 import ProfileIcon from '../../../components/molecules/ProfileIcon'
 import colours from '../../../styles/colours'
@@ -12,6 +13,7 @@ function MatchTile({data, style}) {
   const [newMatch, setNewMatch] = useState(false)
   const [photo, setPhoto] = useState()
   const [name, setName] = useState('')
+  const [service, setService] = useState('')
   const [mentions, setMentions] = useState(0)
   const navigation = useNavigation()
   
@@ -23,6 +25,7 @@ function MatchTile({data, style}) {
         then(doc => {
           setPhoto(doc.data().profilePhoto)
           setName(doc.data().parentFullName)
+          setService(mapObjectToSentence(featured.attributes[0])[0])
         })
       setNewMatch(true)      
     } else {
@@ -43,6 +46,7 @@ function MatchTile({data, style}) {
               <ProfileIcon photo = {photo} size = {40}/>
               <ListItem.Content>
                 <ListItem.Title>{name}</ListItem.Title>
+                <ListItem.Subtitle>{service}</ListItem.Subtitle>
               </ListItem.Content>
                 {mentions > 0 && <Text>+{mentions} more</Text>}
             </ListItem>

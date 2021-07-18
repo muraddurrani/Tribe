@@ -23,17 +23,18 @@ function DatePicker({style, width, label, placeholder, onSelect, defaultValue = 
           value = {value}
           label = {label}
           placeholder = {placeholder}
-          rightIcon = {<Icon name = 'calendar'/>}
+          rightIcon = {<Icon name = 'clock'/>}
         />
       </TouchableHighlight>
       {expand && (
         <DateTimePicker
-          mode = "date"
+          mode = "time"
           value = {new Date()}
+          minuteInterval = {5}
           onChange = {(event, value) => {
             if (value !== undefined) {
               setExpand(false)
-              setValue(value.toDateString().substring(4))
+              setValue(value.toLocaleString().substring(11, 16))
               onSelect(value)
             }
           }}

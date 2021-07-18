@@ -5,6 +5,7 @@ import { Icon } from 'react-native-elements'
 import ProfileStack from './ProfileStack'
 import SettingsStack from './SettingsStack'
 import ChatStack from './ChatStack'
+import AppointmentStack from './AppointmentStack'
 import MatchStack from './MatchStack'
 import HomeScreen from '../../screens/Provider/HomeScreen/index'
 
@@ -25,6 +26,11 @@ function HomeTab() {
       <Tab.Screen name = "Match" component = {MatchStack} options = {{
         tabBarIcon: ({focused}) => (
           <Icon name = 'puzzle-outline' type = 'material-community' color = {colours.gray5}/>
+        )
+      }}/>
+      <Tab.Screen name = "Appointment" component = {AppointmentStack} options = {{
+        tabBarIcon: ({focused}) => (
+          <Icon name = 'calendar' color = {colours.gray5}/>
         )
       }}/>
       <Tab.Screen name = "Chat" component = {ChatStack} options = {{

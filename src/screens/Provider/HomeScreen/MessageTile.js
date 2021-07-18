@@ -39,7 +39,7 @@ function MessageTile({data, style}) {
       {
         newMessage
           ? (
-            <ListItem style = {styles.itemContainer} containerStyle = {styles.item} onPress = {() => navigation.navigate('Chats')}>
+            <ListItem style = {styles.itemContainer} containerStyle = {styles.item} onPress = {() => navigation.navigate('Chat')}>
               <ProfileIcon photo = {photo} size = {40}/>
               <ListItem.Content>
                 <ListItem.Title>{name}</ListItem.Title>

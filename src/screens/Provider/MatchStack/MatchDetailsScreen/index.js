@@ -42,12 +42,12 @@ function index({ navigation, route }) {
 
     await firestore().collection('Providers').doc(provID).collection('Matches').doc(ID).set({
       ID: ID,
-      service: mapObjectToSentence(attributes[0])[0]
+      attributes: attributes
     })
 
     await firestore().collection('Clients').doc(ID).collection('Matches').doc(provID).set({
       ID: provID,
-      service: mapObjectToSentence(attributes[0])[0],
+      attributes: attributes,
       seen: false
     })
 
