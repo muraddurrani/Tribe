@@ -13,11 +13,11 @@ function ClientDetails() {
           <Text h4>Create an account</Text>
           <Text>Set up your profile and tell us about your childs needs and preferences.</Text>
         </View>
-        <Image source = {require('../../../assets/images/DetailsGraphic1.png')}/>
+        <Image source = {require('../../../assets/images/Details1.png')} style = {{height: 140, width: 160}}/>
       </View>
 
       <View style = {{...styles.rowView, backgroundColor: colours.gray1}}>
-      <Image source = {require('../../../assets/images/DetailsGraphic2.png')}/>
+      <Image source = {require('../../../assets/images/Details2.png')}/>
         <View style = {styles.textBox}>
           <Text h4>Find professionals</Text>
           <Text>Search for professionals from a variety of fields and match with those you like best.</Text>
@@ -29,7 +29,7 @@ function ClientDetails() {
           <Text h4>Get connected!</Text>
           <Text>Let Tribe facilitate all your communication and scheduling needs.</Text>
         </View>
-        <Image source = {require('../../../assets/images/DetailsGraphic3.png')}/>
+        <Image source = {require('../../../assets/images/Details3.png')}/>
       </View>
 
     </View>

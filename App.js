@@ -5,7 +5,7 @@ import AuthProvider from './src/navigation/AuthProvider'
 import theme from './src/styles/theme'
 import Routes from './src/navigation/Routes'
 
-import LoginScreen from './src/screens/AuthStack/LoginScreen/index'
+import Onboarding from './src/screens/Client/CreateProfileStack/OnboardingScreen/index'
 
 function App() {
   return (

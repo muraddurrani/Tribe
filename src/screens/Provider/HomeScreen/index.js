@@ -21,16 +21,20 @@ function index() {
   useEffect(() => {
     const chatListener = firestore().collection('Providers').doc(user.uid).collection('Chats').where('read', '==', false).
       onSnapshot(snapshot => {
-        setChats(snapshot.docs.map(doc => {
-          return doc.data()
-        }))
+        if (snapshot) {
+          setChats(snapshot.docs.map(doc => {
+            return doc.data()
+          }))
+        }
       })
 
     const matchListener = firestore().collection('Providers').doc(user.uid).collection('PendingMatches').orderBy('createdAt', 'desc').
     onSnapshot(snapshot => {
-      setMatches(snapshot.docs.map(doc => {
-        return doc.data()
-      }))
+      if (snapshot) {
+        setMatches(snapshot.docs.map(doc => {
+          return doc.data()
+        }))
+      }
     })
 
     const nextAppListener = firestore().collection('Providers').doc(user.uid).collection('Appointments').orderBy('timeStart', 'asc').
@@ -45,9 +49,11 @@ function index() {
 
     const pendingListener = firestore().collection('Providers').doc(user.uid).collection('PendingAppointments').orderBy('timeStart', 'asc').
         onSnapshot(snapshot => {
-          setPending(snapshot.docs.map(doc => {
-            return doc.data()
-          }))
+          if (snapshot) {
+            setPending(snapshot.docs.map(doc => {
+              return doc.data()
+            }))
+          }
         })
 
         return chatListener, matchListener, nextAppListener, pendingListener

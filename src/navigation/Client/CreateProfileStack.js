@@ -4,6 +4,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import CreateProfile1 from '../../screens/Client/CreateProfileStack/CreateProfile1/index'
 import CreateProfile2 from '../../screens/Client/CreateProfileStack/CreateProfile2/index'
 import CreateProfile3 from '../../screens/Client/CreateProfileStack/CreateProfile3/index'
+import OnboardingScreen from '../../screens/Client/CreateProfileStack/OnboardingScreen/index'
 import IncompleteProfileScreen from '../../screens/Client/CreateProfileStack/IncompleteProfileScreen'
 import HomeTab from './HomeTab'
 
@@ -15,6 +16,7 @@ function CreateProfileStack(routes) {
       <Stack.Screen name="CP1" component={CreateProfile1} />
       <Stack.Screen name="CP2" component={CreateProfile2} />
       <Stack.Screen name="CP3" component={CreateProfile3} />
+      <Stack.Screen name="Onboarding" component={OnboardingScreen} />
       <Stack.Screen name="IncompleteProfile" component={IncompleteProfileScreen} />
       <Stack.Screen name="Home" component={HomeTab} />
     </Stack.Navigator>

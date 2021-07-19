@@ -46,7 +46,7 @@ function index({ navigation }) {
           then(() => storage().ref().child(filepath).getDownloadURL()).
           then(url => firestore().collection('Providers').doc(auth().currentUser.uid).update({ profilePhoto: url}))
       }
-      navigation.navigate('Home')
+      navigation.navigate('Onboarding')
     }
 
   return (

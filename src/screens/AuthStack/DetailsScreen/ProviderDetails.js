@@ -13,11 +13,11 @@ function ProviderDetails() {
           <Text h4>Create an account</Text>
           <Text>Set up your profile and tell us a bit about your service.</Text>
         </View>
-        <Image source = {require('../../../assets/images/DetailsGraphic4.png')}/>
+        <Image source = {require('../../../assets/images/Details4.png')}/>
       </View>
 
       <View style = {{...styles.rowView, backgroundColor: colours.gray1}}>
-      <Image source = {require('../../../assets/images/DetailsGraphic5.png')}/>
+      <Image source = {require('../../../assets/images/Details5.png')}/>
         <View style = {styles.textBox}>
           <Text h4>Match with clients</Text>
           <Text>Get connected with clients through Tribe’s matchmaking.</Text>
@@ -29,7 +29,7 @@ function ProviderDetails() {
           <Text h4>Schedule appointments</Text>
           <Text>Tribe handles all communication and scheduling so you can focus on what you do best.</Text>
         </View>
-        <Image source = {require('../../../assets/images/DetailsGraphic3.png')}/>
+        <Image source = {require('../../../assets/images/Details3.png')}/>
       </View>
 
     </View>

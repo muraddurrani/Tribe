@@ -25,7 +25,7 @@ function index({ navigation }) {
         sliderWidth = {Dimensions.get("window").width}
         onSnapToItem = {(index) => setIndex(index)}
       />
-      <View style = {{justifyContent: 'flex-end', paddingBottoom: 20}}>
+      <View style = {{justifyContent: 'flex-end'}}>
         <Pagination
           activeDotIndex = {index}
           dotsLength = {2}

@@ -12,6 +12,7 @@ import CreateProfile8 from '../../screens/Provider/CreateProfileStack/CreateProf
 import CreateProfile9 from '../../screens/Provider/CreateProfileStack/CreateProfile9/index'
 import CreateProfile10 from '../../screens/Provider/CreateProfileStack/CreateProfile10/index'
 import IncompleteProfileScreen from '../../screens/Provider/CreateProfileStack/IncompleteProfileScreen/index'
+import OnboardingScreen from '../../screens/Provider/CreateProfileStack/OnboardingScreen/index'
 import HomeTab from './HomeTab'
 
 const Stack = createStackNavigator()
@@ -29,6 +30,7 @@ function CreateProfileStack(routes) {
       <Stack.Screen name="CP8" component={CreateProfile8} />
       <Stack.Screen name="CP9" component={CreateProfile9} />
       <Stack.Screen name="CP10" component={CreateProfile10} />
+      <Stack.Screen name="Onboarding" component={OnboardingScreen} />
       <Stack.Screen name="IncompleteProfile" component={IncompleteProfileScreen} />
       <Stack.Screen name="Home" component={HomeTab} />
     </Stack.Navigator>
