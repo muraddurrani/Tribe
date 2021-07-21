@@ -49,6 +49,7 @@ function ParticularsForm() {
               width = {160}
               label = "Date of Birth"
               placeholder = "Select D.O.B"
+              maxDate = {new Date()}
               onSelect = {(date) => setDOB(new Date(date.setUTCHours(0, 0, 0, 0)))}
             />
             <Dropdown

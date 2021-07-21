@@ -12,10 +12,12 @@ function index({navigation}) {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    firestore().collection('Clients').doc(auth().currentUser.uid).collection('Matches').orderBy('attributes.0', 'asc').
+    const unsubscribe = firestore().collection('Clients').doc(auth().currentUser.uid).collection('Matches').orderBy('attributes.0', 'asc').
       onSnapshot(snapshot => {
         setData(snapshot.docs.map(doc => doc.data()))
       })
+
+    return unsubscribe
   }, [])
 
   const header = <Text h3Style = {{marginBottom: 10}} h3>Create appointment with</Text>
