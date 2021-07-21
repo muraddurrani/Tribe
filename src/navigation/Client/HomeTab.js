@@ -4,6 +4,7 @@ import { Icon } from 'react-native-elements'
 
 import ProfileStack from './ProfileStack'
 import SettingsStack from './SettingsStack'
+import SearchStack from './SearchStack'
 import ChatStack from './ChatStack'
 import AppointmentStack from './AppointmentStack'
 import HomeScreen from '../../screens/Client/HomeScreen/index'
@@ -20,6 +21,11 @@ function HomeTab() {
       <Tab.Screen name = "Home" component = {HomeScreen} options = {{
         tabBarIcon: ({focused}) => (
           <Icon name = 'home' color = {colours.gray5}/>
+        )
+      }}/>
+      <Tab.Screen name = "Search" component = {SearchStack} options = {{
+        tabBarIcon: ({focused}) => (
+          <Icon name = 'search' color = {colours.gray5}/>
         )
       }}/>
       <Tab.Screen name = "Appointment" component = {AppointmentStack} options = {{
