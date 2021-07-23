@@ -7,6 +7,7 @@ import GradientView from '../../../../components/views/GradientView'
 import MultiChoiceChecklist from '../../../../components/molecules/MultiChoiceChecklist'
 import Card from '../../../../components/atoms/Card'
 import PrimaryButton from '../../../../components/buttons/PrimaryButton'
+import SecondaryButton from '../../../../components/buttons/SecondaryButton'
 
 import colours from '../../../../styles/colours'
 
@@ -20,6 +21,8 @@ function index({ navigation, route }) {
   const [locationData, setLocationData] = useState([])
   const [choices, setChoices] = useState({})
   const [expand, setExpand] = useState(false)
+  const [firstChecked, setFirstChecked] = useState([])
+  const [secondChecked, setSecondChecked] = useState([])
 
   const onCheck = (item) => {
     if (_.has(choices, item.id)) {
@@ -40,6 +43,8 @@ function index({ navigation, route }) {
       const initData = data.splice(0, 2)
       setData(initData)
       setLocationData(data)
+      setFirstChecked(new Array(initData.length).fill(false))
+      setSecondChecked(new Array(data.length).fill(false))
     })
   }, [])
 
@@ -56,6 +61,7 @@ function index({ navigation, route }) {
             width = {'95%'}
             data = {data}
             onCheck = {onCheck}
+            checkArray = {firstChecked}
           />
           <CheckBox
             title = {<Text style={{flex:1, marginLeft: 34}} h4>Venue Based</Text>}
@@ -76,16 +82,25 @@ function index({ navigation, route }) {
                 width = {'100%'}
                 data = {locationData}
                 onCheck = {onCheck}
+                checkArray = {secondChecked}
               />
             )
           }
         </View>
-        <PrimaryButton
-          title = "Next"
-          disabled = {Object.keys(choices).length === 0}
-          containerStyle = {styles.button}
-          onPress = {() => submit()}
-        />
+
+        <View style = {styles.rowView}>
+          <SecondaryButton
+            title = "Back"
+            containerStyle = {styles.button}
+            onPress = {() => navigation.goBack()}
+          />
+          <PrimaryButton
+            title = "Next"
+            disabled = {Object.keys(choices).length === 0}
+            containerStyle = {styles.button}
+            onPress = {() => submit()}
+          />
+        </View>
       </Card>
     </GradientView>
   )
@@ -126,7 +141,11 @@ const styles = StyleSheet.create({
     borderBottomColor: colours.gray2
   },
   button: {
-    marginTop: 30
+    margin: 10
+  },
+  rowView: {
+    flexDirection: 'row',
+    marginTop: 20
   }
 })
 

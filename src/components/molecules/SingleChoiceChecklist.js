@@ -51,7 +51,8 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colours.gray6,
-    fontWeight: '400'
+    fontWeight: '400',
+    textTransform: 'capitalize'
   }
 })
 

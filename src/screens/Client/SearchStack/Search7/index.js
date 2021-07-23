@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet } from 'react-native'
 import { Text } from 'react-native-elements'
 import _ from 'lodash'
 
@@ -7,6 +7,7 @@ import GradientView from '../../../../components/views/GradientView'
 import SingleChoiceChecklist from '../../../../components/molecules/SingleChoiceChecklist'
 import Card from '../../../../components/atoms/Card'
 import PrimaryButton from '../../../../components/buttons/PrimaryButton'
+import SecondaryButton from '../../../../components/buttons/SecondaryButton'
 
 const data = [{id: 0, name: 'Just once'},
               {id: 1, name: 'Once a week'},
@@ -42,12 +43,20 @@ function index({ navigation, route }) {
           data = {data}
           onCheck = {onCheck}
         />
-        <PrimaryButton
-          title = "View Results"
-          disabled = {!choice}
-          containerStyle = {styles.button}
-          onPress = {() => submit()}
-        />
+
+        <View style = {styles.rowView}>
+          <SecondaryButton
+            title = "Back"
+            containerStyle = {styles.button}
+            onPress = {() => navigation.goBack()}
+          />
+          <PrimaryButton
+            title = "View Results"
+            disabled = {!choice}
+            containerStyle = {styles.button}
+            onPress = {() => submit()}
+          />
+        </View>
       </Card>
     </GradientView>
   )
@@ -76,7 +85,11 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   button: {
-    marginTop: 30
+    margin: 10
+  },
+  rowView: {
+    flexDirection: 'row',
+    marginTop: 20
   }
 })
 

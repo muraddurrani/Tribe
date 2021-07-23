@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Image, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet } from 'react-native'
 import { Text } from 'react-native-elements'
 import _ from 'lodash'
 
@@ -8,6 +8,7 @@ import GradientView from '../../../../components/views/GradientView'
 import MultiChoiceChecklist from '../../../../components/molecules/MultiChoiceChecklist'
 import Card from '../../../../components/atoms/Card'
 import PrimaryButton from '../../../../components/buttons/PrimaryButton'
+import SecondaryButton from '../../../../components/buttons/SecondaryButton'
 
 function index({ navigation, route }) {
 
@@ -15,6 +16,7 @@ function index({ navigation, route }) {
 
   const [data, setData] = useState([])
   const [choices, setChoices] = useState({})
+  const [checked, setChecked] = useState([])
 
   const onCheck = (item) => {
     if (_.has(choices, item.id)) {
@@ -33,6 +35,7 @@ function index({ navigation, route }) {
   useEffect(() => {
     fetchProviderAttribute('3').then((data) => {
       setData(data)
+      setChecked(new Array(data.length).fill(false))
     })
   }, [])
 
@@ -47,14 +50,23 @@ function index({ navigation, route }) {
           height = {310}
           width = {'95%'}
           data = {data}
+          checkArray = {checked}
           onCheck = {onCheck}
         />
-        <PrimaryButton
-          title = "Next"
-          disabled = {Object.keys(choices).length === 0}
-          containerStyle = {styles.button}
-          onPress = {() => submit()}
-        />
+
+        <View style = {styles.rowView}>
+          <SecondaryButton
+            title = "Back"
+            containerStyle = {styles.button}
+            onPress = {() => navigation.goBack()}
+          />
+          <PrimaryButton
+            title = "Next"
+            disabled = {Object.keys(choices).length === 0}
+            containerStyle = {styles.button}
+            onPress = {() => submit()}
+          />
+        </View>
       </Card>
     </GradientView>
   )
@@ -83,7 +95,11 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   button: {
-    marginTop: 30
+    margin: 10
+  },
+  rowView: {
+    flexDirection: 'row',
+    marginTop: 20
   }
 })
 
