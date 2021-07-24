@@ -11,12 +11,10 @@ import PrimaryButton from '../../../../components/buttons/PrimaryButton'
 import SecondaryButton from '../../../../components/buttons/SecondaryButton'
 
 function index({ navigation, route }) {
-
-  let query = route.params
-
   const [data, setData] = useState([])
   const [choices, setChoices] = useState({})
   const [checked, setChecked] = useState([])
+  let query = route.params
 
   const onCheck = (item) => {
     if (_.has(choices, item.id)) {
@@ -28,7 +26,7 @@ function index({ navigation, route }) {
   }
 
   const submit = () => {
-    query.push(choices)
+    query[1] = choices
     navigation.navigate('Search4', query)
   }
 
@@ -51,7 +49,7 @@ function index({ navigation, route }) {
           width = {'95%'}
           data = {data}
           checkArray = {checked}
-                    onCheck = {onCheck}
+          onCheck = {onCheck}
         />
 
         <View style = {styles.rowView}>
@@ -81,14 +79,13 @@ const styles = StyleSheet.create({
     width: 40,
     position: 'absolute',
     top: 15,
-    right: 20
+    right: 15
   },
   card: {
     paddingTop: 40,
-    paddingBottom: 30,
-    paddingHorizontal: 15,
+    paddingBottom: 20,
     marginTop: '20%',
-    width: '95%',
+    width: '90%',
     alignItems: 'center'
   },
   checklist: {

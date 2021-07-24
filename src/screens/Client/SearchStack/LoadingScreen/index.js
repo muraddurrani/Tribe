@@ -6,7 +6,7 @@ import colours from '../../../../styles/colours'
 function index() {
   return (
     <LottieView
-    style = {{flex: 1, backgroundColor: colours.primary}}
+    style = {{flex: 1, backgroundColor: colours.midpoint1}}
     source = {require('../../../../assets/animations/9953-loading-round.json')} autoPlay loop/>
   )
 }

@@ -1,42 +1,49 @@
 import React from 'react'
-import { FlatList, StyleSheet } from 'react-native'
+import { StyleSheet, View, Dimensions } from 'react-native'
 import { Icon } from 'react-native-elements'
-
+import Carousel from 'react-native-snap-carousel'
 import ScreenView from '../../../../components/views/ScreenView'
-import ResultCard from './ResultCard'
+import ProviderCard from './ProviderCard'
 import PrimaryButton from '../../../../components/buttons/PrimaryButton'
 
 import colours from '../../../../styles/colours'
 
-function index({ navigation, route}) {
+function index({ navigation, route }) {
+  const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window')
+  let result = route.params
 
-  let {result, query} = route.params
-
-
-  const render = ({item}) => (
-    <ResultCard
-      attributes = {item.data}
-      id = {item.id}
-      frequency = {query[5]}
-    />
-  )
+  const render = (item) => {
+    if (item.index == result.length - 1) {
+      return (
+        <View>
+          <ProviderCard data = {item.item} />
+        </View>
+      )
+    } else {
+      return (
+        <View>
+          <ProviderCard data = {item.item} />
+          <Icon name = 'chevron-down' size = {30} containerStyle = {styles.downIcon}/>
+        </View>
+      )
+    }
+  }
 
   return (
     <ScreenView style = {styles.container}>
-      <FlatList
-        style = {styles.list}
-        contentContainerStyle = {styles.listContent}
-        data = {result}
-        renderItem = {render}
-        keyExtractor = {(item, index) => index}
-      />
       <PrimaryButton
-        title = "Restart Search"
-        icon = {<Icon name = "rotate-ccw" color = {colours.gray0}/>}
-        containerStyle = {styles.buttonContainer}
-        buttonStyle = {styles.button}
-        titleStyle = {styles.buttonTitle}
+        title = {<Icon name = 'x' color = {colours.gray3}/>}
+        containerStyle = {styles.endContainer}
+        buttonStyle = {styles.endButton}
+        titleStyle = {{color: colours.gray3}}
         onPress = {() => navigation.popToTop()}
+      />
+      <Carousel
+        vertical
+        data = {result}
+        itemHeight = {viewportHeight}
+        sliderHeight = {viewportHeight}
+        renderItem = {render}
       />
     </ScreenView>
   )
@@ -50,21 +57,22 @@ const styles = StyleSheet.create({
   list: {
     width: '100%',
   },
-  listContent: {
-    alignItems: 'center',
-    paddingTop: 40,
-    paddingBottom: 50
-  },
-  buttonContainer: {
+  downIcon: {
     position: 'absolute',
-    bottom: 15,
-    width: 200
+    bottom: 40,
+    alignSelf: 'center'
   },
-  button: {
-    width: 200
+  endContainer: {
+    width: 40,
+    position: 'absolute',
+    alignSelf: 'center',
+    top: 15,
+    right: 15,
+    zIndex: 1
   },
-  buttonTitle: {
-    marginLeft: 10
+  endButton: {
+    width: 40,
+    backgroundColor: 'rgba(110, 110, 110 ,0.7)'
   }
 })
 

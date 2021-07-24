@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native'
 import { Text, Icon } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient'
 import auth from '@react-native-firebase/auth'
+import { StackActions } from '@react-navigation/native'
 import firestore from '@react-native-firebase/firestore'
 
 import { mapObjectToSentence } from '../../../../utilities/helper'
@@ -53,7 +54,8 @@ function index({ navigation, route }) {
 
     await removeFromPending()
 
-    navigation.goBack()
+    navigation.dispatch(StackActions.popToTop())
+    navigation.navigate('Chat')
   }
 
   const dismissMatch = async () => {

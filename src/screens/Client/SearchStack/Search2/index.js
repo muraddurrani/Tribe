@@ -1,14 +1,15 @@
-import React, { useState, useCallback } from 'react'
-import { Image, Keyboard, StyleSheet } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Image, Keyboard, StyleSheet, View } from 'react-native'
 import { Text, Input, Icon } from 'react-native-elements'
-import { useFocusEffect } from '@react-navigation/native'
 import _ from 'lodash'
 
 import { fetchProviderAttribute } from '../../../../utilities/helper'
-import KeyboardGradientView from '../../../../components/views/KeyboardGradientView'
+import GradientView from '../../../../components/views/GradientView'
 import SingleChoiceChecklist from '../../../../components/molecules/SingleChoiceChecklist'
 import Card from '../../../../components/atoms/Card'
 import PrimaryButton from '../../../../components/buttons/PrimaryButton'
+import SecondaryButton from '../../../../components/buttons/SecondaryButton'
+import colours from '../../../../styles/colours'
 
 
 function index({ navigation }) {
@@ -17,8 +18,7 @@ function index({ navigation }) {
   const [data, setData] = useState([])
   const [search, setSearch] = useState('')
   const [choice, setChoice] = useState(null)
-
-  let query = []
+  let query = {}
 
   const onCheck = (item) => {
     setChoice({[item.id]: item.name})
@@ -32,26 +32,19 @@ function index({ navigation }) {
   }
 
   const submit = () => {
-    query.push(choice)
+    query[0] = choice
     navigation.navigate('Search3', query)
   }
 
-  useFocusEffect(
-    useCallback(() => {
-      fetchProviderAttribute('0').then((data) => {
-        setData(data)
-        setMasterData(data)
-      })
-
-      return () => {
-        setSearch('')
-        setChoice(null)
-      }
-    }, [])
-  )
+  useEffect(() => {
+    fetchProviderAttribute('0').then((data) => {
+      setData(data)
+      setMasterData(data)
+    })
+  }, [])
 
   return (
-    <KeyboardGradientView style = {styles.container}>
+    <GradientView style = {styles.container}>
       <Image source = {require('../../../../assets/images/Logo_Icon_White.png')} style = {styles.image} />
       <Card style = {styles.card}>
         <Text h4>Which type of service are you looking for?</Text>
@@ -66,11 +59,17 @@ function index({ navigation }) {
             filterSearch('')
           }}/>}
         />
-          <SingleChoiceChecklist
-            height = {280}
-            width = {'95%'}
-            data = {data}
-            onCheck = {onCheck}
+        <SingleChoiceChecklist
+          height = {310}
+          width = {'95%'}
+          data = {data}
+          onCheck = {onCheck}
+        />
+        <View style = {styles.rowView}>
+          <SecondaryButton
+            title = "Back"
+            containerStyle = {styles.button}
+            onPress = {() => navigation.goBack()}
           />
           <PrimaryButton
             title = "Next"
@@ -78,8 +77,9 @@ function index({ navigation }) {
             containerStyle = {styles.button}
             onPress = {() => submit()}
           />
+        </View>
       </Card>
-    </KeyboardGradientView>
+    </GradientView>
   )
 }
 
@@ -92,14 +92,13 @@ const styles = StyleSheet.create({
     width: 40,
     position: 'absolute',
     top: 15,
-    right: 20
+    right: 15
   },
   card: {
     paddingTop: 40,
-    paddingBottom: 30,
-    paddingHorizontal: 15,
+    paddingBottom: 20,
     marginTop: '20%',
-    width: '95%',
+    width: '90%',
     alignItems: 'center'
   },
   searchBar: {
@@ -107,7 +106,11 @@ const styles = StyleSheet.create({
     height: 60
   },
   button: {
-    marginTop: 30
+    margin: 10
+  },
+  rowView: {
+    flexDirection: 'row',
+    marginTop: 20
   }
 })
 

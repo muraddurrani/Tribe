@@ -11,14 +11,15 @@ function index({ navigation }) {
   return (
     <GradientView style = {styles.container}>
       <View style = {styles.iconContainer}>
-        <Icon name = 'search' size = {120} color = {'rgba(253, 254, 253, 0.9)'} containerStyle = {styles.icon}/>
+        <Icon name = 'search' size = {120} color = {'rgba(255, 255, 255, 0.9)'} containerStyle = {styles.icon}/>
       </View>
       <Text h1>Looking for a service?</Text>
-      <Text h4Style = {styles.text} h4>Answer a few short questions and choose from a selection of professionals best suited to your needs!</Text>
+      <Text style = {styles.text}>Answer a few short questions and choose from a selection of professionals best suited to your needs!</Text>
       <PrimaryButton
         title = "Begin Search"
         containerStyle = {styles.button}
         buttonStyle = {styles.button}
+        titleStyle = {{color: colours.midpoint1}}
         onPress = {() => navigation.navigate('Search2')}
       />
     </GradientView>
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     padding: 30,
-    backgroundColor: 'rgba(118, 223, 194, 0.6)',
+    backgroundColor: 'rgba(255, 180, 125, 0.6)',
     width: 220,
     borderRadius: 110,
     marginTop: '25%',
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     padding: 20,
     width: 160,
     borderRadius: 80,
-    backgroundColor: 'rgba(172, 240, 221, 0.6)'
+    backgroundColor: 'rgba(255, 205, 169, 0.6)'
   },
   text: {
     color: colours.gray0,
@@ -50,7 +51,8 @@ const styles = StyleSheet.create({
     marginBottom: 50
   },
   button: {
-    width: 160
+    width: 160,
+    backgroundColor: colours.gray0
   }
 })
 

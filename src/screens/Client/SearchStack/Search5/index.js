@@ -11,9 +11,7 @@ import PrimaryButton from '../../../../components/buttons/PrimaryButton'
 import SecondaryButton from '../../../../components/buttons/SecondaryButton'
 
 function index({ navigation, route }) {
-
   let query = route.params
-
   const [data, setData] = useState([])
   const [choices, setChoices] = useState({})
   const [checked, setChecked] = useState([])
@@ -28,7 +26,7 @@ function index({ navigation, route }) {
   }
 
   const submit = () => {
-    query.push(choices)
+    query[3] = choices
     navigation.navigate('Search6', query)
   }
 
@@ -47,13 +45,12 @@ function index({ navigation, route }) {
         <Text>(Select all that apply)</Text>
         <MultiChoiceChecklist
           style = {styles.checklist}
-          height = {310}
+          height = {360}
           width = {'95%'}
           data = {data}
           checkArray = {checked}
           onCheck = {onCheck}
         />
-
         <View style = {styles.rowView}>
           <SecondaryButton
             title = "Back"
@@ -81,25 +78,24 @@ const styles = StyleSheet.create({
     width: 40,
     position: 'absolute',
     top: 15,
-    right: 20
+    right: 15
   },
   card: {
+    alignItems: 'center',
     paddingTop: 40,
-    paddingBottom: 30,
-    paddingHorizontal: 15,
-    marginTop: '20%',
-    width: '95%',
-    alignItems: 'center'
+    paddingBottom: 20,
+    width: '90%',
+    marginTop: '20%'
   },
   checklist: {
-    marginTop: 20
-  },
-  button: {
-    margin: 10
+    marginTop: 10
   },
   rowView: {
     flexDirection: 'row',
     marginTop: 20
+  },
+  button: {
+    marginHorizontal: 10
   }
 })
 

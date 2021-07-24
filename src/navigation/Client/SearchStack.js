@@ -17,7 +17,7 @@ const Stack = createStackNavigator()
 function SearchStack({navigation, route}) {
   useLayoutEffect(() => {
     const routeName = getFocusedRouteNameFromRoute(route)
-    if (routeName && routeName != "Search") {
+    if (routeName && routeName != "Search1") {
       navigation.setOptions({tabBarVisible: false})
     } else {
       navigation.setOptions({tabBarVisible: true})
@@ -25,7 +25,7 @@ function SearchStack({navigation, route}) {
   }, [navigation, route])
 
   return (
-    <Stack.Navigator initialRouteName = "Search0" screenOptions = {{headerShown: false}}>
+    <Stack.Navigator initialRouteName = "Search1" screenOptions = {{headerShown: false}}>
       <Stack.Screen name = "Search1" component = {Search1} />
       <Stack.Screen name = "Search2" component = {Search2} />
       <Stack.Screen name = "Search3" component = {Search3} />

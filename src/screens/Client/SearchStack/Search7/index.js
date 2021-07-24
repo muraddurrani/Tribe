@@ -16,9 +16,7 @@ const data = [{id: 0, name: 'Just once'},
               {id: 4, name: 'I have not decided'}]
 
 function index({ navigation, route }) {
-
   let query = route.params
-
   const [choice, setChoice] = useState()
 
   const onCheck = (item) => {
@@ -26,7 +24,7 @@ function index({ navigation, route }) {
   }
 
   const submit = () => {
-    query.push(choice)
+    query[5] = choice
     navigation.navigate('GenerateResults', query)
   }
 
@@ -51,7 +49,7 @@ function index({ navigation, route }) {
             onPress = {() => navigation.goBack()}
           />
           <PrimaryButton
-            title = "View Results"
+            title = "Complete"
             disabled = {!choice}
             containerStyle = {styles.button}
             onPress = {() => submit()}
@@ -71,25 +69,24 @@ const styles = StyleSheet.create({
     width: 40,
     position: 'absolute',
     top: 15,
-    right: 20
+    right: 15
   },
   card: {
+    alignItems: 'center',
     paddingTop: 40,
-    paddingBottom: 30,
-    paddingHorizontal: 15,
-    marginTop: '20%',
-    width: '95%',
-    alignItems: 'center'
+    paddingBottom: 20,
+    width: '90%',
+    marginTop: '20%'
   },
   checklist: {
-    marginTop: 20
-  },
-  button: {
-    margin: 10
+    marginTop: 10
   },
   rowView: {
     flexDirection: 'row',
     marginTop: 20
+  },
+  button: {
+    marginHorizontal: 10
   }
 })
 

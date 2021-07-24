@@ -8,15 +8,11 @@ import MultiChoiceChecklist from '../../../../components/molecules/MultiChoiceCh
 import Card from '../../../../components/atoms/Card'
 import PrimaryButton from '../../../../components/buttons/PrimaryButton'
 import SecondaryButton from '../../../../components/buttons/SecondaryButton'
-
 import colours from '../../../../styles/colours'
-
 import { fetchProviderAttribute } from '../../../../utilities/helper'
 
 function index({ navigation, route }) {
-
   let query = route.params
-
   const [data, setData] = useState([])
   const [locationData, setLocationData] = useState([])
   const [choices, setChoices] = useState({})
@@ -34,7 +30,7 @@ function index({ navigation, route }) {
   }
 
   const submit = async () => {
-    query.push(choices)
+    query[2] = choices
     navigation.navigate('Search5', query)
   }
 
@@ -42,8 +38,8 @@ function index({ navigation, route }) {
     fetchProviderAttribute('2').then((data) => {
       const initData = data.splice(0, 2)
       setData(initData)
-      setLocationData(data)
       setFirstChecked(new Array(initData.length).fill(false))
+      setLocationData(data)
       setSecondChecked(new Array(data.length).fill(false))
     })
   }, [])
@@ -52,19 +48,19 @@ function index({ navigation, route }) {
     <GradientView style = {styles.container}>
       <Image source = {require('../../../../assets/images/Logo_Icon_White.png')} style = {styles.image} />
       <Card style = {styles.card}>
-        <Text h4>Which venues/locations are suitable for you?</Text>
+        <Text h4>Which locations are suitable for you?</Text>
         <Text>(Select all that apply)</Text>
-        <View style = {styles.checklistView}>
-          <MultiChoiceChecklist
-            style = {styles.topChecklist}
-            height = {120}
-            width = {'95%'}
-            data = {data}
-            onCheck = {onCheck}
-            checkArray = {firstChecked}
-          />
+        <MultiChoiceChecklist
+          style = {styles.checklist}
+          height = {120}
+          width = {'95%'}
+          data = {data}
+          onCheck = {onCheck}
+          checkArray = {firstChecked}
+        />
+        <View style = {{width: '95%'}}>
           <CheckBox
-            title = {<Text style={{flex:1, marginLeft: 34}} h4>Venue Based</Text>}
+            title = {<Text style={{flex:1, marginLeft: 34}}>Venue Based</Text>}
             containerStyle = {styles.checkbox}
             iconRight
             uncheckedIcon = 'chevron-right'
@@ -72,22 +68,20 @@ function index({ navigation, route }) {
             checkedColor = {colours.primary}
             size = {16}
             checked = {expand}
-            onPress = {() => setExpand(!expand)}
+            onPress = {() => setExpand(true)}
           />
-          {
-            expand && (
-              <MultiChoiceChecklist
-                style = {styles.topChecklist}
-                height = {150}
-                width = {'100%'}
-                data = {locationData}
-                onCheck = {onCheck}
-                checkArray = {secondChecked}
-              />
-            )
-          }
         </View>
-
+        {
+          expand && (
+            <MultiChoiceChecklist
+              height = {190}
+              width = {'95%'}
+              data = {locationData}
+              checkArray = {secondChecked}
+              onCheck = {onCheck}
+            />
+          )
+        }
         <View style = {styles.rowView}>
           <SecondaryButton
             title = "Back"
@@ -115,37 +109,29 @@ const styles = StyleSheet.create({
     width: 40,
     position: 'absolute',
     top: 15,
-    right: 20
+    right: 15
   },
   card: {
+    alignItems: 'center',
     paddingTop: 40,
-    paddingBottom: 30,
-    paddingHorizontal: 15,
-    marginTop: '20%',
-    width: '95%',
-    alignItems: 'center'
+    paddingBottom: 20,
+    width: '90%',
+    marginTop: '20%'
   },
-  checklistView: {
-    width: '95%',
-    borderWidth: 2,
-    borderRadius: 20,
-    borderColor: colours.gray2,
-    marginTop: 20,
-  },
-  topChecklist: {
-    borderWidth: 0
+  checklist: {
+    marginTop: 10
   },
   checkbox: {
     backgroundColor: 'transparent',
     borderColor: 'transparent',
     borderBottomColor: colours.gray2
   },
-  button: {
-    margin: 10
-  },
   rowView: {
     flexDirection: 'row',
     marginTop: 20
+  },
+  button: {
+    marginHorizontal: 10
   }
 })
 
