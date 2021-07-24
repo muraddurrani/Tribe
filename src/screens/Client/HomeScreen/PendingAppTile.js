@@ -49,7 +49,7 @@ function MessageTile({data, style}) {
       {
         app
           ? (
-            <TouchableOpacity onPress = {() => navigation.navigate('Appointment')}>
+            <TouchableOpacity onPress = {() => navigation.navigate('Appointment', { screen: 'Appointments', params: {start: 1} })}>
               <View style = {styles.rowView}>
                 <View style = {styles.dateView}>
                   <Text h4>{date}</Text>

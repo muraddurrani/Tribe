@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, FlatList } from 'react-native'
-import { Text, Icon, ListItem } from 'react-native-elements'
+import { View, StyleSheet } from 'react-native'
+import { Text, Icon } from 'react-native-elements'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import { useNavigation } from '@react-navigation/native'
+import BottomOptions from '../../../../../components/molecules/BottomOptions'
+import TertiaryButton from '../../../../../components/buttons/TertiaryButton'
 
 import colours from '../../../../../styles/colours'
 
@@ -26,28 +28,6 @@ function Bubble({doc, ID, timeStart, timeEnd, location, service}) {
     firestore().collection('Providers').doc(ID).collection('Appointments').doc(doc).update( {cancelled: true })
   }
 
-  const options = [
-    {
-      title: 'Reschedule',
-      onPress: () => reschedule()
-    },
-    {
-      title: 'Cancel Appointment',
-      onPress: () => cancel()
-    }]
-
-  const render = ({item}) => (
-    <ListItem
-      onPress = {() => item.onPress()}
-      containerStyle = {{backgroundColor: colours.gray0, paddingVertical: 10}}
-      style = {{borderBottomColor: colours.gray3, borderBottomWidth: 1}}
-    >
-      <ListItem.Content>
-        <ListItem.Title>{item.title}</ListItem.Title>
-      </ListItem.Content>
-    </ListItem>
-  )
-
   useEffect(() => {
     let ismounted = true
     firestore().collection('Providers').doc(ID).get().
@@ -62,7 +42,7 @@ function Bubble({doc, ID, timeStart, timeEnd, location, service}) {
 
   return (
     <View style = {styles.container}>
-      <Icon name = 'more-vertical' color = {colours.gray6} containerStyle = {showOptions ? styles.pressed : styles.options} onPress = {() => setShowOptions(!showOptions)} />
+      <Icon name = 'more-vertical' color = {colours.gray6} containerStyle = {styles.options} onPress = {() => setShowOptions(true)} />
       <Text h4>{name}</Text>
       <Text>{timeStart.toLocaleString().substring(11, 16)} - {timeEnd.toLocaleString().substring(11, 16)}</Text>
       <Text>{service}</Text>
@@ -70,14 +50,28 @@ function Bubble({doc, ID, timeStart, timeEnd, location, service}) {
         <Icon name = "map-pin" color = {colours.gray6} size = {16} containerStyle = {styles.location}/>
         <Text>{location}</Text>
       </View>
-      {showOptions && (
-        <FlatList
-          style = {styles.list}
-          data = {options}
-          keyExtractor = {(item, index) => index}
-          renderItem = {render}
-        />
-      )}
+      <BottomOptions isVisible = {showOptions} onPress = {() => setShowOptions(false)}>
+        <View style = {styles.buttonView}>
+          <TertiaryButton
+            title = "Reschedule Appointment"
+            style = {styles.button}
+            titleStyle = {styles.buttonTitle}
+            onPress = {() => {
+              setShowOptions(false)
+              reschedule()
+            }}
+          />
+          <TertiaryButton
+            title = "Cancel Appointment"
+            style = {styles.button}
+            titleStyle = {styles.buttonTitle}
+            onPress = {() => {
+              setShowOptions(false)
+              cancel()
+            }}
+          />
+        </View>
+      </BottomOptions>
     </View>
   )
 }
@@ -108,17 +102,6 @@ const styles = StyleSheet.create({
     top: 15,
     zIndex: 1
   },
-  pressed: {
-    position: 'absolute',
-    padding: 3,
-    right: 15,
-    top: 15,
-    zIndex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.2)'
-  },
-  text: {
-    color: colours.gray6
-  },
   rowView: {
     marginTop: 15,
     flexDirection: 'row',
@@ -127,10 +110,23 @@ const styles = StyleSheet.create({
   location: {
     marginRight: 5
   },
-  rightView: {
-    position: 'absolute',
-    right: 15,
-    top: 15
+  buttonView: {
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    backgroundColor: colours.gray0
+  },
+  button: {
+    backgroundColor: colours.gray0,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    height: 60,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonTitle: {
+    fontSize: 16,
+    fontWeight: '400'
   }
 })
 

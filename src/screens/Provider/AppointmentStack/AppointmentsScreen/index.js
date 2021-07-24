@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Icon } from 'react-native-elements'
+import { useIsFocused } from '@react-navigation/native'
 
 import Switcher from './Switcher'
 import Header from '../../../../components/molecules/Header'
@@ -10,8 +11,16 @@ import Pending from './Pending/Pending'
 import Requests from './Requests/Requests'
 import colours from '../../../../styles/colours'
 
-function index({navigation}) {
+function index({navigation, route}) {
   const [index, setIndex] = useState(0)
+  const isFocused = useIsFocused()
+
+  useEffect(() => {
+    if (isFocused && route.params) {
+      const first = route.params.start
+      setIndex(first)
+    }
+  }, [isFocused])
 
   return (
     <ScreenView style = {styles.container}>

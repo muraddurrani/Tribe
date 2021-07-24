@@ -10,6 +10,7 @@ import MessageInput from './MessageInput'
 import TertiaryButton from '../../../../components/buttons/TertiaryButton'
 import colours from '../../../../styles/colours'
 import { mapObjectToSentence } from '../../../../utilities/helper'
+import BottomOptions from '../../../../components/molecules/BottomOptions'
 
 function index({ navigation, route }) {
   const {ID, msgRef, fullName, profilePhoto} = route.params
@@ -63,16 +64,25 @@ function index({ navigation, route }) {
                 name = 'calendar-plus-o'
                 type = 'font-awesome'
                 color = {colours.gray0}
-                containerStyle = {showApp ? styles.iconPressed : styles.icon}
-                onPress = {() => setShowApp(!showApp)}/>
-              {
-                showApp && <TertiaryButton title = "Create Appointment" style = {styles.appButton} titleStyle = {styles.title} onPress = {() => createAppointment()} />
-              }
+                onPress = {() => setShowApp(true)}/>
             </View>
           }
         />
         <MessageView messages = {messages} />
       <MessageInput onPress = {onSend} />
+      <BottomOptions isVisible = {showApp} onPress = {() => setShowApp(false)}>
+        <View style = {styles.buttonView}>
+          <TertiaryButton
+            title = "Create Appointment"
+            style = {styles.button}
+            titleStyle = {styles.buttonTitle}
+            onPress = {() => {
+              setShowApp(false)
+              createAppointment()
+            }}
+          />
+        </View>
+      </BottomOptions>
     </ScreenView>
   )
 }
@@ -83,25 +93,22 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 20
   },
-  icon: {
-    padding: 4,
+  buttonView: {
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    backgroundColor: colours.gray0
   },
-  iconPressed: {
-    marginLeft: 20,
-    padding: 4,
-    backgroundColor: 'rgba(0, 0, 0, 0.2)'
-  },
-  appButton: {
+  button: {
     backgroundColor: colours.gray0,
-    padding: 10,
-    position: 'absolute',
-    right: 0,
-    top: 33,
-    borderWidth: 1,
-    borderColor: colours.gray2,
-    zIndex: 1
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    height: 60,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  title: {
+  buttonTitle: {
+    fontSize: 16,
     fontWeight: '400'
   }
 })

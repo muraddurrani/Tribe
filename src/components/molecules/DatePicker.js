@@ -5,7 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 import colours from '../../styles/colours'
 
-function DatePicker({style, width, label, placeholder, onSelect, defaultValue = ''}) {
+function DatePicker({style, width, label, placeholder, onSelect, defaultValue = '', maxDate, minDate}) {
   const [expand, setExpand] = useState(false)
   const [value, setValue] = useState(defaultValue)
   
@@ -30,6 +30,8 @@ function DatePicker({style, width, label, placeholder, onSelect, defaultValue = 
         <DateTimePicker
           mode = "date"
           value = {new Date()}
+          maximumDate = {maxDate}
+          minimumDate = {minDate}
           onChange = {(event, value) => {
             if (value !== undefined) {
               setExpand(false)

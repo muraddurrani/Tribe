@@ -65,6 +65,7 @@ function index({navigation, route}) {
         width = {320}
         label = "Select Date"
         placeholder = "Date"
+        minDate = {new Date()}
         defaultValue = {startTime ? startTime.toDateString().substring(4) : ''}
         onSelect = {(val) => setDate(val)}
       />

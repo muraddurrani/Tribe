@@ -80,11 +80,13 @@ function Routes() {
         firestore().collection('Users').doc(user.uid).update({ newAccount: false })
       }
   
-      firestore().collection(data.accountType).doc(user.uid).onSnapshot(doc => {
+      const unsubscribe = firestore().collection(data.accountType).doc(user.uid).onSnapshot(doc => {
         if (doc) {
           setUserData(doc.data())
         }
       })
+
+      return unsubscribe
     }
   }, [userDocument])
 
