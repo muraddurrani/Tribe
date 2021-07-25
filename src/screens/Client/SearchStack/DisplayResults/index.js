@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Dimensions } from 'react-native'
-import { Icon } from 'react-native-elements'
+import { Icon, Text } from 'react-native-elements'
 import Carousel from 'react-native-snap-carousel'
 import ScreenView from '../../../../components/views/ScreenView'
 import ProviderCard from './ProviderCard'
@@ -38,13 +38,23 @@ function index({ navigation, route }) {
         titleStyle = {{color: colours.gray3}}
         onPress = {() => navigation.popToTop()}
       />
-      <Carousel
-        vertical
-        data = {result}
-        itemHeight = {viewportHeight}
-        sliderHeight = {viewportHeight}
-        renderItem = {render}
-      />
+      {
+        result.length != 0
+          ? (
+            <Carousel
+              vertical
+              data = {result}
+              itemHeight = {viewportHeight}
+              sliderHeight = {viewportHeight}
+              renderItem = {render}
+            />
+          )
+          : (
+            <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <Text h3>No results found</Text>
+            </View>
+          )
+      }
     </ScreenView>
   )
 }

@@ -113,6 +113,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 5,
     backgroundColor: colours.gray0
   },
+  text: {
+    color: colours.gray0
+  },
   button: {
     backgroundColor: colours.gray0,
     borderTopLeftRadius: 5,

@@ -106,6 +106,7 @@ function index({navigation, route}) {
           const endTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), end.getHours(), end.getMinutes(), 0, 0)
 
           createAppointment(startTime, endTime)
+          setLoading(false)
           navigation.navigate('Appointments')
         }}
       />

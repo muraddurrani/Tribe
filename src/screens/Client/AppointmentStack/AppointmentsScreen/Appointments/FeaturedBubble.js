@@ -115,6 +115,9 @@ const styles = StyleSheet.create({
     backgroundColor: colours.primary,
     borderRadius: 10,
   },
+  text: {
+    color: colours.gray0
+  },
   options: {
     position: 'absolute',
     padding: 3,

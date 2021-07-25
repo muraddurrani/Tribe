@@ -14,6 +14,7 @@ function ProviderCard({ data }) {
   const [name, setName] = useState('')
   const [photo, setPhoto] = useState('')
   const [description, setDescription] = useState('')
+  const [experience, setExperience] = useState('')
   const [matched, setMatched] = useState(false)
   const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window')
 
@@ -33,6 +34,7 @@ function ProviderCard({ data }) {
         setName(doc.data().fullName)
         setPhoto(doc.data().profilePhoto)
         setDescription(doc.data().serviceDescription)
+        setExperience(Object.values(doc.data().Responses[6])[0])
       })
   })
 
@@ -52,7 +54,7 @@ function ProviderCard({ data }) {
           {Object.values(data.attributes).map((value, index) => (
             <Text style = {styles.bodyText} key = {index}>{mapObjectToSentence(value)}</Text>
           ))}
-          <Text>{data.frequency}</Text>
+          <Text>{experience}</Text>
         </View>
       </View>
       <PrimaryButton
