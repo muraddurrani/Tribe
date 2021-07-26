@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header renders correctly 1`] = `
+<BVLinearGradient
+  colors={
+    Array [
+      4294924902,
+      4294942810,
+    ]
+  }
+  endPoint={
+    Object {
+      "x": 1,
+      "y": 0,
+    }
+  }
+  locations={null}
+  startPoint={
+    Object {
+      "x": 0,
+      "y": 0,
+    }
+  }
+  style={
+    Object {
+      "alignItems": "center",
+      "flexDirection": "row",
+      "height": 70,
+      "paddingHorizontal": 20,
+      "paddingVertical": 15,
+      "width": "100%",
+    }
+  }
+>
+  <Text
+    style={
+      Object {
+        "color": "#fdfdfd",
+        "fontSize": 36,
+      }
+    }
+  >
+    Header
+  </Text>
+</BVLinearGradient>
+`;
