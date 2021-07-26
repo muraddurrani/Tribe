@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SecondaryButton renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "borderRadius": 3,
+        "overflow": "hidden",
+      },
+      Object {
+        "borderRadius": 3,
+      },
+      Object {
+        "borderRadius": 20,
+        "height": 40,
+        "width": 120,
+      },
+      false,
+    ]
+  }
+>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      Object {
+        "busy": false,
+        "disabled": false,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "borderColor": "#FF6C63",
+          "borderRadius": 20,
+          "borderWidth": 2,
+          "flexDirection": "row",
+          "height": 40,
+          "justifyContent": "center",
+          "padding": 8,
+          "width": 120,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#FF6C63",
+            "fontSize": 18,
+            "paddingVertical": 1,
+            "textAlign": "center",
+          }
+        }
+      >
+        Secondary Button
+      </Text>
+    </View>
+  </View>
+</View>
+`;

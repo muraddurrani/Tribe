@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#fdfdfd",
+      "borderRadius": 15,
+      "elevation": 3,
+      "width": "90%",
+    }
+  }
+/>
+`;

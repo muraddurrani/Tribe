@@ -32,6 +32,7 @@ function ParticularsForm() {
       {(formikProps) => (
         <View style = {styles.form}>
             <Input
+            testID = {'Name Input'}
               containerStyle = {styles.input}
               label = "Full Name"
               placeholder = "e.g. John Doe"
@@ -41,6 +42,7 @@ function ParticularsForm() {
               errorMessage = {formikProps.touched.name && formikProps.errors.name}
             />
             <Input
+            testID = {'Number Input'}
               label = "Mobile Number (Optional)"
               placeholder = "e.g. 12345678"
               onChangeText = {formikProps.handleChange('number')}
@@ -49,6 +51,7 @@ function ParticularsForm() {
               keyboardType = 'numeric'
             />
             <Dropdown
+            testID = {'Location Dropdown'}
               label = "Your Location"
               placeholder = "Select location..."
               data = {list}
@@ -57,6 +60,7 @@ function ParticularsForm() {
               onSelect = {(location) => setLocation(location)}
             />
           <PrimaryButton
+          testID = {'Next Button'}
             title = "Next"
             disabled = {!location}
             containerStyle = {styles.nextButton}
